@@ -6,9 +6,9 @@ var userModel_1 = require("../models/userModel");
 function registerUser(req, res) {
     try {
         //Get the information from the body
-        var _a = req.body, username = _a.username, email = _a.email, password = _a.password;
+        var _a = req.body, username = _a.username, email = _a.email, password = _a.password, role = _a.role;
         //Initialice a new instance of the User
-        var user = new userModel_1.User(username, email, password);
+        var user = new userModel_1.User(username, email, password, role);
         //Initialice a new instance of Users (the initialization will read the JSON of Users)
         var allUsers = new userModel_1.Users();
         var emailExist = allUsers.createUser(user);

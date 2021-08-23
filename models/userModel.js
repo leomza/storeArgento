@@ -14,13 +14,19 @@ var readJsonUsers = function () {
         console.error(error);
     }
 };
+var Role;
+(function (Role) {
+    Role["user"] = "user";
+    Role["admin"] = "admin";
+})(Role || (Role = {}));
 var User = /** @class */ (function () {
-    function User(username, email, password) {
+    function User(username, email, password, role) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.purchasedCarts = [];
         this.unpurchasedCarts = [];
+        this.role = role;
         this.createdDate = Date.now();
     }
     return User;

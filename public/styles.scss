@@ -265,6 +265,15 @@ body {
   margin-top: 5px;
 }
 
+.wrapper__role {
+  justify-content: center;
+  font-size: 9px;
+
+  input {
+    width: 10%;
+  }
+}
+
 //////////////////////////MODAL////////////////////////
 .modal {
   display: none;

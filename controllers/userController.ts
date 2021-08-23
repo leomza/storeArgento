@@ -7,9 +7,9 @@ import { Product, Cart } from "../models/productModel";
 export function registerUser(req, res) {
     try {
         //Get the information from the body
-        const { username, email, password } = req.body;
+        const { username, email, password, role } = req.body;
         //Initialice a new instance of the User
-        const user = new User(username, email, password);
+        const user = new User(username, email, password, role);
         //Initialice a new instance of Users (the initialization will read the JSON of Users)
         const allUsers = new Users();
         const emailExist: boolean = allUsers.createUser(user);

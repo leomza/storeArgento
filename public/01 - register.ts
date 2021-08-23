@@ -5,10 +5,16 @@ handleFormCreate.addEventListener('submit', doingSubmitCreate);
 async function doingSubmitCreate(ev) {
     try {
         ev.preventDefault();
-        let { username, email, password } = ev.target.elements
+        let { username, email, password, role } = ev.target.elements
         username = username.value;
         email = email.value;
         password = password.value;
+        if (role.checked) {
+            role = 'admin';
+        } else {
+            role = 'user';
+        }
+
         if (!username || !email || !password) throw new Error("Please complete all the fields");
 
         /* const passRegExRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,8}$/;
@@ -19,10 +25,10 @@ async function doingSubmitCreate(ev) {
         } */
 
         ev.target.reset();
-        const userDetails = { username, email, password };
+        const userDetails = { username, email, password, role };
         const userCreated = await axios.post('/user/register', userDetails);
         if (userCreated.data.user != null) {
-            location.href = `03 - products.html?email=${userCreated.data.user.email}`;
+            //location.href = `03 - products.html?email=${userCreated.data.user.email}`;
         } else {
             swal("Ohhh no!", userCreated.data.message, "warning");
         }

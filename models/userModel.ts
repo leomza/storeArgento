@@ -14,20 +14,27 @@ const readJsonUsers = () => {
     }
 };
 
+enum Role {
+    user = 'user',
+    admin = 'admin'
+}
+
 export class User {
     username: string;
     email: string;
     password: string;
+    role: Role;
     purchasedCarts: Array<string>;
     unpurchasedCarts: Array<string>;
     createdDate: any;
 
-    constructor(username, email, password) {
+    constructor(username: string, email: string, password: string, role: Role) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.purchasedCarts = [];
         this.unpurchasedCarts = [];
+        this.role = role;
         this.createdDate = Date.now();
     }
 }

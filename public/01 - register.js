@@ -39,16 +39,22 @@ var handleFormCreate = document.querySelector("#createForm");
 handleFormCreate.addEventListener('submit', doingSubmitCreate);
 function doingSubmitCreate(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, username, email, password, userDetails, userCreated, error_1;
+        var _a, username, email, password, role, userDetails, userCreated, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
                     ev.preventDefault();
-                    _a = ev.target.elements, username = _a.username, email = _a.email, password = _a.password;
+                    _a = ev.target.elements, username = _a.username, email = _a.email, password = _a.password, role = _a.role;
                     username = username.value;
                     email = email.value;
                     password = password.value;
+                    if (role.checked) {
+                        role = 'admin';
+                    }
+                    else {
+                        role = 'user';
+                    }
                     if (!username || !email || !password)
                         throw new Error("Please complete all the fields");
                     /* const passRegExRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,8}$/;
@@ -58,12 +64,12 @@ function doingSubmitCreate(ev) {
                         throw new Error('Password not secured enough');
                     } */
                     ev.target.reset();
-                    userDetails = { username: username, email: email, password: password };
+                    userDetails = { username: username, email: email, password: password, role: role };
                     return [4 /*yield*/, axios.post('/user/register', userDetails)];
                 case 1:
                     userCreated = _b.sent();
                     if (userCreated.data.user != null) {
-                        location.href = "03 - products.html?email=" + userCreated.data.user.email;
+                        //location.href = `03 - products.html?email=${userCreated.data.user.email}`;
                     }
                     else {
                         swal("Ohhh no!", userCreated.data.message, "warning");
