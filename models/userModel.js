@@ -30,6 +30,61 @@ var Users = /** @class */ (function () {
     function Users() {
         this.users = readJsonUsers();
     }
+    Users.prototype.updateUsersJson = function () {
+        try {
+            fs.writeFileSync(usersJsonPath, JSON.stringify(this.users));
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+    Users.prototype.createUser = function (user) {
+        try {
+            //Search if the user exist
+            var userExist = this.users.findIndex(function (userElement) { return userElement.email === user.email; });
+            if (userExist !== -1) {
+                // The user exist
+                return true;
+            }
+            else {
+                // The user doesn't exist
+                this.users.push(user);
+                this.updateUsersJson();
+                return false;
+            }
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+    Users.prototype.findUsername = function (email) {
+        try {
+            var userInfo = this.users.find(function (userElement) { return userElement.email === email; });
+            if (userInfo) {
+                return userInfo.email;
+            }
+            else {
+                return undefined;
+            }
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+    Users.prototype.loginUser = function (email, password) {
+        try {
+            var userInfo = this.users.find(function (userElement) { return userElement.email === email && userElement.password === password; });
+            if (userInfo) {
+                return userInfo;
+            }
+            else {
+                return undefined;
+            }
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
     return Users;
 }());
 exports.Users = Users;

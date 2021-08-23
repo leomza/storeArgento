@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Argento</title>
+    <link rel="shortcut icon" href="./img/faviconTienda.png" />
+    <link rel="stylesheet" href="dist/styles.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body onload="renderProducts()">
+    <nav class="top-menu">
+        <h1 class="top-menu__title">PRODUCTS</h1>
+        <a class="top-menu__button" href="/index.html">Go back</a>
+        <button class="top-menu__button" id="buttonCreate">Add a new product</button>
+    </nav>
+
+    <!-- Modal to create a new product -->
+    <div id="modalProduct" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <form class="form" id="product-form">
+                <h3>Create a new product</h3>
+
+                <div class="form__wrapper">
+                    <input type="text" name="product" placeholder="Product name" required>
+                </div>
+
+                <div class="form__wrapper--image">
+                    <input type="file" id="image" name="image" onchange="readURL(this);">
+                    <img id="previewImage" src="img/logoLosArgento.png">
+                </div>
+
+                <div class="form__wrapper">
+                    <input type="text" name="description" placeholder="Product description" required>
+                </div>
+
+                <div class="form__wrapper">
+                    <input type="number" name="price" placeholder="Product price" required>
+                </div>
+
+                <div class="form__wrapper">
+                    <input type="number" name="stock" placeholder="Product stock" required>
+                </div>
+
+                <input class="form__submit--newuser" type="submit" value="Add product">
+            </form>
+        </div>
+    </div>
+
+    <div id="root"></div>
+
+    <script src="helperModal.js"></script>
+    <script src="03 - products.js"></script>
+</body>
+
+</html>

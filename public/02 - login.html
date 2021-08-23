@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Argento</title>
+    <link rel="shortcut icon" href="./img/faviconTienda.png" />
+    <link rel="stylesheet" href="dist/styles.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+    <nav class="top-menu">
+        <h1 class="top-menu__title">LOGIN</h1>
+        <a class="top-menu__button" href="/index.html">Go back</a>
+    </nav>
+
+    <form class="form register" id="existingForm">
+        <h3>Enter your login data</h3>
+
+        <div class="form__wrapper wrapper__register">
+            <label for="email">Email:</label>
+            <input type="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form__wrapper wrapper__register">
+            <label for="password">Password:</label>
+            <input type="password" name="password" placeholder="Enter your password" autocomplete="off" required>
+        </div>
+
+        <input class="form__submit--newuser" type="submit" value="Login">
+    </form>
+
+    <script src="02 - login.js"></script>
+</body>
+
+</html>

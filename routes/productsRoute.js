@@ -2,25 +2,25 @@
 exports.__esModule = true;
 var express = require('express');
 var router = express.Router();
-/* //I import the function of the Middlewares that I going to use here
-import { userCookieRead } from '../middlewares/userCookie';
-import { isAdmin } from '../middlewares/isAdmin';
-
-//I import the function of the controlers that Im going to use here
-import {newSurvey, getSurveys, deleteSurvey, addQuestion, editQuestion, deleteQuestion, getQuestionsSurvey, updateQuestionsSurvey } from '../controlers/controlerSurvey';
-
+//I import the function of the Middlewares that I going to use here
+var userCookie_1 = require("../middleware/userCookie");
+//I import the function of the Controlers that Im going to use here
+var productController_1 = require("../controllers/productController");
 //When the user click to start a new survey I call this method
-router.route('/survey/:uuid')
-    .post(userCookieRead, isAdmin, newSurvey)
-    .get(userCookieRead, isAdmin, getSurveys)
-    .delete(userCookieRead, isAdmin, deleteSurvey);
+router.post('/newProduct', userCookie_1.userCookieRead, productController_1.newProduct);
+router.get('/allProducts', productController_1.getAllProducts);
+router["delete"]('/deleteProduct/:id', userCookie_1.userCookieRead, productController_1.removeProduct);
+router.get('/productDetail/:id', productController_1.productDetail);
+router.put('/updateProduct/:id', userCookie_1.userCookieRead, productController_1.editProduct);
+/*.get(userCookieRead, isAdmin, getSurveys)
+.delete(userCookieRead, isAdmin, deleteSurvey);
 
 router.route('/question/:uuid/:qUuid')
-    .post(userCookieRead, isAdmin, addQuestion)
-    .put(userCookieRead, isAdmin, editQuestion)
-    .delete(userCookieRead, isAdmin, deleteQuestion);
+.post(userCookieRead, isAdmin, addQuestion)
+.put(userCookieRead, isAdmin, editQuestion)
+.delete(userCookieRead, isAdmin, deleteQuestion);
 
 router.route('/questions/:uuid')
-    .get(getQuestionsSurvey)
-    .put(updateQuestionsSurvey); */
+.get(getQuestionsSurvey)
+.put(updateQuestionsSurvey); */
 module.exports = router;

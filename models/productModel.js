@@ -1,12 +1,12 @@
 "use strict";
 exports.__esModule = true;
-exports.Cart = exports.Product = exports.readJsonCarts = void 0;
+exports.Cart = exports.Products = exports.Product = exports.readJsonProducts = void 0;
 var uuidv4 = require("uuid").v4;
 var fs = require("fs");
 var path = require("path");
-var productsJsonPath = path.resolve(__dirname, "./carts.json");
-//Function to read the JSON of created carts
-exports.readJsonCarts = function () {
+var productsJsonPath = path.resolve(__dirname, "./products.json");
+//Function to read the JSON of created products
+exports.readJsonProducts = function () {
     try {
         var carts = fs.readFileSync(productsJsonPath);
         return JSON.parse(carts);
@@ -28,6 +28,48 @@ var Product = /** @class */ (function () {
     return Product;
 }());
 exports.Product = Product;
+var Products = /** @class */ (function () {
+    function Products() {
+        this.products = exports.readJsonProducts();
+    }
+    Products.prototype.updateProductsJson = function () {
+        try {
+            fs.writeFileSync(productsJsonPath, JSON.stringify(this.products));
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+    Products.prototype.createProducts = function (product) {
+        try {
+            this.products.push(product);
+            this.updateProductsJson();
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+    Products.prototype.deleteProduct = function (id) {
+        try {
+            this.products = this.products.filter(function (product) { return product.uuid !== id; });
+            this.updateProductsJson();
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+    Products.prototype.detailsProduct = function (id) {
+        try {
+            var productInfo = this.products.find(function (product) { return product.uuid === id; });
+            return productInfo;
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+    return Products;
+}());
+exports.Products = Products;
 var Cart = /** @class */ (function () {
     function Cart() {
         this.uuid = uuidv4();

@@ -38,4 +38,56 @@ export class Users {
     constructor() {
         this.users = readJsonUsers();
     }
+
+    updateUsersJson() {
+        try {
+            fs.writeFileSync(usersJsonPath, JSON.stringify(this.users));
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    createUser(user) {
+        try {
+            //Search if the user exist
+            const userExist = this.users.findIndex(userElement => userElement.email === user.email);
+            if (userExist !== -1) {
+                // The user exist
+                return true
+            } else {
+                // The user doesn't exist
+                this.users.push(user);
+                this.updateUsersJson();
+                return false;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    findUsername(email) {
+        try {
+            const userInfo = this.users.find(userElement => userElement.email === email);
+            if (userInfo) {
+                return userInfo.email;
+            } else {
+                return undefined
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    loginUser(email, password) {
+        try {
+            const userInfo = this.users.find(userElement => userElement.email === email && userElement.password === password);
+            if (userInfo) {
+                return userInfo;
+            } else {
+                return undefined
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }
