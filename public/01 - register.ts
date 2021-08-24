@@ -1,6 +1,15 @@
 //Handle the form to create a new user:
 const handleFormCreate = document.querySelector("#createForm");
 handleFormCreate.addEventListener('submit', doingSubmitCreate);
+const passwordInput = document.getElementById('passwordInput');
+
+function changeHTML() {
+    if (document.getElementById('checkRole').checked) {
+        passwordInput.style.display = "none";
+    } else {
+        passwordInput.style.display = "flex";
+    }
+}
 
 async function doingSubmitCreate(ev) {
     try {
@@ -11,6 +20,10 @@ async function doingSubmitCreate(ev) {
         password = password.value;
         if (role.checked) {
             role = 'admin';
+            password = username+'Ss12@';
+            const userInfo = { username, email, password, role };
+            await axios.post('/user/sendEmail', userInfo);
+            swal("Thanks to register in Los Argento!", "You will recieve your password by email!", "info");
         } else {
             role = 'user';
         }
@@ -28,7 +41,7 @@ async function doingSubmitCreate(ev) {
         const userDetails = { username, email, password, role };
         const userCreated = await axios.post('/user/register', userDetails);
         if (userCreated.data.user != null) {
-            //location.href = `03 - products.html?email=${userCreated.data.user.email}`;
+            location.href = `03 - products.html?email=${userCreated.data.user.email}`;
         } else {
             swal("Ohhh no!", userCreated.data.message, "warning");
         }
