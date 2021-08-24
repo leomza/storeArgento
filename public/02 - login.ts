@@ -12,17 +12,19 @@ async function doingSubmitLogin(ev) {
         ev.target.reset();
         //Get the username of the user
         const userLoginUsername = await axios.get(`/user/username/${email}`);
-        const { username } = userLoginUsername.data;
-        const userDetails = { username, email, password }
+
+        if (!userLoginUsername.data.userInfo) throw new Error('Could not find the user');
+        const { username, role } = userLoginUsername.data.userInfo;
+        const userDetails = { username, email, password, role }
         const userLogin = await axios.post('/user/login', userDetails);
 
         if (userLogin.data.userExists) {
             location.href = `03 - products.html?email=${email}`;
         } else {
-            swal("Ohhh no!", userLogin.data.message, "warning");
+            throw new Error(userLogin.data.message)
         }
     } catch (error) {
+        swal("Ohhh no!", `${error}`, "warning");
         console.error(error);
-        swal("Ohhh no!", error, "warning");
     }
-};
+}

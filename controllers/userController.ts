@@ -29,8 +29,8 @@ export function findUsername(req, res) {
         const { email } = req.params;
         const allUsers = new Users();
 
-        const username = allUsers.findUsername(email);
-        res.send({ message: "Username was found", username });
+        const userInfo = allUsers.findUsername(email);
+        res.send({ message: "Username was found", userInfo });
     } catch (error) {
         console.error(error);
         res.status(500).send(error.message);

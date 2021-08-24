@@ -76,7 +76,7 @@ export class Users {
         try {
             const userInfo = this.users.find(userElement => userElement.email === email);
             if (userInfo) {
-                return userInfo.email;
+                return userInfo;
             } else {
                 return undefined
             }

@@ -229,6 +229,11 @@ body {
   font-size: 10px;
 }
 
+.description {
+  flex-direction: column;
+  text-align: center;
+}
+
 #previewImage {
   width: 100px;
   margin: auto;

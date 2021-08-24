@@ -258,6 +258,11 @@ body {
   }
 }
 
+.description {
+  flex-direction: column;
+  text-align: center;
+}
+
 #previewImage {
   width: 100px;
   margin: auto;

@@ -17,8 +17,9 @@ async function renderProduct(): Promise<void> {
         root.innerHTML =
             `<div class="product__item__wrapper">
                 <img class="product__item__image" src = "${productInfo.picture}" alt = "">
-                <div class="product__item__information__wrapper">
+                <div class="product__item__information__wrapper description">
                 <div><b>${productInfo.name.toUpperCase()} </b></div>
+                <div>${productInfo.description}</div>
                 </div>
                 <div class="product__item__information">
                 <div><b>$${productInfo.price} </b></div>

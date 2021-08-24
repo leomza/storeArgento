@@ -20,10 +20,7 @@ async function doingSubmitCreate(ev) {
         password = password.value;
         if (role.checked) {
             role = 'admin';
-            password = username+'Ss12@';
-            const userInfo = { username, email, password, role };
-            await axios.post('/user/sendEmail', userInfo);
-            swal("Thanks to register in Los Argento!", "You will recieve your password by email!", "info");
+            password = username + 'Ss12@';
         } else {
             role = 'user';
         }
@@ -38,10 +35,14 @@ async function doingSubmitCreate(ev) {
         } */
 
         ev.target.reset();
+
         const userDetails = { username, email, password, role };
         const userCreated = await axios.post('/user/register', userDetails);
-        if (userCreated.data.user != null) {
+        if (userCreated.data.user.role === 'user') {
             location.href = `03 - products.html?email=${userCreated.data.user.email}`;
+        } else if (userCreated.data.user.role === 'admin') {
+            swal("Thanks to register in Los Argento!", "During the day you will recieve your password by email!", "success");
+            passwordInput.style.display = "flex";
         } else {
             swal("Ohhh no!", userCreated.data.message, "warning");
         }

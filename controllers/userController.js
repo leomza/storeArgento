@@ -29,8 +29,8 @@ function findUsername(req, res) {
     try {
         var email = req.params.email;
         var allUsers = new userModel_1.Users();
-        var username = allUsers.findUsername(email);
-        res.send({ message: "Username was found", username: username });
+        var userInfo = allUsers.findUsername(email);
+        res.send({ message: "Username was found", userInfo: userInfo });
     }
     catch (error) {
         console.error(error);

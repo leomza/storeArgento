@@ -67,7 +67,7 @@ var Users = /** @class */ (function () {
         try {
             var userInfo = this.users.find(function (userElement) { return userElement.email === email; });
             if (userInfo) {
-                return userInfo.email;
+                return userInfo;
             }
             else {
                 return undefined;

@@ -9,10 +9,9 @@ import { sendEmail } from '../middleware/sendEmail'
 //I import the function of the Controlers that Im going to use here
 import { registerUser, findUsername, login} from '../controllers/userController'
 
-router.post('/register', userCookieWrite, registerUser);
+router.post('/register', userCookieWrite, sendEmail, registerUser);
 router.get('/username/:email', findUsername);
 router.post('/login', userCookieWrite, login);
-router.post('/sendEmail', sendEmail);
 
 /*router.get('/info', userCookieRead, sendCookie);
 //When the user click to finish the new survey I call this method
