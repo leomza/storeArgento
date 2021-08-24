@@ -12,7 +12,9 @@ function userCookieWrite(req, res, next) {
         //Here I set the cookie
         var cookieToWrite = JSON.stringify({ username: username, email: email, role: role });
         var token = jwt.encode(cookieToWrite, secret_1.secret);
-        res.cookie("userInfo", token, { maxAge: 900000, httpOnly: true });
+        //The cookie is going to expire in 30 minutes
+        res.cookie("userInfo", token, { maxAge: 1800000, httpOnly: true });
+        req.cookieExists = true;
         req.username = username;
         req.email = email;
         req.role = role;
@@ -28,13 +30,19 @@ exports.userCookieWrite = userCookieWrite;
 function userCookieRead(req, res, next) {
     try {
         var userInfo = req.cookies.userInfo;
-        var decoded = jwt.decode(userInfo, secret_1.secret);
-        var cookie = JSON.parse(decoded);
-        var username = cookie.username, email = cookie.email, role = cookie.role;
-        req.username = username;
-        req.email = email;
-        req.role = role;
-        next();
+        if (userInfo) {
+            var decoded = jwt.decode(userInfo, secret_1.secret);
+            var cookie = JSON.parse(decoded);
+            var username = cookie.username, email = cookie.email, role = cookie.role;
+            req.username = username;
+            req.email = email;
+            req.role = role;
+            next();
+        }
+        else {
+            req.cookieExists = false;
+            res.status(401).send({ cookieExist: req.cookieExists, message: 'The session has expired. Please log in again.' });
+        }
     }
     catch (error) {
         console.error(error);

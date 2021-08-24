@@ -212,6 +212,7 @@ body {
       flex-direction: column;
       align-items: center;
       border-radius: 50px;
+      padding-bottom: 20px;
     }
 
     &__image {
@@ -219,6 +220,11 @@ body {
       height: 150px;
       margin-top: 10px;
       border-radius: 20px;
+
+      &:hover{
+        cursor: pointer;
+        filter: brightness(150%);
+      }
     }
 
     &__options {
@@ -255,6 +261,26 @@ body {
         font-size: 10px;
       }
     }
+
+    &__quantity {
+      width: 20%;
+      text-align: center;
+      border-radius: 20px;
+      border: 1px solid grey;
+    }
+
+    &__cart {
+      background-color: blue;
+      border: none;
+      color: white;
+      border-radius: 20px;
+      width: 55%;
+      cursor: pointer;
+
+      &:hover {
+        background: green;
+      }
+    }
   }
 }
 
@@ -277,6 +303,10 @@ body {
   input {
     width: 10%;
   }
+}
+
+.nameUser__title {
+  color: white;
 }
 
 //////////////////////////MODAL////////////////////////
@@ -322,4 +352,8 @@ body {
   h3 {
     text-align: center;
   }
+}
+
+#buttonCreate {
+  display: none;
 }

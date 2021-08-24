@@ -10,7 +10,7 @@ async function doingSubmitLogin(ev) {
         password = password.value;
         if ((!email) || (!password)) throw new Error("Please complete all the fields");
         ev.target.reset();
-        //Get the username of the user
+        //Get the role of the user
         const userLoginUsername = await axios.get(`/user/username/${email}`);
 
         if (!userLoginUsername.data.userInfo) throw new Error('Could not find the user');

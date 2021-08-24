@@ -19,10 +19,11 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
-<body onload="renderProducts()">
+<body onload="renderUserDetails(); renderProducts()">
     <nav class="top-menu">
         <h1 class="top-menu__title">PRODUCTS</h1>
-        <a class="top-menu__button" href="/index.html">Go back</a>
+        <div id="nameUser"></div>
+        <a class="top-menu__button" href="/index.html">Log out</a>
         <button class="top-menu__button" id="buttonCreate">Add a new product</button>
     </nav>
 

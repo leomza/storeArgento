@@ -72,7 +72,7 @@ export class Users {
         }
     }
 
-    findUsername(email) {
+    findUser(email) {
         try {
             const userInfo = this.users.find(userElement => userElement.email === email);
             if (userInfo) {

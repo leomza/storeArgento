@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.login = exports.findUsername = exports.registerUser = void 0;
+exports.login = exports.findUser = exports.registerUser = void 0;
 //I import the classes (with Methods) of the Models that Im going to use here
 var userModel_1 = require("../models/userModel");
 function registerUser(req, res) {
@@ -25,11 +25,18 @@ function registerUser(req, res) {
     }
 }
 exports.registerUser = registerUser;
-function findUsername(req, res) {
+function findUser(req, res) {
     try {
         var email = req.params.email;
         var allUsers = new userModel_1.Users();
-        var userInfo = allUsers.findUsername(email);
+        var userInfo = void 0;
+        //I use req.params from the login and req.email from the cookies 
+        if (req.email) {
+            userInfo = allUsers.findUser(req.email);
+        }
+        else {
+            userInfo = allUsers.findUser(email);
+        }
         res.send({ message: "Username was found", userInfo: userInfo });
     }
     catch (error) {
@@ -37,7 +44,7 @@ function findUsername(req, res) {
         res.status(500).send(error.message);
     }
 }
-exports.findUsername = findUsername;
+exports.findUser = findUser;
 function login(req, res) {
     try {
         var _a = req.body, email = _a.email, password = _a.password;

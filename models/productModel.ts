@@ -7,8 +7,8 @@ const productsJsonPath = path.resolve(__dirname, "./products.json");
 //Function to read the JSON of created products
 export const readJsonProducts = () => {
     try {
-        const carts = fs.readFileSync(productsJsonPath);
-        return JSON.parse(carts);;
+        const products = fs.readFileSync(productsJsonPath);
+        return JSON.parse(products);;
     } catch (error) {
         console.error(error);
     }
@@ -73,19 +73,5 @@ export class Products {
         } catch (error) {
             console.error(error);
         }
-    }
-}
-
-export class Cart {
-    uuid: string;
-    products: Array<Product>;
-    createdDate: any;
-    purchasedDate: any;
-
-    constructor() {
-        this.uuid = uuidv4();
-        this.products = [];
-        this.createdDate = Date.now();
-        this.purchasedDate = null;
     }
 }

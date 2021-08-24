@@ -2,7 +2,7 @@ export { };
 
 //I import the classes (with Methods) of the Models that Im going to use here
 import { User, Users } from "../models/userModel";
-import { Product, Cart, Products } from "../models/productModel";
+import { Product, Products } from "../models/productModel";
 
 //Function to create a new Product
 export function newProduct(req, res) {
@@ -75,5 +75,13 @@ export function editProduct(req, res) {
     } catch (error) {
         console.error(error);
         res.status(500).send(error.message);
+    }
+}
+
+export function addToCart() {
+    try {
+
+    } catch (error) {
+        console.error(error);
     }
 }

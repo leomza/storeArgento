@@ -24,12 +24,18 @@ export function registerUser(req, res) {
     }
 }
 
-export function findUsername(req, res) {
+export function findUser(req, res) {
     try {
         const { email } = req.params;
         const allUsers = new Users();
+        let userInfo;
 
-        const userInfo = allUsers.findUsername(email);
+        //I use req.params from the login and req.email from the cookies 
+        if (req.email) {
+            userInfo = allUsers.findUser(req.email);
+        } else {
+            userInfo = allUsers.findUser(email);
+        }
         res.send({ message: "Username was found", userInfo });
     } catch (error) {
         console.error(error);

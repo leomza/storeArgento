@@ -1,0 +1,65 @@
+export { };
+const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
+const path = require("path");
+const cartsJsonPath = path.resolve(__dirname, "./carts.json");
+
+//Function to read the JSON of created carts
+export const readJsonCarts = () => {
+    try {
+        const carts = fs.readFileSync(cartsJsonPath);
+        return JSON.parse(carts);;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export class PurchaseProduct {
+    uuid: string;
+    productId: string;
+    quantity: number;
+    price: number;
+    totalPrice: number
+
+    constructor(productId, quantity, price) {
+        this.uuid = uuidv4();
+        this.productId = productId;
+        this.quantity = quantity;
+        this.price = price;
+        this.totalPrice = (quantity * price)
+    }
+}
+
+export class Cart {
+    uuid: string;
+    userId: string;
+    products: Array<PurchaseProduct>;
+    totalAmount: number; //Will set this when the user finish the purchase
+    createdDate: any;
+    purchasedDate: any;
+
+    constructor(userId, products) {
+        this.uuid = uuidv4();
+        this.userId = userId;
+        this.products = (products === null) ? [] : products; //when the user push add here
+        this.totalAmount = null;
+        this.createdDate = Date.now();
+        this.purchasedDate = null;
+    }
+}
+
+export class Carts {
+    carts: Array<Cart>;
+
+    constructor() {
+        this.carts = readJsonCarts();
+    }
+
+    updateCartsJson() {
+        try {
+            fs.writeFileSync(cartsJsonPath, JSON.stringify(this.carts));
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}

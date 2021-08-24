@@ -7,10 +7,11 @@ import { userCookieRead, userCookieWrite } from '../middleware/userCookie';
 import { sendEmail } from '../middleware/sendEmail'
 
 //I import the function of the Controlers that Im going to use here
-import { registerUser, findUsername, login} from '../controllers/userController'
+import { registerUser, findUser, login} from '../controllers/userController'
 
 router.post('/register', userCookieWrite, sendEmail, registerUser);
-router.get('/username/:email', findUsername);
+router.get('/username/:email', findUser);
+router.get('/info', userCookieRead, findUser);
 router.post('/login', userCookieWrite, login);
 
 /*router.get('/info', userCookieRead, sendCookie);

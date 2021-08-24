@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.Cart = exports.Products = exports.Product = exports.readJsonProducts = void 0;
+exports.Products = exports.Product = exports.readJsonProducts = void 0;
 var uuidv4 = require("uuid").v4;
 var fs = require("fs");
 var path = require("path");
@@ -8,8 +8,8 @@ var productsJsonPath = path.resolve(__dirname, "./products.json");
 //Function to read the JSON of created products
 exports.readJsonProducts = function () {
     try {
-        var carts = fs.readFileSync(productsJsonPath);
-        return JSON.parse(carts);
+        var products = fs.readFileSync(productsJsonPath);
+        return JSON.parse(products);
         ;
     }
     catch (error) {
@@ -70,13 +70,3 @@ var Products = /** @class */ (function () {
     return Products;
 }());
 exports.Products = Products;
-var Cart = /** @class */ (function () {
-    function Cart() {
-        this.uuid = uuidv4();
-        this.products = [];
-        this.createdDate = Date.now();
-        this.purchasedDate = null;
-    }
-    return Cart;
-}());
-exports.Cart = Cart;

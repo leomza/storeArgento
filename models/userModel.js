@@ -63,7 +63,7 @@ var Users = /** @class */ (function () {
             console.error(error);
         }
     };
-    Users.prototype.findUsername = function (email) {
+    Users.prototype.findUser = function (email) {
         try {
             var userInfo = this.users.find(function (userElement) { return userElement.email === email; });
             if (userInfo) {

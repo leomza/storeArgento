@@ -8,6 +8,7 @@ var userCookie_1 = require("../middleware/userCookie");
 var productController_1 = require("../controllers/productController");
 //When the user click to start a new survey I call this method
 router.post('/newProduct', userCookie_1.userCookieRead, productController_1.newProduct);
+router.post('/addCart', userCookie_1.userCookieRead, productController_1.addToCart);
 router.get('/allProducts', productController_1.getAllProducts);
 router["delete"]('/deleteProduct/:id', userCookie_1.userCookieRead, productController_1.removeProduct);
 router.get('/productDetail/:id', productController_1.productDetail);

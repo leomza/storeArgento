@@ -6,10 +6,11 @@ const router = express.Router();
 import { userCookieRead, userCookieWrite } from '../middleware/userCookie';
 
 //I import the function of the Controlers that Im going to use here
-import { newProduct, getAllProducts, removeProduct, productDetail, editProduct } from '../controllers/productController'
+import { newProduct, getAllProducts, removeProduct, productDetail, editProduct, addToCart } from '../controllers/productController'
 
 //When the user click to start a new survey I call this method
 router.post('/newProduct', userCookieRead, newProduct);
+router.post('/addCart', userCookieRead, addToCart);
 router.get('/allProducts', getAllProducts);
 router.delete('/deleteProduct/:id', userCookieRead, removeProduct);
 router.get('/productDetail/:id', productDetail);

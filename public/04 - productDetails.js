@@ -38,6 +38,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var url_string = window.location.href;
 var url = new URL(url_string);
 var uuidProduct = url.searchParams.get("uuid");
+//Function to render the data of the user
+try {
+    var root_1 = document.querySelector('#nameUser');
+    function renderUserDetails() {
+        return __awaiter(this, void 0, void 0, function () {
+            var userDetails, username, toRender;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, axios.get('/user/info')];
+                    case 1:
+                        userDetails = _a.sent();
+                        username = userDetails.data.userInfo.username;
+                        toRender = "<h1>Wish more <span class=\"nameUser__title\">" + username + "s</span></h1>";
+                        root_1.innerHTML = toRender;
+                        return [2 /*return*/];
+                }
+            });
+        });
+    }
+    ;
+}
+catch (error) {
+    console.error(error);
+}
 //I render the detail of the product
 function renderProduct() {
     return __awaiter(this, void 0, Promise, function () {

@@ -3,6 +3,20 @@ const url_string = window.location.href;
 const url = new URL(url_string);
 const uuidProduct = url.searchParams.get("uuid");
 
+//Function to render the data of the user
+try {
+    const root = document.querySelector('#nameUser');
+
+    async function renderUserDetails() {
+        const userDetails = await axios.get('/user/info');
+        const { username } = userDetails.data.userInfo;
+        const toRender = `<h1>Wish more <span class="nameUser__title">${username}s</span></h1>`
+        root.innerHTML = toRender;
+    };
+} catch (error) {
+    console.error(error);
+}
+
 //I render the detail of the product
 async function renderProduct(): Promise<void> {
     try {
