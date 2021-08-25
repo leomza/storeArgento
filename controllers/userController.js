@@ -3,6 +3,7 @@ exports.__esModule = true;
 exports.login = exports.findUser = exports.registerUser = void 0;
 //I import the classes (with Methods) of the Models that Im going to use here
 var userModel_1 = require("../models/userModel");
+var cartModel_1 = require("../models/cartModel");
 function registerUser(req, res) {
     try {
         //Get the information from the body
@@ -13,7 +14,11 @@ function registerUser(req, res) {
         var allUsers = new userModel_1.Users();
         var emailExist = allUsers.createUser(user);
         if (!emailExist) {
-            res.send({ message: "A new User was added", user: user });
+            var products = null;
+            var unpurchaseCart = new cartModel_1.Cart(email, products);
+            var allCarts = new cartModel_1.Carts();
+            allCarts.addProductsToCart(unpurchaseCart);
+            res.send({ message: "A new User was added", user: user, unpurchaseCart: unpurchaseCart });
         }
         else {
             res.send({ message: "Email already registered, please try a different email address!" });
@@ -50,8 +55,16 @@ function login(req, res) {
         var _a = req.body, email = _a.email, password = _a.password;
         var allUsers = new userModel_1.Users();
         var userExists = allUsers.loginUser(email, password);
+        var unpurchaseCart = req.unpurchaseCart;
+        if (!unpurchaseCart) {
+            var products = null;
+            unpurchaseCart = new cartModel_1.Cart(email, products);
+            var allCarts = new cartModel_1.Carts();
+            allCarts.addProductsToCart(unpurchaseCart);
+        }
+        ;
         if (userExists) {
-            res.send({ message: "Logged in successfully", userExists: true });
+            res.send({ message: "Logged in successfully", userExists: true, unpurchaseCart: unpurchaseCart });
         }
         else {
             res.send({ message: "Username or password are wrong, please try again!", userExists: false });

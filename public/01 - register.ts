@@ -38,11 +38,15 @@ async function doingSubmitCreate(ev) {
 
         const userDetails = { username, email, password, role };
         const userCreated = await axios.post('/user/register', userDetails);
+        const { uuid } = userCreated.data.unpurchaseCart;
+
         if (userCreated.data.user.role === 'user') {
-            location.href = `03 - products.html?email=${userCreated.data.user.email}`;
+            location.href = `03 - products.html?cartId=${uuid}`;
+
         } else if (userCreated.data.user.role === 'admin') {
             swal("Thanks to register in Los Argento!", "During the day you will recieve your password by email!", "success");
             passwordInput.style.display = "flex";
+
         } else {
             swal("Ohhh no!", userCreated.data.message, "warning");
         }

@@ -4,17 +4,22 @@ const router = express.Router();
 
 //I import the function of the Middlewares that I going to use here
 import { userCookieRead, userCookieWrite } from '../middleware/userCookie';
+import { sendDataProduct } from '../middleware/sendDataProduct';
+
 
 //I import the function of the Controlers that Im going to use here
-import { newProduct, getAllProducts, removeProduct, productDetail, editProduct } from '../controllers/productController'
+import { addCart } from '../controllers/cartController'
 
 //When the user click to start a new survey I call this method
-router.post('/newProduct', userCookieRead, newProduct);
+router.post('/addCart', userCookieRead, sendDataProduct, addCart);
+
+
+/* router.post('/addCart', userCookieRead, addToCart);
 router.get('/allProducts', getAllProducts);
 router.delete('/deleteProduct/:id', userCookieRead, removeProduct);
 router.get('/productDetail/:id', productDetail);
 router.put('/updateProduct/:id', userCookieRead, editProduct);
-/*.get(userCookieRead, isAdmin, getSurveys)
+ *//*.get(userCookieRead, isAdmin, getSurveys)
 .delete(userCookieRead, isAdmin, deleteSurvey);
 
 router.route('/question/:uuid/:qUuid')

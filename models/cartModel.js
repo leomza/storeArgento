@@ -28,9 +28,9 @@ var PurchaseProduct = /** @class */ (function () {
 }());
 exports.PurchaseProduct = PurchaseProduct;
 var Cart = /** @class */ (function () {
-    function Cart(userId, products) {
+    function Cart(userEmail, products) {
         this.uuid = uuidv4();
-        this.userId = userId;
+        this.userEmail = userEmail;
         this.products = (products === null) ? [] : products; //when the user push add here
         this.totalAmount = null;
         this.createdDate = Date.now();
@@ -46,6 +46,33 @@ var Carts = /** @class */ (function () {
     Carts.prototype.updateCartsJson = function () {
         try {
             fs.writeFileSync(cartsJsonPath, JSON.stringify(this.carts));
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+    Carts.prototype.addProductsToCart = function (cart) {
+        try {
+            this.carts.push(cart);
+            this.updateCartsJson();
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+    Carts.prototype.searchUnpurchaseCart = function (userEmail) {
+        try {
+            var unpurchaseCart = this.carts.find(function (cart) { return (cart.userEmail === userEmail) && (cart.purchasedDate === null); });
+            return unpurchaseCart;
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+    Carts.prototype.searchUserCart = function (cartId) {
+        try {
+            var userCart = this.carts.find(function (cart) { return cart.uuid === cartId; });
+            return userCart;
         }
         catch (error) {
             console.error(error);

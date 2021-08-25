@@ -25,7 +25,6 @@ var User = /** @class */ (function () {
         this.email = email;
         this.password = password;
         this.purchasedCarts = [];
-        this.unpurchasedCarts = [];
         this.role = role;
         this.createdDate = Date.now();
     }

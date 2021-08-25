@@ -39,7 +39,7 @@ var handleFormCreate = document.querySelector("#existingForm");
 handleFormCreate.addEventListener('submit', doingSubmitLogin);
 function doingSubmitLogin(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, email, password, userLoginUsername, _b, username, role, userDetails, userLogin, error_1;
+        var _a, email, password, userLoginUsername, _b, username, role, userDetails, userLogin, uuid, error_1;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -61,8 +61,9 @@ function doingSubmitLogin(ev) {
                     return [4 /*yield*/, axios.post('/user/login', userDetails)];
                 case 2:
                     userLogin = _c.sent();
+                    uuid = userLogin.data.unpurchaseCart.uuid;
                     if (userLogin.data.userExists) {
-                        location.href = "03 - products.html?email=" + email;
+                        location.href = "03 - products.html?cartId=" + uuid;
                     }
                     else {
                         throw new Error(userLogin.data.message);

@@ -21,12 +21,14 @@ app.use(express.static(pathToPublicFolder));
 //I use this to read a cookie (I can create it with out this)
 app.use(cookieParser());
 
-//Route (I import the routes of users and products)
+//Route (I import the routes of users, products and cart)
 const userRoute = require('./routes/usersRoute');
 const productsRoute = require('./routes/productsRoute');
+const cartRoute = require('./routes/cartRoute');
 
 //Use of that Routes that I imported
 app.use('/user', userRoute);
 app.use('/products', productsRoute);
+app.use('/cart', cartRoute);
 
 app.listen(port, () => { console.log(`Listening on port: ${port}`) });

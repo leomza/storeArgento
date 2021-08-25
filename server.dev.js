@@ -22,15 +22,18 @@ var pathToPublicFolder = path.resolve(__dirname, "./public");
 app.use(express.json());
 app.use(express["static"](pathToPublicFolder)); //I use this to read a cookie (I can create it with out this)
 
-app.use(cookieParser()); //Route (I import the routes of users and products)
+app.use(cookieParser()); //Route (I import the routes of users, products and cart)
 
 var userRoute = require('./routes/usersRoute');
 
-var productsRoute = require('./routes/productsRoute'); //Use of that Routes that I imported
+var productsRoute = require('./routes/productsRoute');
+
+var cartRoute = require('./routes/cartRoute'); //Use of that Routes that I imported
 
 
 app.use('/user', userRoute);
 app.use('/products', productsRoute);
+app.use('/cart', cartRoute);
 app.listen(port, function () {
   console.log("Listening on port: ".concat(port));
 });

@@ -32,15 +32,15 @@ export class PurchaseProduct {
 
 export class Cart {
     uuid: string;
-    userId: string;
+    userEmail: string;
     products: Array<PurchaseProduct>;
     totalAmount: number; //Will set this when the user finish the purchase
     createdDate: any;
     purchasedDate: any;
 
-    constructor(userId, products) {
+    constructor(userEmail, products) {
         this.uuid = uuidv4();
-        this.userId = userId;
+        this.userEmail = userEmail;
         this.products = (products === null) ? [] : products; //when the user push add here
         this.totalAmount = null;
         this.createdDate = Date.now();
@@ -58,6 +58,33 @@ export class Carts {
     updateCartsJson() {
         try {
             fs.writeFileSync(cartsJsonPath, JSON.stringify(this.carts));
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    addProductsToCart(cart) {
+        try {
+            this.carts.push(cart);
+            this.updateCartsJson();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    searchUnpurchaseCart(userEmail) {
+        try {
+            const unpurchaseCart = this.carts.find(cart => (cart.userEmail === userEmail) && (cart.purchasedDate === null));
+            return unpurchaseCart;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    searchUserCart(cartId) {
+        try {
+            const userCart = this.carts.find(cart => cart.uuid === cartId);
+            return userCart;
         } catch (error) {
             console.error(error);
         }

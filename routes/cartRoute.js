@@ -4,15 +4,17 @@ var express = require('express');
 var router = express.Router();
 //I import the function of the Middlewares that I going to use here
 var userCookie_1 = require("../middleware/userCookie");
+var sendDataProduct_1 = require("../middleware/sendDataProduct");
 //I import the function of the Controlers that Im going to use here
-var productController_1 = require("../controllers/productController");
+var cartController_1 = require("../controllers/cartController");
 //When the user click to start a new survey I call this method
-router.post('/newProduct', userCookie_1.userCookieRead, productController_1.newProduct);
-router.get('/allProducts', productController_1.getAllProducts);
-router["delete"]('/deleteProduct/:id', userCookie_1.userCookieRead, productController_1.removeProduct);
-router.get('/productDetail/:id', productController_1.productDetail);
-router.put('/updateProduct/:id', userCookie_1.userCookieRead, productController_1.editProduct);
-/*.get(userCookieRead, isAdmin, getSurveys)
+router.post('/addCart', userCookie_1.userCookieRead, sendDataProduct_1.sendDataProduct, cartController_1.addCart);
+/* router.post('/addCart', userCookieRead, addToCart);
+router.get('/allProducts', getAllProducts);
+router.delete('/deleteProduct/:id', userCookieRead, removeProduct);
+router.get('/productDetail/:id', productDetail);
+router.put('/updateProduct/:id', userCookieRead, editProduct);
+ */ /*.get(userCookieRead, isAdmin, getSurveys)
 .delete(userCookieRead, isAdmin, deleteSurvey);
 
 router.route('/question/:uuid/:qUuid')

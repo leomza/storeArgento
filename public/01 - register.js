@@ -48,7 +48,7 @@ function changeHTML() {
 }
 function doingSubmitCreate(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, username, email, password, role, userDetails, userCreated, error_1;
+        var _a, username, email, password, role, userDetails, userCreated, uuid, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -78,8 +78,9 @@ function doingSubmitCreate(ev) {
                     return [4 /*yield*/, axios.post('/user/register', userDetails)];
                 case 1:
                     userCreated = _b.sent();
+                    uuid = userCreated.data.unpurchaseCart.uuid;
                     if (userCreated.data.user.role === 'user') {
-                        location.href = "03 - products.html?email=" + userCreated.data.user.email;
+                        location.href = "03 - products.html?cartId=" + uuid;
                     }
                     else if (userCreated.data.user.role === 'admin') {
                         swal("Thanks to register in Los Argento!", "During the day you will recieve your password by email!", "success");

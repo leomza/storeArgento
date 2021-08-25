@@ -2,7 +2,8 @@ export { };
 
 //I import the classes (with Methods) of the Models that Im going to use here
 import { User, Users } from "../models/userModel";
-import { Product, Cart } from "../models/productModel";
+import { Cart, Carts } from "../models/cartModel";
+
 
 export function registerUser(req, res) {
     try {
@@ -14,7 +15,12 @@ export function registerUser(req, res) {
         const allUsers = new Users();
         const emailExist: boolean = allUsers.createUser(user);
         if (!emailExist) {
-            res.send({ message: "A new User was added", user });
+            const products = null;
+            const unpurchaseCart = new Cart(email, products)
+            const allCarts = new Carts();
+            allCarts.addProductsToCart(unpurchaseCart);
+
+            res.send({ message: "A new User was added", user, unpurchaseCart });
         } else {
             res.send({ message: "Email already registered, please try a different email address!" });
         }
@@ -48,8 +54,16 @@ export function login(req, res) {
         const { email, password } = req.body;
         const allUsers = new Users();
         const userExists = allUsers.loginUser(email, password);
+        let unpurchaseCart = req.unpurchaseCart;
+        if (!unpurchaseCart) {
+            const products = null;
+            unpurchaseCart = new Cart(email, products);
+            const allCarts = new Carts();
+            allCarts.addProductsToCart(unpurchaseCart);
+        };
+
         if (userExists) {
-            res.send({ message: "Logged in successfully", userExists: true });
+            res.send({ message: "Logged in successfully", userExists: true, unpurchaseCart });
         } else {
             res.send({ message: "Username or password are wrong, please try again!", userExists: false });
         }

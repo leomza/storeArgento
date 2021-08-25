@@ -34,6 +34,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+//Get the UUID from the cart in the URL
+var url_string = window.location.href;
+var url = new URL(url_string);
+var cartId = url.searchParams.get("cartId");
+//This variable will determinate the rol of the User in the client side
 var rolUser;
 //Function to render the data of the user
 try {
@@ -167,16 +172,35 @@ function renderProducts() {
 //Function to add products into the cart
 function addToCart(productId) {
     return __awaiter(this, void 0, void 0, function () {
-        var itemQuantity, quantity, itemToCart;
+        var itemQuantity, quantity, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    _a.trys.push([0, 2, , 3]);
                     itemQuantity = document.querySelector("#item" + productId);
                     quantity = itemQuantity.value;
-                    return [4 /*yield*/, axios.post("/products/addCart/", { quantity: quantity, productId: productId })];
+                    return [4 /*yield*/, axios.post("/cart/addCart/", { quantity: quantity, productId: productId, cartId: cartId })];
                 case 1:
-                    itemToCart = _a.sent();
-                    return [2 /*return*/];
+                    _a.sent();
+                    swal({
+                        title: "Product added to your cart!",
+                        text: "Do you want to continue buying or see your cart!",
+                        icon: "success",
+                        buttons: true,
+                        dangerMode: false
+                    }).then(function (goToCart) {
+                        if (goToCart) {
+                            swal("Redirect to the cart HERE", {
+                                icon: "success"
+                            });
+                        }
+                    });
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_2 = _a.sent();
+                    console.error(error_2);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });
@@ -190,3 +214,4 @@ function detailsProduct(productId) {
         console.error(error);
     }
 }
+;

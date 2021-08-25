@@ -1,3 +1,9 @@
+//Get the UUID from the cart in the URL
+const url_string = window.location.href;
+const url = new URL(url_string);
+const cartId = url.searchParams.get("cartId");
+
+//This variable will determinate the rol of the User in the client side
 let rolUser;
 
 //Function to render the data of the user
@@ -124,9 +130,26 @@ async function renderProducts(): Promise<void> {
 
 //Function to add products into the cart
 async function addToCart(productId) {
-    const itemQuantity = document.querySelector(`#item${productId}`)
-    const quantity = itemQuantity.value;
-    const itemToCart = await axios.post(`/products/addCart/`, { quantity, productId });
+    try {
+        const itemQuantity = document.querySelector(`#item${productId}`)
+        const quantity = itemQuantity.value;
+        await axios.post(`/cart/addCart/`, { quantity, productId, cartId });
+        swal({
+            title: "Product added to your cart!",
+            text: "Do you want to continue buying or see your cart!",
+            icon: "success",
+            buttons: true,
+            dangerMode: false,
+        }).then((goToCart) => {
+            if (goToCart) {
+                swal("Redirect to the cart HERE", {
+                    icon: "success",
+                });
+            }
+        });
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 //Function when you click on a Product you will redirect to other page to see all the information of it
@@ -136,4 +159,5 @@ function detailsProduct(productId) {
     } catch (error) {
         console.error(error);
     }
-}
+};
+

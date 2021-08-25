@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
-exports.addToCart = exports.editProduct = exports.productDetail = exports.removeProduct = exports.getAllProducts = exports.newProduct = void 0;
+exports.editProduct = exports.productDetail = exports.removeProduct = exports.getAllProducts = exports.newProduct = void 0;
+//I import the classes (with Methods) of the Models that Im going to use here
 var productModel_1 = require("../models/productModel");
 //Function to create a new Product
 function newProduct(req, res) {
@@ -80,11 +81,3 @@ function editProduct(req, res) {
     }
 }
 exports.editProduct = editProduct;
-function addToCart() {
-    try {
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
-exports.addToCart = addToCart;

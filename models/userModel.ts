@@ -25,7 +25,6 @@ export class User {
     password: string;
     role: Role;
     purchasedCarts: Array<string>;
-    unpurchasedCarts: Array<string>;
     createdDate: any;
 
     constructor(username: string, email: string, password: string, role: Role) {
@@ -33,7 +32,6 @@ export class User {
         this.email = email;
         this.password = password;
         this.purchasedCarts = [];
-        this.unpurchasedCarts = [];
         this.role = role;
         this.createdDate = Date.now();
     }
