@@ -9,14 +9,23 @@ export function addCart(req, res) {
         //Get the information from the body
         const { quantity, productId, cartId } = req.body;
 
-        //Initialice a new instance of the product that is going to purchase
-        const productToPurchase = new PurchaseProduct(productId, quantity, req.price);
-
         //Initialice a new instance of the carts
         const allCarts = new Carts()
 
         //Look for the cart of the user
         const userCart = allCarts.searchUserCart(cartId);
+
+        //Search if the product already exist in the cart, if not create a new one
+        const productExist = allCarts.searchProductInCart(productId);
+        let productToPurchase;
+        console.log(productExist);
+        if (productExist) {
+            console.log("existe!");
+        } else {
+            //Initialice a new instance of the product that is going to purchase
+            productToPurchase = new PurchaseProduct(productId, quantity, req.price);
+        }
+
         userCart.products.push(productToPurchase);
         allCarts.updateCartsJson();
 

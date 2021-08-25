@@ -105,11 +105,8 @@ function deleteProduct(id) {
 
 async function deleteItem(id) {
     try {
-        const productDelete = await axios.delete(`/products/deleteProduct/${id}`);
-        swal(productDelete.data.message, {
-            icon: "success",
-        });
-        location.href = `./03- products.html`;
+        await axios.delete(`/products/deleteProduct/${id}`);
+        location.href = `./03 - products.html`;
         renderProducts();
     } catch (error) {
         console.error(error);

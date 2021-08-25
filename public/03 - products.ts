@@ -92,7 +92,7 @@ async function renderProducts(): Promise<void> {
             html = products.map(element => {
                 return (
                     `<div class="product__item__wrapper">
-                    <img onclick="redirectDetailsProduct('${element.uuid}')" class="product__item__image" src = "${element.picture}" alt = "">
+                    <img onclick="redirectDetailsProduct('${element.uuid}')" class="product__item__image image--clickeable" src = "${element.picture}" alt = "">
                     <div class="product__item__information__wrapper">
                     <div><b>${element.name.toUpperCase()} </b></div>
                     </div>

@@ -5,7 +5,9 @@ var buttonCreate = document.getElementById("buttonCreate");
 // Get the <span> element that closes the modal
 var closeUpload = document.getElementById("closeModal");
 // When the user clicks the button, open the modal
-buttonCreate.addEventListener('click', openModal);
+if (buttonCreate) {
+    buttonCreate.addEventListener('click', openModal);
+}
 function openModal() {
     try {
         modalUpload.style.display = "block";

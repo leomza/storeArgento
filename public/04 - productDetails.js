@@ -144,18 +144,15 @@ function deleteProduct(id) {
 }
 function deleteItem(id) {
     return __awaiter(this, void 0, void 0, function () {
-        var productDelete, error_2;
+        var error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     return [4 /*yield*/, axios["delete"]("/products/deleteProduct/" + id)];
                 case 1:
-                    productDelete = _a.sent();
-                    swal(productDelete.data.message, {
-                        icon: "success"
-                    });
-                    location.href = "./03- products.html";
+                    _a.sent();
+                    location.href = "./03 - products.html";
                     renderProducts();
                     return [3 /*break*/, 3];
                 case 2:

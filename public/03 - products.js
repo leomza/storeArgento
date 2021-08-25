@@ -149,7 +149,7 @@ function renderProducts() {
                     products = productsCreated.data.allProducts.products;
                     if (rolUser === 'admin') {
                         html = products.map(function (element) {
-                            return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"redirectDetailsProduct('" + element.uuid + "')\" class=\"product__item__image\" src = \"" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    <div>Stock: <b>" + element.stock + " </b></div>\n                    </div>\n                    </div>");
+                            return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"redirectDetailsProduct('" + element.uuid + "')\" class=\"product__item__image image--clickeable\" src = \"" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    <div>Stock: <b>" + element.stock + " </b></div>\n                    </div>\n                    </div>");
                         }).join('');
                     }
                     else {

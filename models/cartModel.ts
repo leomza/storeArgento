@@ -98,9 +98,15 @@ export class Carts {
         } catch (error) {
             console.error(error);
         }
+    }
 
-        /* this.products = this.products.filter(product => product.uuid !== id);
-        this.updateProductsJson(); */
-
+    searchProductInCart(productId){
+        try {
+            let userCart = this.searchUserCart(cartId);
+            const productExist = userCart.products.filter(product => product.productId !== productId);
+            return productExist;
+        } catch (error) {
+            console.error(error);
+        }
     }
 }

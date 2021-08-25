@@ -87,8 +87,16 @@ var Carts = /** @class */ (function () {
         catch (error) {
             console.error(error);
         }
-        /* this.products = this.products.filter(product => product.uuid !== id);
-        this.updateProductsJson(); */
+    };
+    Carts.prototype.searchProductInCart = function (productId) {
+        try {
+            var userCart = this.searchUserCart(cartId);
+            var productExist = userCart.products.filter(function (product) { return product.productId !== productId; });
+            return productExist;
+        }
+        catch (error) {
+            console.error(error);
+        }
     };
     return Carts;
 }());

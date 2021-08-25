@@ -8,7 +8,9 @@ const buttonCreate = document.getElementById("buttonCreate");
 const closeUpload = document.getElementById("closeModal");
 
 // When the user clicks the button, open the modal
+if (buttonCreate){
 buttonCreate.addEventListener('click', openModal);
+}
 
 function openModal() {
     try {
