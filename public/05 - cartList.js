@@ -79,7 +79,7 @@ catch (error) {
 //I render the cart of the user
 function renderCart() {
     return __awaiter(this, void 0, Promise, function () {
-        var table, renderInfo, html, error_1;
+        var table, renderInfo, totalAmount, html, finalAmount, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -90,10 +90,15 @@ function renderCart() {
                     return [4 /*yield*/, getInformationToRender()];
                 case 1:
                     renderInfo = _a.sent();
-                    html = renderInfo.map(function (element) {
+                    totalAmount = renderInfo.totalAmount;
+                    html = renderInfo.products.map(function (element) {
                         return ("<tr>\n            <td><img class=\"table__image\" src=\"" + element.picture + "\" alt=\"\"></td>\n            <td>" + element.name + "</td> \n            <td>" + element.description + "</td>\n            <td>" + element.quantity + "</td>  \n            <td>$" + element.price + "</td> \n            <td>$" + element.totalPrice + "</td> \n            <td>\n            <i class=\"fas fa-trash table__remove\" onclick='removeFromCart(\"" + element.productId + "\" )' title=\"Remove\"></i>\n            </td>\n            </tr>");
                     }).join('');
                     table.innerHTML = html;
+                    finalAmount = document.querySelector('#finalAmount');
+                    if (!finalAmount)
+                        throw new Error('There is a problem finding the total amount from the HTML');
+                    finalAmount.innerHTML = "TOTAL AMOUNT: $" + totalAmount;
                     return [3 /*break*/, 3];
                 case 2:
                     error_1 = _a.sent();
@@ -129,7 +134,7 @@ function getInformationToRender() {
                         _loop_1(index);
                     }
                     ;
-                    return [2 /*return*/, userCart.products];
+                    return [2 /*return*/, userCart];
             }
         });
     });

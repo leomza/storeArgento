@@ -16,13 +16,16 @@ function addCart(req, res) {
         var productExist = allCarts.searchProductInCart(productId, userCart);
         var productToPurchase = void 0;
         if (productExist) {
+            //Have to parse because they are Strings
             productExist.quantity = parseInt(productExist.quantity) + parseInt(quantity);
+            productExist.totalPrice = productExist.quantity * productExist.price;
         }
         else {
             //Initialice a new instance of the product that is going to purchase
             productToPurchase = new cartModel_1.PurchaseProduct(productId, quantity, req.price);
             userCart.products.push(productToPurchase);
         }
+        allCarts.updateTotalAmount(userCart);
         allCarts.updateCartsJson();
         res.send({ message: "A new product was added to the cart", userCart: userCart });
     }
@@ -50,6 +53,9 @@ function deleteProduct(req, res) {
         var _a = req.params, productId = _a.productId, cartId = _a.cartId;
         var allCarts = new cartModel_1.Carts();
         var productDelete = allCarts.removeProductsFromUserCart(productId, cartId);
+        var userCart = allCarts.searchUserCart(cartId);
+        allCarts.updateTotalAmount(userCart);
+        allCarts.updateCartsJson();
         res.send({ message: "Poof! Your product has been deleted!", productDelete: productDelete });
     }
     catch (error) {

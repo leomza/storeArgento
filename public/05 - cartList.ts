@@ -39,7 +39,9 @@ async function renderCart(): Promise<void> {
 
         const renderInfo = await getInformationToRender();
 
-        let html: string = renderInfo.map(element => {
+        const {totalAmount} = renderInfo;
+
+        let html: string = renderInfo.products.map(element => {
             return (
                 `<tr>
             <td><img class="table__image" src="${element.picture}" alt=""></td>
@@ -55,6 +57,12 @@ async function renderCart(): Promise<void> {
             );
         }).join('');
         table.innerHTML = html;
+
+        const finalAmount: HTMLElement = document.querySelector('#finalAmount');
+        if (!finalAmount) throw new Error('There is a problem finding the total amount from the HTML');
+        
+        finalAmount.innerHTML = `TOTAL AMOUNT: $${totalAmount}`;
+
     } catch (error) {
         console.error(error);
     }
@@ -78,7 +86,7 @@ async function getInformationToRender() {
             }
         });
     };
-    return userCart.products;
+    return userCart;
 }
 
 //Function to remove a product from the cart

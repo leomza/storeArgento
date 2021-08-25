@@ -34,7 +34,7 @@ export class Cart {
     uuid: string;
     userEmail: string;
     products: Array<PurchaseProduct>;
-    totalAmount: number; //Will set this when the user finish the purchase
+    totalAmount: number;
     createdDate: any;
     purchasedDate: any;
 
@@ -42,7 +42,7 @@ export class Cart {
         this.uuid = uuidv4();
         this.userEmail = userEmail;
         this.products = (products === null) ? [] : products; //when the user push add here
-        this.totalAmount = null;
+        this.totalAmount = 0;
         this.createdDate = Date.now();
         this.purchasedDate = null;
     }
@@ -94,18 +94,24 @@ export class Carts {
         try {
             let userCart = this.searchUserCart(cartId);
             userCart.products = userCart.products.filter(product => product.productId !== productId);
-            this.updateCartsJson();
         } catch (error) {
             console.error(error);
         }
     }
 
-    searchProductInCart(productId, userCart){
+    searchProductInCart(productId, userCart) {
         try {
             const productExist = userCart.products.find(product => product.productId === productId);
             return productExist;
         } catch (error) {
             console.error(error);
         }
+    }
+
+    updateTotalAmount(userCart) {
+        userCart.totalAmount = 0;
+        userCart.products.forEach(product => {
+            userCart.totalAmount = userCart.totalAmount + product.totalPrice;
+        });
     }
 }

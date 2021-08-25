@@ -1,15 +1,1 @@
-[{
-    "username": "pepe",
-    "email": "pepe@pepe.com",
-    "password": "123",
-    "purchasedCarts": [],
-    "role": "user",
-    "createdDate": 1629800596186
-}, {
-    "username": "leonardo",
-    "email": "leo.mixdecompras@gmail.com",
-    "password": "123",
-    "purchasedCarts": [],
-    "role": "admin",
-    "createdDate": 1629800639701
-}]
+[{"username":"pepe","email":"pepe@pepe.com","password":"123","purchasedCarts":[],"role":"user","createdDate":1629800596186},{"username":"leonardo","email":"leo.mixdecompras@gmail.com","password":"123","purchasedCarts":[],"role":"admin","createdDate":1629800639701},{"username":"Tomas","email":"tomashoffer96@gmail.com","password":"TomasSs12@","purchasedCarts":[],"role":"admin","createdDate":1629913985791}]

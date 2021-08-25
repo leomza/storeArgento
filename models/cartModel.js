@@ -32,7 +32,7 @@ var Cart = /** @class */ (function () {
         this.uuid = uuidv4();
         this.userEmail = userEmail;
         this.products = (products === null) ? [] : products; //when the user push add here
-        this.totalAmount = null;
+        this.totalAmount = 0;
         this.createdDate = Date.now();
         this.purchasedDate = null;
     }
@@ -82,7 +82,6 @@ var Carts = /** @class */ (function () {
         try {
             var userCart = this.searchUserCart(cartId);
             userCart.products = userCart.products.filter(function (product) { return product.productId !== productId; });
-            this.updateCartsJson();
         }
         catch (error) {
             console.error(error);
@@ -96,6 +95,12 @@ var Carts = /** @class */ (function () {
         catch (error) {
             console.error(error);
         }
+    };
+    Carts.prototype.updateTotalAmount = function (userCart) {
+        userCart.totalAmount = 0;
+        userCart.products.forEach(function (product) {
+            userCart.totalAmount = userCart.totalAmount + product.totalPrice;
+        });
     };
     return Carts;
 }());
