@@ -1,8 +1,9 @@
 "use strict";
 exports.__esModule = true;
-exports.deleteProduct = exports.infoCart = exports.addCart = void 0;
+exports.finalPurchase = exports.deleteProduct = exports.infoCart = exports.addCart = void 0;
 //I import the classes (with Methods) of the Models that Im going to use here
 var cartModel_1 = require("../models/cartModel");
+var userModel_1 = require("../models/userModel");
 //Function to create a new Cart
 function addCart(req, res) {
     try {
@@ -64,3 +65,18 @@ function deleteProduct(req, res) {
     }
 }
 exports.deleteProduct = deleteProduct;
+function finalPurchase(req, res) {
+    var userEmail = req.email;
+    var cartId = req.body.cartId;
+    //Set the date of the purchase in the cart
+    var allCarts = new cartModel_1.Carts();
+    var userCart = allCarts.searchUserCart(cartId);
+    allCarts.setPurchaseDate(userCart);
+    allCarts.updateCartsJson();
+    //Set the id of the cart in the user
+    var allUsers = new userModel_1.Users();
+    var userInfo = allUsers.findUser(userEmail);
+    allUsers.addPurchasedCart(userInfo, cartId);
+    allUsers.updateUsersJson();
+}
+exports.finalPurchase = finalPurchase;

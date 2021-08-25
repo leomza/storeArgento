@@ -39,7 +39,7 @@ async function renderCart(): Promise<void> {
 
         const renderInfo = await getInformationToRender();
 
-        const {totalAmount} = renderInfo;
+        const { totalAmount } = renderInfo;
 
         let html: string = renderInfo.products.map(element => {
             return (
@@ -60,7 +60,7 @@ async function renderCart(): Promise<void> {
 
         const finalAmount: HTMLElement = document.querySelector('#finalAmount');
         if (!finalAmount) throw new Error('There is a problem finding the total amount from the HTML');
-        
+
         finalAmount.innerHTML = `TOTAL AMOUNT: $${totalAmount}`;
 
     } catch (error) {
@@ -118,6 +118,31 @@ async function deleteItem(productId) {
             icon: "success",
         });
         renderCart();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+const buttonPurchase = document.querySelector('#purchase');
+buttonPurchase.addEventListener('click', doPurchase);
+
+async function doPurchase() {
+    swal({
+        title: "Last question!",
+        text: "Do you want to continue buying or purchase your items?",
+        icon: "info",
+        buttons: ["Continue buying", "Prepare my products!"],
+    }).then((goToCart) => {
+        if (goToCart) {
+            purchase();
+            window.location.href = `./index.html`;
+        }
+    });
+}
+
+async function purchase() {
+    try {
+        await axios.post(`/cart/purchase`, { cartId });
     } catch (error) {
         console.error(error);
     }

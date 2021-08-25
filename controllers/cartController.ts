@@ -2,6 +2,8 @@ export { };
 
 //I import the classes (with Methods) of the Models that Im going to use here
 import { PurchaseProduct, Carts } from "../models/cartModel";
+import { Users } from "../models/userModel";
+
 
 //Function to create a new Cart
 export function addCart(req, res) {
@@ -63,4 +65,22 @@ export function deleteProduct(req, res) {
         console.error(error);
         res.status(500).send(error.message);
     }
+}
+
+export function finalPurchase(req, res) {
+    const userEmail = req.email;
+    const { cartId } = req.body;
+    
+    //Set the date of the purchase in the cart
+    const allCarts = new Carts();
+    const userCart = allCarts.searchUserCart(cartId);
+    allCarts.setPurchaseDate(userCart);
+    allCarts.updateCartsJson();
+
+    //Set the id of the cart in the user
+    const allUsers = new Users();
+    const userInfo = allUsers.findUser(userEmail);
+    allUsers.addPurchasedCart(userInfo, cartId);
+    allUsers.updateUsersJson();
+
 }

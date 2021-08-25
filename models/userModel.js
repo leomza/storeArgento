@@ -90,6 +90,14 @@ var Users = /** @class */ (function () {
             console.error(error);
         }
     };
+    Users.prototype.addPurchasedCart = function (userInfo, cartId) {
+        try {
+            userInfo.purchasedCarts.push(cartId);
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
     return Users;
 }());
 exports.Users = Users;

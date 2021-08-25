@@ -114,4 +114,8 @@ export class Carts {
             userCart.totalAmount = userCart.totalAmount + product.totalPrice;
         });
     }
+
+    setPurchaseDate(userCart) {
+        userCart.purchasedDate = Date.now();
+    }
 }

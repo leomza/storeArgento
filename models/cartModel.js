@@ -102,6 +102,9 @@ var Carts = /** @class */ (function () {
             userCart.totalAmount = userCart.totalAmount + product.totalPrice;
         });
     };
+    Carts.prototype.setPurchaseDate = function (userCart) {
+        userCart.purchasedDate = Date.now();
+    };
     return Carts;
 }());
 exports.Carts = Carts;

@@ -95,4 +95,12 @@ export class Users {
             console.error(error);
         }
     }
+
+    addPurchasedCart(userInfo, cartId){
+        try {
+            userInfo.purchasedCarts.push(cartId);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }
