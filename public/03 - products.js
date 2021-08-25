@@ -70,11 +70,12 @@ catch (error) {
 //Function to manage the rol according the rol
 function manageDOMAccordingRol() {
     var buttonCreateProduct = document.getElementById('buttonCreate');
+    var buttonProceedCart = document.getElementById('proceedCart');
     if (rolUser === 'admin') {
         buttonCreateProduct.style.display = 'flex';
     }
     else {
-        buttonCreateProduct.style.display = 'none';
+        buttonProceedCart.style.display = 'flex';
     }
 }
 //Function to add a new product
@@ -145,15 +146,15 @@ function renderProducts() {
                 case 1:
                     productsCreated = _a.sent();
                     html = '';
-                    products = productsCreated.data.allSurveys.products;
+                    products = productsCreated.data.allProducts.products;
                     if (rolUser === 'admin') {
                         html = products.map(function (element) {
-                            return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"detailsProduct('" + element.uuid + "')\" class=\"product__item__image\" src = \"" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    <div>Stock: <b>" + element.stock + " </b></div>\n                    </div>\n                    </div>");
+                            return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"redirectDetailsProduct('" + element.uuid + "')\" class=\"product__item__image\" src = \"" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    <div>Stock: <b>" + element.stock + " </b></div>\n                    </div>\n                    </div>");
                         }).join('');
                     }
                     else {
                         html = products.map(function (element) {
-                            return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"detailsProduct('" + element.uuid + "')\" class=\"product__item__image\" src = \"" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <button class=\"product__item__cart\" onclick=\"addToCart('" + element.uuid + "')\">Add to cart</button>\n                    <input id=\"item" + element.uuid + "\" class=\"product__item__quantity\" type=\"number\" name=\"quantity\" value=\"1\">\n                    </div>\n                    </div>");
+                            return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"redirectDetailsProduct('" + element.uuid + "')\" class=\"product__item__image image--clickeable\" src = \"" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <button class=\"product__item__cart\" onclick=\"addToCart('" + element.uuid + "')\">Add to cart</button>\n                    <input id=\"item" + element.uuid + "\" class=\"product__item__quantity\" type=\"number\" name=\"quantity\" value=\"1\">\n                    </div>\n                    </div>");
                         }).join('');
                     }
                     if (!html)
@@ -206,9 +207,31 @@ function addToCart(productId) {
     });
 }
 //Function when you click on a Product you will redirect to other page to see all the information of it
-function detailsProduct(productId) {
+function redirectDetailsProduct(productId) {
     try {
-        window.location.href = "./04 - productDetails.html?uuid=" + productId;
+        if (rolUser === 'admin') {
+            window.location.href = "./04 - productDetails.html?uuid=" + productId;
+        }
+        else {
+            window.location.href = "./04 - productDetails.html?uuid=" + productId + "&cartId=" + cartId;
+        }
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+;
+try {
+    var buttonCheckout = document.getElementById('proceedCart');
+    buttonCheckout.addEventListener('click', redirectCheckout);
+}
+catch (error) {
+    console.error(error);
+}
+//Function when you click redirect to other page to see the cart and checkout
+function redirectCheckout() {
+    try {
+        window.location.href = "./05 - cartList.html?cartId=" + cartId;
     }
     catch (error) {
         console.error(error);

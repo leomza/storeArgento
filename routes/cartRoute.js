@@ -9,6 +9,7 @@ var sendDataProduct_1 = require("../middleware/sendDataProduct");
 var cartController_1 = require("../controllers/cartController");
 //When the user click to start a new survey I call this method
 router.post('/addCart', userCookie_1.userCookieRead, sendDataProduct_1.sendDataProduct, cartController_1.addCart);
+router.get('/infoCart/:cartId', userCookie_1.userCookieRead, cartController_1.infoCart);
 /* router.post('/addCart', userCookieRead, addToCart);
 router.get('/allProducts', getAllProducts);
 router.delete('/deleteProduct/:id', userCookieRead, removeProduct);

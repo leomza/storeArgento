@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.addCart = void 0;
+exports.infoCart = exports.addCart = void 0;
 //I import the classes (with Methods) of the Models that Im going to use here
 var cartModel_1 = require("../models/cartModel");
 //Function to create a new Cart
@@ -24,3 +24,16 @@ function addCart(req, res) {
     }
 }
 exports.addCart = addCart;
+function infoCart(req, res) {
+    try {
+        var cartId = req.params.cartId;
+        var allCarts = new cartModel_1.Carts();
+        var userCart = allCarts.searchUserCart(cartId);
+        res.send({ message: "Get the information of the cart correctly", userCart: userCart });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
+}
+exports.infoCart = infoCart;

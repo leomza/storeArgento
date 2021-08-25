@@ -220,11 +220,6 @@ body {
       height: 150px;
       margin-top: 10px;
       border-radius: 20px;
-
-      &:hover{
-        cursor: pointer;
-        filter: brightness(150%);
-      }
     }
 
     &__options {
@@ -354,6 +349,129 @@ body {
   }
 }
 
-#buttonCreate {
+#buttonCreate,
+#proceedCart {
   display: none;
+}
+
+.image--clickeable {
+  &:hover {
+    cursor: pointer;
+    filter: brightness(150%);
+  }
+}
+
+//////////////////////////TABLE////////////////////////
+table {
+  width: fit-content;
+  margin: auto;
+  color: white;
+  margin-top: 40px;
+
+  th,
+  td {
+      padding: 12px;
+      text-align: center;
+  }
+
+  tr:nth-child(odd) {
+      background-color: white;
+      color: black;
+  }
+
+  tr:nth-child(even) {
+      background-color: darkslategray
+  }
+
+  th {
+      background-color: darkgrey;
+      color: white;
+
+      &:hover {
+          color: black;
+      }
+  }
+
+}
+
+.table__image {
+  width: 80px;
+}
+
+@media screen and (max-width: 600px) {
+  .top-menu {
+      display: flex;
+      padding: 0;
+
+      img {
+          width: 150px;
+      }
+  }
+
+  .top-submenu {
+      padding: 0;
+      display: block;
+      text-align: center;
+      margin-bottom: 15px;
+
+      &-button {
+          font-size: 12px;
+          padding: 10px;
+          width: 200px;
+          margin-bottom: 10px;
+      }
+
+      &-filter__status {
+          margin-top: 10px;
+      }
+  }
+
+  .form {
+      width: 100%;
+
+      &__search {
+          margin: 10px;
+      }
+
+      &__input--submit {
+          width: 125px;
+      }
+  }
+
+  .modal {
+      padding-top: 0;
+  }
+
+  #tblData__titles {
+      display: none;
+  }
+
+  table {
+      width: 100%;
+  }
+
+  thead {
+      display: none;
+  }
+
+  tr:nth-of-type(2n) {
+      background-color: inherit;
+  }
+
+  tr td:first-child {
+      background: peru;
+      font-weight: bold;
+      font-size: 1.3em;
+  }
+
+  tbody td {
+      display: block;
+      text-align: center;
+  }
+
+  tbody td:before {
+      content: attr(data-th);
+      display: block;
+      text-align: center;
+  }
 }

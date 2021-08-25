@@ -19,26 +19,27 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
-<body onload="renderUserDetails(); renderProduct()">
+<body onload="renderUserDetails(); renderCart()">
     <nav class="top-menu">
-        <h1 class="top-menu__title">PRODUCT DETAILS</h1>
+        <h1 class="top-menu__title">CHECKOUT</h1>
         <div id="nameUser"></div>
         <a class="top-menu__button" onclick="redirectBack()">Go back</a>
     </nav>
 
-    <!-- Modal to edit a product -->
-    <div id="modalProduct" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span id="closeModal" class="close">&times;</span>
-            <div class="form" id="formEdit">
-            </div>
-        </div>
-    </div>
+    <table id="tblData">
+        <tr id="tblData__titles">
+            <th id="tblData__titles--picture">Picture</th>
+            <th id="tblData__titles--name">Name</th>
+            <th id="tblData__titles--description">Description</th>
+            <th id="tblData__titles--quantity">Quantity</th>
+            <th id="tblData__titles--price">Price</th>
+            <th id="tblData__titles--total">Total</th>
+            <th><i class="fas fa-wrench"></i></th>
+        </tr>
+        <tbody class="table"></tbody>
+    </table>
 
-    <div id="root"></div>
-
-    <script src="04 - productDetails.js"></script>
+    <script src="05 - cartList.js"></script>
     <script src="helperModal.js"></script>
 </body>
 

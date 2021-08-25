@@ -199,10 +199,6 @@ body {
   margin-top: 10px;
   border-radius: 20px;
 }
-.product__item__image:hover {
-  cursor: pointer;
-  filter: brightness(150%);
-}
 .product__item__options {
   width: 100%;
   display: flex;
@@ -316,6 +312,115 @@ body {
   text-align: center;
 }
 
-#buttonCreate {
+#buttonCreate,
+#proceedCart {
   display: none;
+}
+
+.image--clickeable:hover {
+  cursor: pointer;
+  filter: brightness(150%);
+}
+
+table {
+  width: fit-content;
+  margin: auto;
+  color: white;
+  margin-top: 40px;
+}
+table th,
+table td {
+  padding: 12px;
+  text-align: center;
+}
+table tr:nth-child(odd) {
+  background-color: white;
+  color: black;
+}
+table tr:nth-child(even) {
+  background-color: darkslategray;
+}
+table th {
+  background-color: darkgrey;
+  color: white;
+}
+table th:hover {
+  color: black;
+}
+
+.table__image {
+  width: 80px;
+}
+
+@media screen and (max-width: 600px) {
+  .top-menu {
+    display: flex;
+    padding: 0;
+  }
+  .top-menu img {
+    width: 150px;
+  }
+
+  .top-submenu {
+    padding: 0;
+    display: block;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .top-submenu-button {
+    font-size: 12px;
+    padding: 10px;
+    width: 200px;
+    margin-bottom: 10px;
+  }
+  .top-submenu-filter__status {
+    margin-top: 10px;
+  }
+
+  .form {
+    width: 100%;
+  }
+  .form__search {
+    margin: 10px;
+  }
+  .form__input--submit {
+    width: 125px;
+  }
+
+  .modal {
+    padding-top: 0;
+  }
+
+  #tblData__titles {
+    display: none;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr:nth-of-type(2n) {
+    background-color: inherit;
+  }
+
+  tr td:first-child {
+    background: peru;
+    font-weight: bold;
+    font-size: 1.3em;
+  }
+
+  tbody td {
+    display: block;
+    text-align: center;
+  }
+
+  tbody td:before {
+    content: attr(data-th);
+    display: block;
+    text-align: center;
+  }
 }

@@ -24,8 +24,8 @@ exports.newProduct = newProduct;
 // //Function to get all the created products
 function getAllProducts(req, res) {
     try {
-        var allSurveys = new productModel_1.Products();
-        res.send({ allSurveys: allSurveys });
+        var allProducts = new productModel_1.Products();
+        res.send({ allProducts: allProducts });
     }
     catch (error) {
         console.error(error);

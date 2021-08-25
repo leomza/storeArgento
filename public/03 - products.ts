@@ -26,10 +26,11 @@ try {
 //Function to manage the rol according the rol
 function manageDOMAccordingRol() {
     const buttonCreateProduct = document.getElementById('buttonCreate');
+    const buttonProceedCart = document.getElementById('proceedCart');
     if (rolUser === 'admin') {
         buttonCreateProduct.style.display = 'flex';
     } else {
-        buttonCreateProduct.style.display = 'none';
+        buttonProceedCart.style.display = 'flex';
     }
 }
 
@@ -85,13 +86,13 @@ async function renderProducts(): Promise<void> {
         const root: HTMLElement = document.querySelector('#root');
         const productsCreated = await axios.get(`/products/allProducts`);
         let html: any = '';
-        const { products } = productsCreated.data.allSurveys;
+        const { products } = productsCreated.data.allProducts;
 
         if (rolUser === 'admin') {
             html = products.map(element => {
                 return (
                     `<div class="product__item__wrapper">
-                    <img onclick="detailsProduct('${element.uuid}')" class="product__item__image" src = "${element.picture}" alt = "">
+                    <img onclick="redirectDetailsProduct('${element.uuid}')" class="product__item__image" src = "${element.picture}" alt = "">
                     <div class="product__item__information__wrapper">
                     <div><b>${element.name.toUpperCase()} </b></div>
                     </div>
@@ -106,7 +107,7 @@ async function renderProducts(): Promise<void> {
             html = products.map(element => {
                 return (
                     `<div class="product__item__wrapper">
-                    <img onclick="detailsProduct('${element.uuid}')" class="product__item__image" src = "${element.picture}" alt = "">
+                    <img onclick="redirectDetailsProduct('${element.uuid}')" class="product__item__image image--clickeable" src = "${element.picture}" alt = "">
                     <div class="product__item__information__wrapper">
                     <div><b>${element.name.toUpperCase()} </b></div>
                     </div>
@@ -153,11 +154,32 @@ async function addToCart(productId) {
 }
 
 //Function when you click on a Product you will redirect to other page to see all the information of it
-function detailsProduct(productId) {
+function redirectDetailsProduct(productId) {
     try {
-        window.location.href = `./04 - productDetails.html?uuid=${productId}`;
+        if (rolUser === 'admin') {
+            window.location.href = `./04 - productDetails.html?uuid=${productId}`;
+        } else {
+            window.location.href = `./04 - productDetails.html?uuid=${productId}&cartId=${cartId}`;
+        }
     } catch (error) {
         console.error(error);
     }
 };
 
+
+try {
+    const buttonCheckout = document.getElementById('proceedCart');
+    buttonCheckout.addEventListener('click', redirectCheckout);
+
+} catch (error) {
+    console.error(error);
+}
+
+//Function when you click redirect to other page to see the cart and checkout
+function redirectCheckout() {
+    try {
+        window.location.href = `./05 - cartList.html?cartId=${cartId}`;
+    } catch (error) {
+        console.error(error);
+    }
+};

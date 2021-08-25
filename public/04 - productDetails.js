@@ -38,20 +38,35 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var url_string = window.location.href;
 var url = new URL(url_string);
 var uuidProduct = url.searchParams.get("uuid");
+var cartId = url.searchParams.get("cartId");
+//This variable will determinate the rol of the User in the client side
+var rolUser;
+//Function to redirect back to the other page
+function redirectBack() {
+    try {
+        window.location.href = "./03 - products.html?cartId=" + cartId;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+;
 //Function to render the data of the user
 try {
     var root_1 = document.querySelector('#nameUser');
     function renderUserDetails() {
         return __awaiter(this, void 0, void 0, function () {
-            var userDetails, username, toRender;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var userDetails, _a, username, role, toRender;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0: return [4 /*yield*/, axios.get('/user/info')];
                     case 1:
-                        userDetails = _a.sent();
-                        username = userDetails.data.userInfo.username;
+                        userDetails = _b.sent();
+                        _a = userDetails.data.userInfo, username = _a.username, role = _a.role;
                         toRender = "<h1>Wish more <span class=\"nameUser__title\">" + username + "s</span></h1>";
                         root_1.innerHTML = toRender;
+                        //With this I will set the role of the user that is logged in (I will use this to manage the DOM in the client side, also in the server side I will do validation through cookies with role)
+                        rolUser = role;
                         return [2 /*return*/];
                 }
             });
@@ -79,7 +94,8 @@ function renderProduct() {
                         productInfo.picture = 'img/logoLosArgento.png';
                     }
                     root.innerHTML =
-                        "<div class=\"product__item__wrapper\">\n                <img class=\"product__item__image\" src = \"" + productInfo.picture + "\" alt = \"\">\n                <div class=\"product__item__information__wrapper description\">\n                <div><b>" + productInfo.name.toUpperCase() + " </b></div>\n                <div>" + productInfo.description + "</div>\n                </div>\n                <div class=\"product__item__information\">\n                <div><b>$" + productInfo.price + " </b></div>\n                <div>Stock: <b>" + productInfo.stock + " </b></div>\n                </div>\n                <div class=\"product__item__options\">\n                <i class=\"fas fa-trash-alt button--pointer\" onclick=\"deleteProduct('" + productInfo.uuid + "')\"></i>\n                <i class=\"fas fa-edit button--pointer\" onclick=\"editProduct('" + productInfo.uuid + "', '" + productInfo.name + "', '" + productInfo.description + "', '" + productInfo.picture + "', '" + productInfo.price + "', '" + productInfo.stock + "')\"></i>\n                </div>\n                </div>";
+                        "<div class=\"product__item__wrapper\">\n                <img class=\"product__item__image\" src = \"" + productInfo.picture + "\" alt = \"\">\n                <div class=\"product__item__information__wrapper description\">\n                <div><b>" + productInfo.name.toUpperCase() + " </b></div>\n                <div>" + productInfo.description + "</div>\n                </div>\n                <div class=\"product__item__information\">\n                <div><b>$" + productInfo.price + " </b></div>\n                <div id=\"stockProduct\">Stock: <b>" + productInfo.stock + " </b></div>\n                </div>\n                <div class=\"product__item__options\" id=\"editArea\">\n                <i class=\"fas fa-trash-alt button--pointer\" onclick=\"deleteProduct('" + productInfo.uuid + "')\"></i>\n                <i class=\"fas fa-edit button--pointer\" onclick=\"editProduct('" + productInfo.uuid + "', '" + productInfo.name + "', '" + productInfo.description + "', '" + productInfo.picture + "', '" + productInfo.price + "', '" + productInfo.stock + "')\"></i>\n                </div>\n                </div>";
+                    manageDOMAccordingRol();
                     return [3 /*break*/, 3];
                 case 2:
                     error_1 = _a.sent();
@@ -89,6 +105,19 @@ function renderProduct() {
             }
         });
     });
+}
+//Function to manage the rol according the rol
+function manageDOMAccordingRol() {
+    var editArea = document.getElementById('editArea');
+    var stockProduct = document.getElementById('stockProduct');
+    if (rolUser === 'admin') {
+        editArea.style.display = 'flex';
+        stockProduct.style.display = 'flex';
+    }
+    else {
+        editArea.style.display = 'none';
+        stockProduct.style.display = 'none';
+    }
 }
 //Delete a product
 function deleteProduct(id) {

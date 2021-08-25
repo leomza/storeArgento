@@ -26,3 +26,15 @@ export function addCart(req, res) {
         res.status(500).send(error.message);
     }
 }
+
+export function infoCart(req, res) {
+    try {
+        const { cartId } = req.params;
+        const allCarts = new Carts();
+        const userCart = allCarts.searchUserCart(cartId)
+        res.send({ message: "Get the information of the cart correctly", userCart });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
+}

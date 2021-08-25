@@ -23,8 +23,8 @@ export function newProduct(req, res) {
 // //Function to get all the created products
 export function getAllProducts(req, res) {
     try {
-        const allSurveys = new Products();
-        res.send({ allSurveys });
+        const allProducts = new Products();
+        res.send({ allProducts });
     } catch (error) {
         console.error(error);
         res.status(500).send(error.message);
