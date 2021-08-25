@@ -100,10 +100,9 @@ export class Carts {
         }
     }
 
-    searchProductInCart(productId){
+    searchProductInCart(productId, userCart){
         try {
-            let userCart = this.searchUserCart(cartId);
-            const productExist = userCart.products.filter(product => product.productId !== productId);
+            const productExist = userCart.products.find(product => product.productId === productId);
             return productExist;
         } catch (error) {
             console.error(error);

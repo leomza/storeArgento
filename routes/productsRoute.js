@@ -12,15 +12,4 @@ router.get('/allProducts', productController_1.getAllProducts);
 router["delete"]('/deleteProduct/:id', userCookie_1.userCookieRead, productController_1.removeProduct);
 router.get('/productDetail/:id', productController_1.productDetail);
 router.put('/updateProduct/:id', userCookie_1.userCookieRead, productController_1.editProduct);
-/*.get(userCookieRead, isAdmin, getSurveys)
-.delete(userCookieRead, isAdmin, deleteSurvey);
-
-router.route('/question/:uuid/:qUuid')
-.post(userCookieRead, isAdmin, addQuestion)
-.put(userCookieRead, isAdmin, editQuestion)
-.delete(userCookieRead, isAdmin, deleteQuestion);
-
-router.route('/questions/:uuid')
-.get(getQuestionsSurvey)
-.put(updateQuestionsSurvey); */
 module.exports = router;

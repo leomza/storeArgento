@@ -88,10 +88,9 @@ var Carts = /** @class */ (function () {
             console.error(error);
         }
     };
-    Carts.prototype.searchProductInCart = function (productId) {
+    Carts.prototype.searchProductInCart = function (productId, userCart) {
         try {
-            var userCart = this.searchUserCart(cartId);
-            var productExist = userCart.products.filter(function (product) { return product.productId !== productId; });
+            var productExist = userCart.products.find(function (product) { return product.productId === productId; });
             return productExist;
         }
         catch (error) {

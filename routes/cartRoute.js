@@ -11,20 +11,4 @@ var cartController_1 = require("../controllers/cartController");
 router.post('/addCart', userCookie_1.userCookieRead, sendDataProduct_1.sendDataProduct, cartController_1.addCart);
 router.get('/infoCart/:cartId', userCookie_1.userCookieRead, cartController_1.infoCart);
 router["delete"]('/deleteProduct/:productId/:cartId', userCookie_1.userCookieRead, cartController_1.deleteProduct);
-/* router.post('/addCart', userCookieRead, addToCart);
-router.get('/allProducts', getAllProducts);
-router.delete('/deleteProduct/:id', userCookieRead, removeProduct);
-router.get('/productDetail/:id', productDetail);
-router.put('/updateProduct/:id', userCookieRead, editProduct);
- */ /*.get(userCookieRead, isAdmin, getSurveys)
-.delete(userCookieRead, isAdmin, deleteSurvey);
-
-router.route('/question/:uuid/:qUuid')
-.post(userCookieRead, isAdmin, addQuestion)
-.put(userCookieRead, isAdmin, editQuestion)
-.delete(userCookieRead, isAdmin, deleteQuestion);
-
-router.route('/questions/:uuid')
-.get(getQuestionsSurvey)
-.put(updateQuestionsSurvey); */
 module.exports = router;

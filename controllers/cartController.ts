@@ -1,7 +1,7 @@
 export { };
 
 //I import the classes (with Methods) of the Models that Im going to use here
-import { PurchaseProduct, Cart, Carts } from "../models/cartModel";
+import { PurchaseProduct, Carts } from "../models/cartModel";
 
 //Function to create a new Cart
 export function addCart(req, res) {
@@ -16,17 +16,17 @@ export function addCart(req, res) {
         const userCart = allCarts.searchUserCart(cartId);
 
         //Search if the product already exist in the cart, if not create a new one
-        const productExist = allCarts.searchProductInCart(productId);
+        const productExist = allCarts.searchProductInCart(productId, userCart);
         let productToPurchase;
-        console.log(productExist);
+
         if (productExist) {
-            console.log("existe!");
+            productExist.quantity = parseInt(productExist.quantity) + parseInt(quantity);
         } else {
             //Initialice a new instance of the product that is going to purchase
             productToPurchase = new PurchaseProduct(productId, quantity, req.price);
+            userCart.products.push(productToPurchase);
         }
 
-        userCart.products.push(productToPurchase);
         allCarts.updateCartsJson();
 
         res.send({ message: "A new product was added to the cart", userCart });

@@ -271,6 +271,12 @@ body {
   color: white;
 }
 
+.purchase {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
 .modal {
   display: none;
   position: fixed;

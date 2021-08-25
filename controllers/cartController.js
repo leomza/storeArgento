@@ -13,17 +13,16 @@ function addCart(req, res) {
         //Look for the cart of the user
         var userCart = allCarts.searchUserCart(cartId);
         //Search if the product already exist in the cart, if not create a new one
-        var productExist = allCarts.searchProductInCart(productId);
+        var productExist = allCarts.searchProductInCart(productId, userCart);
         var productToPurchase = void 0;
-        console.log(productExist);
         if (productExist) {
-            console.log("existe!");
+            productExist.quantity = parseInt(productExist.quantity) + parseInt(quantity);
         }
         else {
             //Initialice a new instance of the product that is going to purchase
             productToPurchase = new cartModel_1.PurchaseProduct(productId, quantity, req.price);
+            userCart.products.push(productToPurchase);
         }
-        userCart.products.push(productToPurchase);
         allCarts.updateCartsJson();
         res.send({ message: "A new product was added to the cart", userCart: userCart });
     }

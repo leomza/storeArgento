@@ -15,11 +15,4 @@ router.get('/username/:email', findUser);
 router.get('/info', userCookieRead, findUser);
 router.post('/login', userCookieWrite, checkUnpurachaseCart, login);
 
-/*router.get('/info', userCookieRead, sendCookie);
-//When the user click to finish the new survey I call this method
-router.post('/uploadUserWithSurvey/:uuid', userCookieRead, isAdmin, uploadSurvey);
-router.post('/answerLoginBefore', userCookieWrite, sendCookie);
-router.post('/answerLoginAfter/:uuid', userCookieRead, answerLogin);
-router.delete('/deleteSurvey/:uuid', userCookieRead, deleteSurveyUser); */
-
 module.exports = router;

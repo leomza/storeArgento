@@ -6,7 +6,6 @@ const router = express.Router();
 import { userCookieRead, userCookieWrite } from '../middleware/userCookie';
 import { sendDataProduct } from '../middleware/sendDataProduct';
 
-
 //I import the function of the Controlers that Im going to use here
 import { addCart, infoCart, deleteProduct } from '../controllers/cartController'
 
@@ -14,24 +13,5 @@ import { addCart, infoCart, deleteProduct } from '../controllers/cartController'
 router.post('/addCart', userCookieRead, sendDataProduct, addCart);
 router.get('/infoCart/:cartId', userCookieRead, infoCart);
 router.delete('/deleteProduct/:productId/:cartId', userCookieRead, deleteProduct);
-
-
-
-/* router.post('/addCart', userCookieRead, addToCart);
-router.get('/allProducts', getAllProducts);
-router.delete('/deleteProduct/:id', userCookieRead, removeProduct);
-router.get('/productDetail/:id', productDetail);
-router.put('/updateProduct/:id', userCookieRead, editProduct);
- *//*.get(userCookieRead, isAdmin, getSurveys)
-.delete(userCookieRead, isAdmin, deleteSurvey);
-
-router.route('/question/:uuid/:qUuid')
-.post(userCookieRead, isAdmin, addQuestion)
-.put(userCookieRead, isAdmin, editQuestion)
-.delete(userCookieRead, isAdmin, deleteQuestion);
-
-router.route('/questions/:uuid')
-.get(getQuestionsSurvey)
-.put(updateQuestionsSurvey); */
 
 module.exports = router;
