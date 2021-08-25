@@ -121,31 +121,26 @@ function manageDOMAccordingRol() {
 }
 //Delete a product
 function deleteProduct(id) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            try {
-                swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this product!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true
-                })
-                    .then(function (willDelete) {
-                    if (willDelete) {
-                        deleteItem(id);
-                    }
-                    else {
-                        swal("Your product is safe!");
-                    }
-                });
+    try {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this product!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        })
+            .then(function (willDelete) {
+            if (willDelete) {
+                deleteItem(id);
             }
-            catch (error) {
-                console.error(error);
+            else {
+                swal("Your product is safe!");
             }
-            return [2 /*return*/];
         });
-    });
+    }
+    catch (error) {
+        console.error(error);
+    }
 }
 function deleteItem(id) {
     return __awaiter(this, void 0, void 0, function () {

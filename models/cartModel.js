@@ -78,6 +78,18 @@ var Carts = /** @class */ (function () {
             console.error(error);
         }
     };
+    Carts.prototype.removeProductsFromUserCart = function (productId, cartId) {
+        try {
+            var userCart = this.searchUserCart(cartId);
+            userCart.products = userCart.products.filter(function (product) { return product.productId !== productId; });
+            this.updateCartsJson();
+        }
+        catch (error) {
+            console.error(error);
+        }
+        /* this.products = this.products.filter(product => product.uuid !== id);
+        this.updateProductsJson(); */
+    };
     return Carts;
 }());
 exports.Carts = Carts;

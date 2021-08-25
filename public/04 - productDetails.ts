@@ -82,7 +82,7 @@ function manageDOMAccordingRol() {
 }
 
 //Delete a product
-async function deleteProduct(id) {
+function deleteProduct(id) {
     try {
         swal({
             title: "Are you sure?",

@@ -38,3 +38,15 @@ export function infoCart(req, res) {
         res.status(500).send(error.message);
     }
 }
+
+export function deleteProduct(req, res) {
+    try {
+        const { productId, cartId } = req.params;
+        const allCarts = new Carts();
+        const productDelete = allCarts.removeProductsFromUserCart(productId, cartId);
+        res.send({ message: "Poof! Your product has been deleted!", productDelete });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
+}

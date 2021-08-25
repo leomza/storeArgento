@@ -137,15 +137,12 @@ async function addToCart(productId) {
         await axios.post(`/cart/addCart/`, { quantity, productId, cartId });
         swal({
             title: "Product added to your cart!",
-            text: "Do you want to continue buying or see your cart!",
+            text: "Do you want to continue buying or going to your cart?",
             icon: "success",
-            buttons: true,
-            dangerMode: false,
+            buttons: ["Continue buying", "Proceed to cart"],
         }).then((goToCart) => {
             if (goToCart) {
-                swal("Redirect to the cart HERE", {
-                    icon: "success",
-                });
+                window.location.href = `./05 - cartList.html?cartId=${cartId}`;
             }
         });
     } catch (error) {

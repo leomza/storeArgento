@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.infoCart = exports.addCart = void 0;
+exports.deleteProduct = exports.infoCart = exports.addCart = void 0;
 //I import the classes (with Methods) of the Models that Im going to use here
 var cartModel_1 = require("../models/cartModel");
 //Function to create a new Cart
@@ -37,3 +37,16 @@ function infoCart(req, res) {
     }
 }
 exports.infoCart = infoCart;
+function deleteProduct(req, res) {
+    try {
+        var _a = req.params, productId = _a.productId, cartId = _a.cartId;
+        var allCarts = new cartModel_1.Carts();
+        var productDelete = allCarts.removeProductsFromUserCart(productId, cartId);
+        res.send({ message: "Poof! Your product has been deleted!", productDelete: productDelete });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
+}
+exports.deleteProduct = deleteProduct;

@@ -8,11 +8,13 @@ import { sendDataProduct } from '../middleware/sendDataProduct';
 
 
 //I import the function of the Controlers that Im going to use here
-import { addCart, infoCart } from '../controllers/cartController'
+import { addCart, infoCart, deleteProduct } from '../controllers/cartController'
 
 //When the user click to start a new survey I call this method
 router.post('/addCart', userCookieRead, sendDataProduct, addCart);
-router.get('/infoCart/:cartId', userCookieRead, infoCart)
+router.get('/infoCart/:cartId', userCookieRead, infoCart);
+router.delete('/deleteProduct/:productId/:cartId', userCookieRead, deleteProduct);
+
 
 
 /* router.post('/addCart', userCookieRead, addToCart);

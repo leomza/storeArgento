@@ -185,15 +185,12 @@ function addToCart(productId) {
                     _a.sent();
                     swal({
                         title: "Product added to your cart!",
-                        text: "Do you want to continue buying or see your cart!",
+                        text: "Do you want to continue buying or going to your cart?",
                         icon: "success",
-                        buttons: true,
-                        dangerMode: false
+                        buttons: ["Continue buying", "Proceed to cart"]
                     }).then(function (goToCart) {
                         if (goToCart) {
-                            swal("Redirect to the cart HERE", {
-                                icon: "success"
-                            });
+                            window.location.href = "./05 - cartList.html?cartId=" + cartId;
                         }
                     });
                     return [3 /*break*/, 3];

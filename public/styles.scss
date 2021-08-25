@@ -370,108 +370,117 @@ table {
 
   th,
   td {
-      padding: 12px;
-      text-align: center;
+    padding: 12px;
+    text-align: center;
   }
 
   tr:nth-child(odd) {
-      background-color: white;
-      color: black;
+    background-color: white;
+    color: black;
   }
 
   tr:nth-child(even) {
-      background-color: darkslategray
+    background-color: darkslategray;
   }
 
   th {
-      background-color: darkgrey;
-      color: white;
+    background-color: darkgrey;
+    color: white;
 
-      &:hover {
-          color: black;
-      }
+    &:hover {
+      color: black;
+    }
   }
-
 }
 
-.table__image {
-  width: 80px;
+.table {
+  &__image {
+    width: 80px;
+  }
+
+  &__remove {
+    cursor: pointer;
+
+    &:hover {
+      color: #4caf50;
+    }
+  }
 }
 
 @media screen and (max-width: 600px) {
   .top-menu {
-      display: flex;
-      padding: 0;
+    display: flex;
+    padding: 0;
 
-      img {
-          width: 150px;
-      }
+    img {
+      width: 150px;
+    }
   }
 
   .top-submenu {
-      padding: 0;
-      display: block;
-      text-align: center;
-      margin-bottom: 15px;
+    padding: 0;
+    display: block;
+    text-align: center;
+    margin-bottom: 15px;
 
-      &-button {
-          font-size: 12px;
-          padding: 10px;
-          width: 200px;
-          margin-bottom: 10px;
-      }
+    &-button {
+      font-size: 12px;
+      padding: 10px;
+      width: 200px;
+      margin-bottom: 10px;
+    }
 
-      &-filter__status {
-          margin-top: 10px;
-      }
+    &-filter__status {
+      margin-top: 10px;
+    }
   }
 
   .form {
-      width: 100%;
+    width: 100%;
 
-      &__search {
-          margin: 10px;
-      }
+    &__search {
+      margin: 10px;
+    }
 
-      &__input--submit {
-          width: 125px;
-      }
+    &__input--submit {
+      width: 125px;
+    }
   }
 
   .modal {
-      padding-top: 0;
+    padding-top: 0;
   }
 
   #tblData__titles {
-      display: none;
+    display: none;
   }
 
   table {
-      width: 100%;
+    width: 100%;
   }
 
   thead {
-      display: none;
+    display: none;
   }
 
   tr:nth-of-type(2n) {
-      background-color: inherit;
+    background-color: inherit;
   }
 
   tr td:first-child {
-      background: peru;
-      font-weight: bold;
-      font-size: 1.3em;
+    background: peru;
+    font-weight: bold;
+    font-size: 1.3em;
   }
 
   tbody td {
-      display: block;
-      text-align: center;
+    display: block;
+    text-align: center;
   }
 
   tbody td:before {
-      content: attr(data-th);
-      display: block;
-      text-align: center;
+    content: attr(data-th);
+    display: block;
+    text-align: center;
   }
 }

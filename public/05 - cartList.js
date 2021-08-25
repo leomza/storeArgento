@@ -91,7 +91,7 @@ function renderCart() {
                 case 1:
                     renderInfo = _a.sent();
                     html = renderInfo.map(function (element) {
-                        return ("<tr>\n            <td><img class=\"table__image\" src=\"" + element.picture + "\" alt=\"\"></td>\n            <td>" + element.name + "</td> \n            <td>" + element.description + "</td>\n            <td>" + element.quantity + "</td>  \n            <td>$" + element.price + "</td> \n            <td>$" + element.totalPrice + "</td> \n            <td>\n            <i class=\"fas fa-edit table__edit\" onclick='edit(\"" + element.id + "\")' title=\"Edit\"></i>\n            <i class=\"fas fa-trash table__remove\" onclick='remove(\"" + element.id + "\", \"" + element.firstname + "\")' title=\"Remove\"></i>\n            </td>\n            </tr>");
+                        return ("<tr>\n            <td><img class=\"table__image\" src=\"" + element.picture + "\" alt=\"\"></td>\n            <td>" + element.name + "</td> \n            <td>" + element.description + "</td>\n            <td>" + element.quantity + "</td>  \n            <td>$" + element.price + "</td> \n            <td>$" + element.totalPrice + "</td> \n            <td>\n            <i class=\"fas fa-trash table__remove\" onclick='removeFromCart(\"" + element.productId + "\" )' title=\"Remove\"></i>\n            </td>\n            </tr>");
                     }).join('');
                     table.innerHTML = html;
                     return [3 /*break*/, 3];
@@ -130,6 +130,53 @@ function getInformationToRender() {
                     }
                     ;
                     return [2 /*return*/, userCart.products];
+            }
+        });
+    });
+}
+//Function to remove a product from the cart
+function removeFromCart(productId) {
+    try {
+        swal({
+            title: "Are you sure?",
+            text: "It would be a shame to delete this amazing product!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        })
+            .then(function (willDelete) {
+            if (willDelete) {
+                deleteItem(productId);
+            }
+            else {
+                swal("Your product is safe!");
+            }
+        });
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+function deleteItem(productId) {
+    return __awaiter(this, void 0, void 0, function () {
+        var productDelete, error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, axios["delete"]("/cart/deleteProduct/" + productId + "/" + cartId)];
+                case 1:
+                    productDelete = _a.sent();
+                    swal(productDelete.data.message, {
+                        icon: "success"
+                    });
+                    renderCart();
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_2 = _a.sent();
+                    console.error(error_2);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });

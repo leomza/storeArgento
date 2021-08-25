@@ -351,6 +351,12 @@ table th:hover {
 .table__image {
   width: 80px;
 }
+.table__remove {
+  cursor: pointer;
+}
+.table__remove:hover {
+  color: #4caf50;
+}
 
 @media screen and (max-width: 600px) {
   .top-menu {

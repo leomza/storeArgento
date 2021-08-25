@@ -49,8 +49,7 @@ async function renderCart(): Promise<void> {
             <td>$${element.price}</td> 
             <td>$${element.totalPrice}</td> 
             <td>
-            <i class="fas fa-edit table__edit" onclick='edit("${element.id}")' title="Edit"></i>
-            <i class="fas fa-trash table__remove" onclick='remove("${element.id}", "${element.firstname}")' title="Remove"></i>
+            <i class="fas fa-trash table__remove" onclick='removeFromCart("${element.productId}" )' title="Remove"></i>
             </td>
             </tr>`
             );
@@ -80,4 +79,38 @@ async function getInformationToRender() {
         });
     };
     return userCart.products;
+}
+
+//Function to remove a product from the cart
+function removeFromCart(productId) {
+    try {
+        swal({
+            title: "Are you sure?",
+            text: "It would be a shame to delete this amazing product!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    deleteItem(productId);
+                } else {
+                    swal("Your product is safe!");
+                }
+            });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function deleteItem(productId) {
+    try {
+        const productDelete = await axios.delete(`/cart/deleteProduct/${productId}/${cartId}`);
+        swal(productDelete.data.message, {
+            icon: "success",
+        });
+        renderCart();
+    } catch (error) {
+        console.error(error);
+    }
 }
