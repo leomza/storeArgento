@@ -71,6 +71,12 @@ async function renderCart(): Promise<void> {
 async function getInformationToRender() {
     //Get the information of the cart
     const cartInfo = await axios.get(`/cart/infoCart/${cartId}`);
+    let { totalAmount } = cartInfo.data.userCart
+
+    if (totalAmount === 0){
+        buttonPurchase.disabled = true
+    } 
+
     const { userCart } = cartInfo.data;
 
     //Get the information of the products

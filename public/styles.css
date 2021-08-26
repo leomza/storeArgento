@@ -216,6 +216,7 @@ body {
   display: flex;
   justify-content: space-evenly;
   width: 100%;
+  overflow-wrap: break-word;
 }
 .product__item__information__wrapper {
   display: flex;
@@ -224,6 +225,8 @@ body {
   justify-content: space-evenly;
   padding: 5px;
   font-size: 12px;
+  overflow-wrap: break-word;
+  text-align: center;
 }
 .product__item__information__description {
   text-align: center;
@@ -284,6 +287,18 @@ body {
   padding: 10px;
 }
 
+.cart__icon {
+  display: flex;
+  align-self: center;
+  margin-right: 8px;
+}
+
+#areaDescription {
+  resize: none;
+  width: 70%;
+  margin: 15px;
+}
+
 .modal {
   display: none;
   position: fixed;
@@ -326,7 +341,8 @@ body {
 }
 
 #buttonCreate,
-#proceedCart {
+#proceedCart,
+#purchasedCarts {
   display: none;
 }
 

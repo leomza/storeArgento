@@ -11,5 +11,6 @@ var cartController_1 = require("../controllers/cartController");
 router.post('/addCart', userCookie_1.userCookieRead, sendDataProduct_1.sendDataProduct, cartController_1.addCart);
 router.post('/purchase', userCookie_1.userCookieRead, cartController_1.finalPurchase);
 router.get('/infoCart/:cartId', userCookie_1.userCookieRead, cartController_1.infoCart);
+router.get('/allPurchase', userCookie_1.userCookieRead, cartController_1.allCartsPurchased);
 router["delete"]('/deleteProduct/:productId/:cartId', userCookie_1.userCookieRead, cartController_1.deleteProduct);
 module.exports = router;

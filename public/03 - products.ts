@@ -27,8 +27,11 @@ try {
 function manageDOMAccordingRol() {
     const buttonCreateProduct = document.getElementById('buttonCreate');
     const buttonProceedCart = document.getElementById('proceedCart');
+    const buttonPurchasedCarts = document.getElementById('purchasedCarts');
+
     if (rolUser === 'admin') {
         buttonCreateProduct.style.display = 'flex';
+        buttonPurchasedCarts.style.display = 'flex';
     } else {
         buttonProceedCart.style.display = 'flex';
     }
@@ -121,7 +124,7 @@ async function renderProducts(productsToShow): Promise<void> {
                     </div>
                     <div class="product__item__information">
                     <button class="product__item__cart" onclick="addToCart('${element.uuid}')">Add to cart</button>
-                    <input id="item${element.uuid}" class="product__item__quantity" type="number" name="quantity" value="1">
+                    <input id="item${element.uuid}" class="product__item__quantity" type="number" name="quantity" value="1" min="1">
                     </div>
                     </div>`
                 )
@@ -133,7 +136,19 @@ async function renderProducts(productsToShow): Promise<void> {
             root.innerHTML = 'Product not found';
             root.classList.add('error__message')
         };
+        showNumberProducts();
 
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+//Add in the DOM the number of products that the user is buying
+async function showNumberProducts() {
+    try {
+        const numberProducts = document.getElementById('productsNumber');
+        const userCart = await axios.get(`/cart/infoCart/${cartId}`);
+        numberProducts.innerHTML = userCart.data.userCart.products.length;
     } catch (error) {
         console.error(error);
     }
@@ -144,7 +159,11 @@ async function addToCart(productId) {
     try {
         const itemQuantity = document.querySelector(`#item${productId}`)
         const quantity = itemQuantity.value;
-        await axios.post(`/cart/addCart/`, { quantity, productId, cartId });
+        const userCart = await axios.post(`/cart/addCart/`, { quantity, productId, cartId });
+
+        //Add in the DOM the number of products that the user is buying (I have this when I render the products, buy if I change something and not render I will net to change the number in the DOM as well)
+        const numberProducts = document.getElementById('productsNumber');
+        numberProducts.innerHTML = userCart.data.userCart.products.length;
         swal({
             title: "Product added to your cart!",
             text: "Do you want to continue buying or going to your cart?",
@@ -173,16 +192,9 @@ function redirectDetailsProduct(productId) {
     }
 };
 
-
-try {
-    const buttonCheckout = document.getElementById('proceedCart');
-    buttonCheckout.addEventListener('click', redirectCheckout);
-
-} catch (error) {
-    console.error(error);
-}
-
 //Function when you click redirect to other page to see the cart and checkout
+const buttonCheckout = document.getElementById('proceedCart');
+buttonCheckout.addEventListener('click', redirectCheckout);
 function redirectCheckout() {
     try {
         window.location.href = `./05 - cartList.html?cartId=${cartId}`;

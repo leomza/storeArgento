@@ -118,4 +118,13 @@ export class Carts {
     setPurchaseDate(userCart) {
         userCart.purchasedDate = Date.now();
     }
+
+    searchPurchasedCarts() {
+        try {
+            const purchaseCarts = this.carts.filter(cart => cart.purchasedDate !== null);
+            return purchaseCarts;
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }

@@ -111,12 +111,16 @@ function renderCart() {
 }
 function getInformationToRender() {
     return __awaiter(this, void 0, void 0, function () {
-        var cartInfo, userCart, productInfo, _loop_1, index;
+        var cartInfo, totalAmount, userCart, productInfo, _loop_1, index;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, axios.get("/cart/infoCart/" + cartId)];
                 case 1:
                     cartInfo = _a.sent();
+                    totalAmount = cartInfo.data.userCart.totalAmount;
+                    if (totalAmount === 0) {
+                        buttonPurchase.disabled = true;
+                    }
                     userCart = cartInfo.data.userCart;
                     return [4 /*yield*/, axios.get("/products/allProducts/")];
                 case 2:

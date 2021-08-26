@@ -70,7 +70,7 @@ export function deleteProduct(req, res) {
 export function finalPurchase(req, res) {
     const userEmail = req.email;
     const { cartId } = req.body;
-    
+
     //Set the date of the purchase in the cart
     const allCarts = new Carts();
     const userCart = allCarts.searchUserCart(cartId);
@@ -82,5 +82,15 @@ export function finalPurchase(req, res) {
     const userInfo = allUsers.findUser(userEmail);
     allUsers.addPurchasedCart(userInfo, cartId);
     allUsers.updateUsersJson();
+}
 
+export function allCartsPurchased(req, res) {
+    try {
+        const allCarts = new Carts();
+        const purchasedCarts = allCarts.searchPurchasedCarts();
+        res.send({ message: "Get the information of the purchased carts correctly", purchasedCarts });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
 }

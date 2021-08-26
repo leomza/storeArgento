@@ -105,6 +105,15 @@ var Carts = /** @class */ (function () {
     Carts.prototype.setPurchaseDate = function (userCart) {
         userCart.purchasedDate = Date.now();
     };
+    Carts.prototype.searchPurchasedCarts = function () {
+        try {
+            var purchaseCarts = this.carts.filter(function (cart) { return cart.purchasedDate !== null; });
+            return purchaseCarts;
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
     return Carts;
 }());
 exports.Carts = Carts;

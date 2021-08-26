@@ -71,8 +71,10 @@ catch (error) {
 function manageDOMAccordingRol() {
     var buttonCreateProduct = document.getElementById('buttonCreate');
     var buttonProceedCart = document.getElementById('proceedCart');
+    var buttonPurchasedCarts = document.getElementById('purchasedCarts');
     if (rolUser === 'admin') {
         buttonCreateProduct.style.display = 'flex';
+        buttonPurchasedCarts.style.display = 'flex';
     }
     else {
         buttonProceedCart.style.display = 'flex';
@@ -159,7 +161,7 @@ function renderProducts(productsToShow) {
                     }
                     else {
                         html = productsToShow.map(function (element) {
-                            return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"redirectDetailsProduct('" + element.uuid + "')\" class=\"product__item__image image--clickeable\" src = \"" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <button class=\"product__item__cart\" onclick=\"addToCart('" + element.uuid + "')\">Add to cart</button>\n                    <input id=\"item" + element.uuid + "\" class=\"product__item__quantity\" type=\"number\" name=\"quantity\" value=\"1\">\n                    </div>\n                    </div>");
+                            return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"redirectDetailsProduct('" + element.uuid + "')\" class=\"product__item__image image--clickeable\" src = \"" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <button class=\"product__item__cart\" onclick=\"addToCart('" + element.uuid + "')\">Add to cart</button>\n                    <input id=\"item" + element.uuid + "\" class=\"product__item__quantity\" type=\"number\" name=\"quantity\" value=\"1\" min=\"1\">\n                    </div>\n                    </div>");
                         }).join('');
                     }
                     root.innerHTML = html;
@@ -168,6 +170,7 @@ function renderProducts(productsToShow) {
                         root.classList.add('error__message');
                     }
                     ;
+                    showNumberProducts();
                     return [3 /*break*/, 4];
                 case 3:
                     error_1 = _a.sent();
@@ -178,10 +181,33 @@ function renderProducts(productsToShow) {
         });
     });
 }
+//Add in the DOM the number of products that the user is buying
+function showNumberProducts() {
+    return __awaiter(this, void 0, void 0, function () {
+        var numberProducts, userCart, error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    numberProducts = document.getElementById('productsNumber');
+                    return [4 /*yield*/, axios.get("/cart/infoCart/" + cartId)];
+                case 1:
+                    userCart = _a.sent();
+                    numberProducts.innerHTML = userCart.data.userCart.products.length;
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_2 = _a.sent();
+                    console.error(error_2);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
 //Function to add products into the cart
 function addToCart(productId) {
     return __awaiter(this, void 0, void 0, function () {
-        var itemQuantity, quantity, error_2;
+        var itemQuantity, quantity, userCart, numberProducts, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -190,7 +216,9 @@ function addToCart(productId) {
                     quantity = itemQuantity.value;
                     return [4 /*yield*/, axios.post("/cart/addCart/", { quantity: quantity, productId: productId, cartId: cartId })];
                 case 1:
-                    _a.sent();
+                    userCart = _a.sent();
+                    numberProducts = document.getElementById('productsNumber');
+                    numberProducts.innerHTML = userCart.data.userCart.products.length;
                     swal({
                         title: "Product added to your cart!",
                         text: "Do you want to continue buying or going to your cart?",
@@ -203,8 +231,8 @@ function addToCart(productId) {
                     });
                     return [3 /*break*/, 3];
                 case 2:
-                    error_2 = _a.sent();
-                    console.error(error_2);
+                    error_3 = _a.sent();
+                    console.error(error_3);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
@@ -226,14 +254,9 @@ function redirectDetailsProduct(productId) {
     }
 }
 ;
-try {
-    var buttonCheckout = document.getElementById('proceedCart');
-    buttonCheckout.addEventListener('click', redirectCheckout);
-}
-catch (error) {
-    console.error(error);
-}
 //Function when you click redirect to other page to see the cart and checkout
+var buttonCheckout = document.getElementById('proceedCart');
+buttonCheckout.addEventListener('click', redirectCheckout);
 function redirectCheckout() {
     try {
         window.location.href = "./05 - cartList.html?cartId=" + cartId;
@@ -246,7 +269,7 @@ function redirectCheckout() {
 //Function to do a filter in the search input
 function handleSearch() {
     return __awaiter(this, void 0, void 0, function () {
-        var searchProduct, regEx, searching_1, productsCreated, productsFiltered, error_3;
+        var searchProduct, regEx, searching_1, productsCreated, productsFiltered, error_4;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -261,8 +284,8 @@ function handleSearch() {
                     renderProducts(productsFiltered);
                     return [3 /*break*/, 3];
                 case 2:
-                    error_3 = _a.sent();
-                    console.error(error_3);
+                    error_4 = _a.sent();
+                    console.error(error_4);
                     return [3 /*break*/, 3];
                 case 3:
                     ;

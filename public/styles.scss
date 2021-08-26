@@ -241,6 +241,7 @@ body {
       display: flex;
       justify-content: space-evenly;
       width: 100%;
+      overflow-wrap: break-word;
 
       &__wrapper {
         display: flex;
@@ -249,6 +250,8 @@ body {
         justify-content: space-evenly;
         padding: 5px;
         font-size: 12px;
+        overflow-wrap: break-word;
+        text-align: center;
       }
 
       &__description {
@@ -317,6 +320,20 @@ body {
   padding: 10px;
 }
 
+.cart {
+  &__icon {
+    display: flex;
+    align-self: center;
+    margin-right: 8px;
+  }
+}
+
+#areaDescription {
+  resize: none;
+  width: 70%;
+  margin: 15px;
+}
+
 //////////////////////////MODAL////////////////////////
 .modal {
   display: none;
@@ -363,7 +380,8 @@ body {
 }
 
 #buttonCreate,
-#proceedCart {
+#proceedCart,
+#purchasedCarts {
   display: none;
 }
 

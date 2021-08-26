@@ -23,8 +23,12 @@
     <nav class="top-menu">
         <h1 class="top-menu__title">PRODUCTS</h1>
         <div id="nameUser"></div>
-        <button class="top-menu__button" id="proceedCart"><i class="fas fa-shopping-cart"></i></button>
+        <button class="top-menu__button cart" id="proceedCart">
+            <i class="fas fa-shopping-cart cart__icon"></i>
+            <span id="productsNumber">0</span>
+        </button>
         <button class="top-menu__button" id="buttonCreate">Add a new product</button>
+        <a class="top-menu__button" id="purchasedCarts" href="/06 - purchasedCarts.html">Purchased carts</a>
         <a class="top-menu__button" href="/index.html">Log out</a>
     </nav>
 
@@ -43,7 +47,7 @@
                 <h3>Create a new product</h3>
 
                 <div class="form__wrapper">
-                    <input type="text" name="product" placeholder="Product name" required>
+                    <input type="text" name="product" placeholder="Product name" maxlength="35" required>
                 </div>
 
                 <div class="form__wrapper--image">
@@ -52,15 +56,15 @@
                 </div>
 
                 <div class="form__wrapper">
-                    <input type="text" name="description" placeholder="Product description" required>
+                    <textarea id="areaDescription" name="description" cols="42" rows="3" placeholder="Product description" maxlength="100" required></textarea>
                 </div>
 
                 <div class="form__wrapper">
-                    <input type="number" name="price" placeholder="Product price" required>
+                    <input type="number" name="price" placeholder="Product price" min="1" required>
                 </div>
 
                 <div class="form__wrapper">
-                    <input type="number" name="stock" placeholder="Product stock" required>
+                    <input type="number" name="stock" placeholder="Product stock" min="1" required>
                 </div>
 
                 <input class="form__submit--newuser" type="submit" value="Add product">

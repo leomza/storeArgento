@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Argento</title>
+    <link rel="shortcut icon" href="./img/faviconTienda.png" />
+    <link rel="stylesheet" href="styles.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body onload="renderUserDetails(); renderUsersCart()">
+    <nav class="top-menu">
+        <h1 class="top-menu__title">USERS PURCHASE</h1>
+        <div id="nameUser"></div>
+        <a class="top-menu__button" href="/03 - products.html">Go back</a>
+    </nav>
+
+    <table id="tblData">
+        <tr id="tblData__titles">
+            <th id="tblData__titles--date">Purchase Date</th>
+            <th id="tblData__titles--email">Email</th>
+            <th id="tblData__titles--date">Start Cart</th>
+            <th id="tblData__titles--items">Items</th>
+            <th id="tblData__titles--total">Total Amount</th>
+        </tr>
+        <tbody class="table"></tbody>
+    </table>
+
+    <script src="06 - purchasedCarts.js"></script>
+</body>
+
+</html>
