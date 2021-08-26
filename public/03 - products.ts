@@ -136,7 +136,10 @@ async function renderProducts(productsToShow): Promise<void> {
             root.innerHTML = 'Product not found';
             root.classList.add('error__message')
         };
-        showNumberProducts();
+        
+        if (rolUser === 'user') {
+            showNumberProducts();
+        }
 
     } catch (error) {
         console.error(error);

@@ -170,7 +170,9 @@ function renderProducts(productsToShow) {
                         root.classList.add('error__message');
                     }
                     ;
-                    showNumberProducts();
+                    if (rolUser === 'user') {
+                        showNumberProducts();
+                    }
                     return [3 /*break*/, 4];
                 case 3:
                     error_1 = _a.sent();
