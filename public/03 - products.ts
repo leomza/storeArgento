@@ -178,6 +178,7 @@ async function addToCart(productId) {
             }
         });
     } catch (error) {
+        swal("Ohhh no!", `${error.response.data}`, "warning");
         console.error(error);
     }
 }
