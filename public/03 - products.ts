@@ -56,7 +56,7 @@ try {
         modalUpload.style.display = "none";
         swal("Good job!", productInfo.data.message, "success");
         document.querySelector('#previewImage').setAttribute('src', 'img/logoLosArgento.png');
-        renderProducts();
+        renderProducts(null);
     };
 
 } catch (error) {
@@ -81,15 +81,20 @@ function readURL(input): void {
 }
 
 //I render all the products
-async function renderProducts(): Promise<void> {
+async function renderProducts(productsToShow): Promise<void> {
     try {
         const root: HTMLElement = document.querySelector('#root');
-        const productsCreated = await axios.get(`/products/allProducts`);
+        root.classList.remove('error__message')
         let html: any = '';
-        const { products } = productsCreated.data.allProducts;
+
+        if (!productsToShow) {
+            const productsInfo = await axios.get(`/products/allProducts`);
+            const { products } = productsInfo.data.allProducts;
+            productsToShow = products;
+        }
 
         if (rolUser === 'admin') {
-            html = products.map(element => {
+            html = productsToShow.map(element => {
                 return (
                     `<div class="product__item__wrapper">
                     <img onclick="redirectDetailsProduct('${element.uuid}')" class="product__item__image image--clickeable" src = "${element.picture}" alt = "">
@@ -104,7 +109,7 @@ async function renderProducts(): Promise<void> {
                 )
             }).join('');
         } else {
-            html = products.map(element => {
+            html = productsToShow.map(element => {
                 return (
                     `<div class="product__item__wrapper">
                     <img onclick="redirectDetailsProduct('${element.uuid}')" class="product__item__image image--clickeable" src = "${element.picture}" alt = "">
@@ -122,8 +127,13 @@ async function renderProducts(): Promise<void> {
                 )
             }).join('');
         }
-        if (!html) throw new Error('An error happens when you want to render the products!')
         root.innerHTML = html;
+
+        if (!html) {
+            root.innerHTML = 'Product not found';
+            root.classList.add('error__message')
+        };
+
     } catch (error) {
         console.error(error);
     }
@@ -179,4 +189,18 @@ function redirectCheckout() {
     } catch (error) {
         console.error(error);
     }
+};
+
+//Function to do a filter in the search input
+async function handleSearch() {
+    try {
+        const searchProduct: any = document.querySelector('#search');
+        const regEx: string = searchProduct.value;
+        const searching: RegExp = new RegExp(regEx, 'i');
+        const productsCreated = await axios.get(`/products/allProducts`);
+        const productsFiltered = productsCreated.data.allProducts.products.filter(product => searching.test(product.name));
+        renderProducts(productsFiltered);
+    } catch (error) {
+        console.error(error);
+    };
 };

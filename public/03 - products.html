@@ -19,14 +19,20 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
-<body onload="renderUserDetails(); renderProducts()">
+<body onload="renderUserDetails(); renderProducts(null)">
     <nav class="top-menu">
         <h1 class="top-menu__title">PRODUCTS</h1>
         <div id="nameUser"></div>
-        <a class="top-menu__button" href="/index.html">Log out</a>
-        <button class="top-menu__button" id="proceedCart">Proceed to cart</button>
+        <button class="top-menu__button" id="proceedCart"><i class="fas fa-shopping-cart"></i></button>
         <button class="top-menu__button" id="buttonCreate">Add a new product</button>
+        <a class="top-menu__button" href="/index.html">Log out</a>
     </nav>
+
+    <section class="section">
+        <form onkeyup="handleSearch()">
+            <input class="form__search" type="text" name="search" id="search" placeholder="Search by product name" />
+        </form>
+    </section>
 
     <!-- Modal to create a new product -->
     <div id="modalProduct" class="modal">

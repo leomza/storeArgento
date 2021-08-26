@@ -105,7 +105,7 @@ try {
                         modalUpload.style.display = "none";
                         swal("Good job!", productInfo.data.message, "success");
                         document.querySelector('#previewImage').setAttribute('src', 'img/logoLosArgento.png');
-                        renderProducts();
+                        renderProducts(null);
                         return [2 /*return*/];
                 }
             });
@@ -134,38 +134,46 @@ function readURL(input) {
     }
 }
 //I render all the products
-function renderProducts() {
+function renderProducts(productsToShow) {
     return __awaiter(this, void 0, Promise, function () {
-        var root, productsCreated, html, products, error_1;
+        var root, html, productsInfo, products, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
+                    _a.trys.push([0, 3, , 4]);
                     root = document.querySelector('#root');
+                    root.classList.remove('error__message');
+                    html = '';
+                    if (!!productsToShow) return [3 /*break*/, 2];
                     return [4 /*yield*/, axios.get("/products/allProducts")];
                 case 1:
-                    productsCreated = _a.sent();
-                    html = '';
-                    products = productsCreated.data.allProducts.products;
+                    productsInfo = _a.sent();
+                    products = productsInfo.data.allProducts.products;
+                    productsToShow = products;
+                    _a.label = 2;
+                case 2:
                     if (rolUser === 'admin') {
-                        html = products.map(function (element) {
+                        html = productsToShow.map(function (element) {
                             return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"redirectDetailsProduct('" + element.uuid + "')\" class=\"product__item__image image--clickeable\" src = \"" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    <div>Stock: <b>" + element.stock + " </b></div>\n                    </div>\n                    </div>");
                         }).join('');
                     }
                     else {
-                        html = products.map(function (element) {
+                        html = productsToShow.map(function (element) {
                             return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"redirectDetailsProduct('" + element.uuid + "')\" class=\"product__item__image image--clickeable\" src = \"" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <button class=\"product__item__cart\" onclick=\"addToCart('" + element.uuid + "')\">Add to cart</button>\n                    <input id=\"item" + element.uuid + "\" class=\"product__item__quantity\" type=\"number\" name=\"quantity\" value=\"1\">\n                    </div>\n                    </div>");
                         }).join('');
                     }
-                    if (!html)
-                        throw new Error('An error happens when you want to render the products!');
                     root.innerHTML = html;
-                    return [3 /*break*/, 3];
-                case 2:
+                    if (!html) {
+                        root.innerHTML = 'Product not found';
+                        root.classList.add('error__message');
+                    }
+                    ;
+                    return [3 /*break*/, 4];
+                case 3:
                     error_1 = _a.sent();
                     console.error(error_1);
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });
@@ -233,5 +241,34 @@ function redirectCheckout() {
     catch (error) {
         console.error(error);
     }
+}
+;
+//Function to do a filter in the search input
+function handleSearch() {
+    return __awaiter(this, void 0, void 0, function () {
+        var searchProduct, regEx, searching_1, productsCreated, productsFiltered, error_3;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    searchProduct = document.querySelector('#search');
+                    regEx = searchProduct.value;
+                    searching_1 = new RegExp(regEx, 'i');
+                    return [4 /*yield*/, axios.get("/products/allProducts")];
+                case 1:
+                    productsCreated = _a.sent();
+                    productsFiltered = productsCreated.data.allProducts.products.filter(function (product) { return searching_1.test(product.name); });
+                    renderProducts(productsFiltered);
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_3 = _a.sent();
+                    console.error(error_3);
+                    return [3 /*break*/, 3];
+                case 3:
+                    ;
+                    return [2 /*return*/];
+            }
+        });
+    });
 }
 ;
