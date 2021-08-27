@@ -142,11 +142,11 @@ function editProduct(id, name, description, picture, price, stock) {
                 </div>
 
                 <div class="form__wrapper">
-                    <input type="number" name="price" value="${price}" placeholder="Product price" required>
+                    <input type="number" name="price" value="${price}" placeholder="Product price" min="1" required>
                 </div>
 
                 <div class="form__wrapper">
-                    <input type="number" name="stock" value="${stock}" placeholder="Product stock" required>
+                    <input type="number" name="stock" value="${stock}" placeholder="Product stock" min="1" required>
                 </div>
 
             <button class="form__submit--newuser form__wrapper--edit--button" onclick="handleEdit('${id}')">Update product</button>
