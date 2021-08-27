@@ -90,7 +90,6 @@ export function finalPurchase(req, res) {
             allProducts.products.forEach(product => {
                 if (userProduct.productId === product.uuid) {
                     product.stock = product.stock - userProduct.quantity;
-                    console.log(product.stock);
                 }
             })
         });

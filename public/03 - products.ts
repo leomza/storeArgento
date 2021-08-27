@@ -113,6 +113,8 @@ async function renderProducts(productsToShow): Promise<void> {
             }).join('');
         } else {
             html = productsToShow.map(element => {
+                //Just show elements that have stock
+                if (element.stock > 0)
                 return (
                     `<div class="product__item__wrapper">
                     <img onclick="redirectDetailsProduct('${element.uuid}')" class="product__item__image image--clickeable" src = "${element.picture}" alt = "">

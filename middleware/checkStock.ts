@@ -35,7 +35,8 @@ export function checkStockCart(req, res, next) {
 
         cartUser.products.forEach(userProduct => {
             products.products.forEach(product => {
-                if (userProduct.quantity > product.stock) {
+                if (userProduct.productId === product.uuid && userProduct.quantity > product.stock) {
+                    console.log(cartUser);
                     res.status(400).send(`Not enough stock of the product ${product.name}`);
                     return;
                 }

@@ -28,12 +28,13 @@ function checkStockCart(req, res, next) {
         var cartId = req.body.cartId;
         //Get the cart of the user
         var carts = new cartModel_1.Carts();
-        var cartUser = carts.searchUserCart(cartId);
+        var cartUser_1 = carts.searchUserCart(cartId);
         //Get all the products
         var products_1 = new productModel_1.Products();
-        cartUser.products.forEach(function (userProduct) {
+        cartUser_1.products.forEach(function (userProduct) {
             products_1.products.forEach(function (product) {
-                if (userProduct.quantity > product.stock) {
+                if (userProduct.productId === product.uuid && userProduct.quantity > product.stock) {
+                    console.log(cartUser_1);
                     res.status(400).send("Not enough stock of the product " + product.name);
                     return;
                 }

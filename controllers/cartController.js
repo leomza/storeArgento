@@ -86,7 +86,6 @@ function finalPurchase(req, res) {
             allProducts_1.products.forEach(function (product) {
                 if (userProduct.productId === product.uuid) {
                     product.stock = product.stock - userProduct.quantity;
-                    console.log(product.stock);
                 }
             });
         });
