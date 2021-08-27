@@ -94,8 +94,8 @@ try {
                         _a = ev.target.elements, product = _a.product, description = _a.description, price = _a.price, stock = _a.stock;
                         product = product.value;
                         description = description.value;
-                        price = price.value;
-                        stock = stock.value;
+                        price = price.valueAsNumber;
+                        stock = stock.valueAsNumber;
                         image = document.querySelector('#previewImage').getAttribute("src");
                         if (!product || !description || !price || !stock)
                             throw new Error("Please complete all the fields");
@@ -215,7 +215,7 @@ function addToCart(productId) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     itemQuantity = document.querySelector("#item" + productId);
-                    quantity = itemQuantity.value;
+                    quantity = itemQuantity.valueAsNumber;
                     return [4 /*yield*/, axios.post("/cart/addCart/", { quantity: quantity, productId: productId, cartId: cartId })];
                 case 1:
                     userCart = _a.sent();

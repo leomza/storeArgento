@@ -164,8 +164,8 @@ async function handleEdit(idProduct) {
         let nameProduct = document.querySelector('input[name="product"]').value;
         const pictureProduct: string = document.querySelector('#previewImage').getAttribute("src");
         let descriptionProduct = document.querySelector('input[name="description"]').value;
-        let priceProduct = document.querySelector('input[name="price"]').value;
-        let stockProduct = document.querySelector('input[name="stock"]').value;
+        let priceProduct = document.querySelector('input[name="price"]').valueAsNumber;
+        let stockProduct = document.querySelector('input[name="stock"]').valueAsNumber;
 
         const productToChange = { nameProduct, pictureProduct, descriptionProduct, priceProduct, stockProduct };
         if (!productToChange) throw new Error("You need to complete all the fields");

@@ -47,8 +47,8 @@ try {
         let { product, description, price, stock } = ev.target.elements;
         product = product.value;
         description = description.value;
-        price = price.value;
-        stock = stock.value;
+        price = price.valueAsNumber;
+        stock = stock.valueAsNumber;
         const image: string = document.querySelector('#previewImage').getAttribute("src");
         if (!product || !description || !price || !stock)
             throw new Error("Please complete all the fields");
@@ -161,7 +161,7 @@ async function showNumberProducts() {
 async function addToCart(productId) {
     try {
         const itemQuantity = document.querySelector(`#item${productId}`)
-        const quantity = itemQuantity.value;
+        const quantity = itemQuantity.valueAsNumber;
         const userCart = await axios.post(`/cart/addCart/`, { quantity, productId, cartId });
 
         //Add in the DOM the number of products that the user is buying (I have this when I render the products, buy if I change something and not render I will net to change the number in the DOM as well)

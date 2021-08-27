@@ -203,7 +203,6 @@ function doPurchase() {
             }).then(function (goToCart) {
                 if (goToCart) {
                     purchase();
-                    window.location.href = "./index.html";
                 }
             });
             return [2 /*return*/];
@@ -220,9 +219,13 @@ function purchase() {
                     return [4 /*yield*/, axios.post("/cart/purchase", { cartId: cartId })];
                 case 1:
                     _a.sent();
+                    swal("Thank you for your purchase!", "We waiting in our shop form 9 to 21!").then(function () {
+                        window.location.href = "./index.html";
+                    });
                     return [3 /*break*/, 3];
                 case 2:
                     error_3 = _a.sent();
+                    swal("Ohhh no!", "" + error_3.response.data, "warning");
                     console.error(error_3);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];

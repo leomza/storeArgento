@@ -192,8 +192,8 @@ function handleEdit(idProduct) {
                     nameProduct = document.querySelector('input[name="product"]').value;
                     pictureProduct = document.querySelector('#previewImage').getAttribute("src");
                     descriptionProduct = document.querySelector('input[name="description"]').value;
-                    priceProduct = document.querySelector('input[name="price"]').value;
-                    stockProduct = document.querySelector('input[name="stock"]').value;
+                    priceProduct = document.querySelector('input[name="price"]').valueAsNumber;
+                    stockProduct = document.querySelector('input[name="stock"]').valueAsNumber;
                     productToChange = { nameProduct: nameProduct, pictureProduct: pictureProduct, descriptionProduct: descriptionProduct, priceProduct: priceProduct, stockProduct: stockProduct };
                     if (!productToChange)
                         throw new Error("You need to complete all the fields");

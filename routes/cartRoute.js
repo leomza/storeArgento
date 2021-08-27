@@ -8,8 +8,8 @@ var checkStock_1 = require("../middleware/checkStock");
 //I import the function of the Controlers that Im going to use here
 var cartController_1 = require("../controllers/cartController");
 //When the user click to start a new survey I call this method
-router.post('/addCart', userCookie_1.userCookieRead, checkStock_1.checkStock, cartController_1.addCart);
-router.post('/purchase', userCookie_1.userCookieRead, cartController_1.finalPurchase);
+router.post('/addCart', userCookie_1.userCookieRead, checkStock_1.checkStockProduct, cartController_1.addCart);
+router.post('/purchase', userCookie_1.userCookieRead, checkStock_1.checkStockCart, cartController_1.finalPurchase);
 router.get('/infoCart/:cartId', userCookie_1.userCookieRead, cartController_1.infoCart);
 router.get('/allPurchase', userCookie_1.userCookieRead, cartController_1.allCartsPurchased);
 router["delete"]('/deleteProduct/:productId/:cartId', userCookie_1.userCookieRead, cartController_1.deleteProduct);

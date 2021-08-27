@@ -73,9 +73,9 @@ async function getInformationToRender() {
     const cartInfo = await axios.get(`/cart/infoCart/${cartId}`);
     let { totalAmount } = cartInfo.data.userCart
 
-    if (totalAmount === 0){
+    if (totalAmount === 0) {
         buttonPurchase.disabled = true
-    } 
+    }
 
     const { userCart } = cartInfo.data;
 
@@ -141,7 +141,6 @@ async function doPurchase() {
     }).then((goToCart) => {
         if (goToCart) {
             purchase();
-            window.location.href = `./index.html`;
         }
     });
 }
@@ -149,7 +148,11 @@ async function doPurchase() {
 async function purchase() {
     try {
         await axios.post(`/cart/purchase`, { cartId });
+        swal("Thank you for your purchase!", "We waiting in our shop form 9 to 21!").then(() => {
+            window.location.href = `./index.html`;
+        });
     } catch (error) {
+        swal("Ohhh no!", `${error.response.data}`, "warning");
         console.error(error);
     }
 }

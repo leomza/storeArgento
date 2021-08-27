@@ -68,20 +68,26 @@ export function deleteProduct(req, res) {
 }
 
 export function finalPurchase(req, res) {
-    const userEmail = req.email;
-    const { cartId } = req.body;
+    try {
+        const userEmail = req.email;
+        const { cartId } = req.body;
 
-    //Set the date of the purchase in the cart
-    const allCarts = new Carts();
-    const userCart = allCarts.searchUserCart(cartId);
-    allCarts.setPurchaseDate(userCart);
-    allCarts.updateCartsJson();
+        //Set the date of the purchase in the cart
+        const allCarts = new Carts();
+        const userCart = allCarts.searchUserCart(cartId);
+        allCarts.setPurchaseDate(userCart);
+        allCarts.updateCartsJson();
 
-    //Set the id of the cart in the user
-    const allUsers = new Users();
-    const userInfo = allUsers.findUser(userEmail);
-    allUsers.addPurchasedCart(userInfo, cartId);
-    allUsers.updateUsersJson();
+        //Set the id of the cart in the user
+        const allUsers = new Users();
+        const userInfo = allUsers.findUser(userEmail);
+        allUsers.addPurchasedCart(userInfo, cartId);
+        allUsers.updateUsersJson();
+        res.send("Amazing purchase!");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
 }
 
 export function allCartsPurchased(req, res) {

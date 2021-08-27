@@ -66,18 +66,25 @@ function deleteProduct(req, res) {
 }
 exports.deleteProduct = deleteProduct;
 function finalPurchase(req, res) {
-    var userEmail = req.email;
-    var cartId = req.body.cartId;
-    //Set the date of the purchase in the cart
-    var allCarts = new cartModel_1.Carts();
-    var userCart = allCarts.searchUserCart(cartId);
-    allCarts.setPurchaseDate(userCart);
-    allCarts.updateCartsJson();
-    //Set the id of the cart in the user
-    var allUsers = new userModel_1.Users();
-    var userInfo = allUsers.findUser(userEmail);
-    allUsers.addPurchasedCart(userInfo, cartId);
-    allUsers.updateUsersJson();
+    try {
+        var userEmail = req.email;
+        var cartId = req.body.cartId;
+        //Set the date of the purchase in the cart
+        var allCarts = new cartModel_1.Carts();
+        var userCart = allCarts.searchUserCart(cartId);
+        allCarts.setPurchaseDate(userCart);
+        allCarts.updateCartsJson();
+        //Set the id of the cart in the user
+        var allUsers = new userModel_1.Users();
+        var userInfo = allUsers.findUser(userEmail);
+        allUsers.addPurchasedCart(userInfo, cartId);
+        allUsers.updateUsersJson();
+        res.send("Amazing purchase!");
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
 }
 exports.finalPurchase = finalPurchase;
 function allCartsPurchased(req, res) {
