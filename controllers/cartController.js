@@ -4,6 +4,7 @@ exports.changeStatus = exports.allCartsPurchased = exports.finalPurchase = expor
 //I import the classes (with Methods) of the Models that Im going to use here
 var cartModel_1 = require("../models/cartModel");
 var userModel_1 = require("../models/userModel");
+var productModel_1 = require("../models/productModel");
 //Function to create a new Cart
 function addCart(req, res) {
     try {
@@ -79,6 +80,17 @@ function finalPurchase(req, res) {
         var userInfo = allUsers.findUser(userEmail);
         allUsers.addPurchasedCart(userInfo, cartId);
         allUsers.updateUsersJson();
+        //Get all the products and then dicrease stock
+        var allProducts_1 = new productModel_1.Products();
+        userCart.products.forEach(function (userProduct) {
+            allProducts_1.products.forEach(function (product) {
+                if (userProduct.productId === product.uuid) {
+                    product.stock = product.stock - userProduct.quantity;
+                    console.log(product.stock);
+                }
+            });
+        });
+        allProducts_1.updateProductsJson();
         res.send("Amazing purchase!");
     }
     catch (error) {

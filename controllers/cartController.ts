@@ -3,7 +3,7 @@ export { };
 //I import the classes (with Methods) of the Models that Im going to use here
 import { PurchaseProduct, Carts } from "../models/cartModel";
 import { Users } from "../models/userModel";
-
+import { Products } from "../models/productModel";
 
 //Function to create a new Cart
 export function addCart(req, res) {
@@ -83,6 +83,19 @@ export function finalPurchase(req, res) {
         const userInfo = allUsers.findUser(userEmail);
         allUsers.addPurchasedCart(userInfo, cartId);
         allUsers.updateUsersJson();
+
+        //Get all the products and then dicrease stock
+        const allProducts = new Products();
+        userCart.products.forEach(userProduct => {
+            allProducts.products.forEach(product => {
+                if (userProduct.productId === product.uuid) {
+                    product.stock = product.stock - userProduct.quantity;
+                    console.log(product.stock);
+                }
+            })
+        });
+        allProducts.updateProductsJson();
+
         res.send("Amazing purchase!");
     } catch (error) {
         console.error(error);
