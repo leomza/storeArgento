@@ -77,7 +77,8 @@ function renderUsersCart() {
                     html = renderInfo.map(function (element) {
                         var purchaseDate = convertDate(element.purchasedDate);
                         var createDate = convertDate(element.createdDate);
-                        return ("<tr>\n            <td>" + purchaseDate + "</td>\n            <td>" + element.userEmail + "</td> \n            <td>" + createDate + "</td>\n            <td>" + element.products.length + "</td>  \n            <td>$" + element.totalAmount + "</td> \n            </tr>");
+                        var pickedStatus = convertPicksToIcons(element.picked);
+                        return ("<tr>\n            <td>" + purchaseDate + "</td>\n            <td>" + element.userEmail + "</td> \n            <td>" + createDate + "</td>\n            <td>" + element.products.length + "</td>  \n            <td>$" + element.totalAmount + "</td>\n            <td class=\"fa pick__status\">" + pickedStatus + "</td>\n            <td>\n                <select class=\"form-control fa pick__options\" onchange=\"updateCartStatus(event, '" + element.uuid + "')\" name=\"pickedUp\">\n                    <option class=\"fa pick__options\" value=\"\" selected disabled hidden></option>\n                    <option class=\"fa pick__options--false\" id=\"falsePick\" value=\"false\">&#xf057;</option>\n                    <option class=\"fa pick__options--true\" id=\"truePick\" value=\"true\">&#xf058;</option>    \n                </select>\n            </td> \n            </tr>");
                     }).join('');
                     table.innerHTML = html;
                     return [3 /*break*/, 3];
@@ -89,6 +90,15 @@ function renderUsersCart() {
             }
         });
     });
+}
+//Function to instead of render a word, render an icon in the Table
+function convertPicksToIcons(pickedStatus) {
+    if (pickedStatus) {
+        return '&#xf058;';
+    }
+    else {
+        return '&#xf057;';
+    }
 }
 //Get the information of the purchased carts
 function getInformationToRender() {
@@ -108,4 +118,35 @@ function getInformationToRender() {
 function convertDate(date) {
     var hoy = new Date(date);
     return hoy.toLocaleDateString();
+}
+//Update if the cart was picked up or not
+function updateCartStatus(ev, cartId) {
+    return __awaiter(this, void 0, void 0, function () {
+        var cartStatus, changed, error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    cartStatus = ev.target.value;
+                    //Convert to boolean because in the model is a boolean and I prefer to manage as that
+                    if (cartStatus === 'true') {
+                        cartStatus = true;
+                    }
+                    else {
+                        cartStatus = false;
+                    }
+                    return [4 /*yield*/, axios.put("/cart/changeStatus", { cartId: cartId, cartStatus: cartStatus })];
+                case 1:
+                    changed = _a.sent();
+                    swal("Good job!", changed.data.message, "success");
+                    renderUsersCart();
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_2 = _a.sent();
+                    console.error(error_2);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
 }

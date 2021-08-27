@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.allCartsPurchased = exports.finalPurchase = exports.deleteProduct = exports.infoCart = exports.addCart = void 0;
+exports.changeStatus = exports.allCartsPurchased = exports.finalPurchase = exports.deleteProduct = exports.infoCart = exports.addCart = void 0;
 //I import the classes (with Methods) of the Models that Im going to use here
 var cartModel_1 = require("../models/cartModel");
 var userModel_1 = require("../models/userModel");
@@ -92,3 +92,18 @@ function allCartsPurchased(req, res) {
     }
 }
 exports.allCartsPurchased = allCartsPurchased;
+function changeStatus(req, res) {
+    try {
+        var _a = req.body, cartId = _a.cartId, cartStatus = _a.cartStatus;
+        var allCarts = new cartModel_1.Carts();
+        var userCart = allCarts.searchUserCart(cartId);
+        userCart.picked = cartStatus;
+        allCarts.updateCartsJson();
+        res.send({ message: "The cart was updated!" });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
+}
+exports.changeStatus = changeStatus;

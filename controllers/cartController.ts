@@ -94,3 +94,17 @@ export function allCartsPurchased(req, res) {
         res.status(500).send(error.message);
     }
 }
+
+export function changeStatus(req, res) {
+    try {
+        const { cartId, cartStatus } = req.body;
+        const allCarts = new Carts();
+        const userCart = allCarts.searchUserCart(cartId);
+        userCart.picked = cartStatus;
+        allCarts.updateCartsJson();
+        res.send({ message: "The cart was updated!" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
+}

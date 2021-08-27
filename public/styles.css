@@ -357,6 +357,22 @@ body {
   font-weight: 900;
 }
 
+.pick__options {
+  font-size: 20px;
+}
+.pick__options--true {
+  color: green;
+}
+.pick__options--false {
+  color: red;
+}
+
+.pick__status {
+  position: relative;
+  left: 20%;
+  font-size: 30px;
+}
+
 table {
   width: fit-content;
   margin: auto;

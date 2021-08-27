@@ -37,6 +37,7 @@ export class Cart {
     totalAmount: number;
     createdDate: any;
     purchasedDate: any;
+    picked: boolean;
 
     constructor(userEmail, products) {
         this.uuid = uuidv4();
@@ -45,6 +46,7 @@ export class Cart {
         this.totalAmount = 0;
         this.createdDate = Date.now();
         this.purchasedDate = null;
+        this.picked = false;
     }
 }
 
@@ -127,4 +129,6 @@ export class Carts {
             console.error(error);
         }
     }
+
+    
 }

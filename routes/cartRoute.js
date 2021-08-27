@@ -13,4 +13,5 @@ router.post('/purchase', userCookie_1.userCookieRead, cartController_1.finalPurc
 router.get('/infoCart/:cartId', userCookie_1.userCookieRead, cartController_1.infoCart);
 router.get('/allPurchase', userCookie_1.userCookieRead, cartController_1.allCartsPurchased);
 router["delete"]('/deleteProduct/:productId/:cartId', userCookie_1.userCookieRead, cartController_1.deleteProduct);
+router.put('/changeStatus', userCookie_1.userCookieRead, cartController_1.changeStatus);
 module.exports = router;

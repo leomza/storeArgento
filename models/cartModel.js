@@ -35,6 +35,7 @@ var Cart = /** @class */ (function () {
         this.totalAmount = 0;
         this.createdDate = Date.now();
         this.purchasedDate = null;
+        this.picked = false;
     }
     return Cart;
 }());

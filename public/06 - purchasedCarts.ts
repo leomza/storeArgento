@@ -25,20 +25,39 @@ async function renderUsersCart() {
         let html: string = renderInfo.map(element => {
             const purchaseDate = convertDate(element.purchasedDate);
             const createDate = convertDate(element.createdDate);
+            const pickedStatus = convertPicksToIcons(element.picked);
             return (
                 `<tr>
             <td>${purchaseDate}</td>
             <td>${element.userEmail}</td> 
             <td>${createDate}</td>
             <td>${element.products.length}</td>  
-            <td>$${element.totalAmount}</td> 
+            <td>$${element.totalAmount}</td>
+            <td class="fa pick__status">${pickedStatus}</td>
+            <td>
+                <select class="form-control fa pick__options" onchange="updateCartStatus(event, '${element.uuid}')" name="pickedUp">
+                    <option class="fa pick__options" value="" selected disabled hidden></option>
+                    <option class="fa pick__options--false" id="falsePick" value="false">&#xf057;</option>
+                    <option class="fa pick__options--true" id="truePick" value="true">&#xf058;</option>    
+                </select>
+            </td> 
             </tr>`
             );
         }).join('');
+
         table.innerHTML = html;
 
     } catch (error) {
         console.error(error);
+    }
+}
+
+//Function to instead of render a word, render an icon in the Table
+function convertPicksToIcons(pickedStatus) {
+    if (pickedStatus) {
+        return '&#xf058;'
+    } else {
+        return '&#xf057;'
     }
 }
 
@@ -52,4 +71,22 @@ async function getInformationToRender() {
 function convertDate(date) {
     const hoy = new Date(date);
     return hoy.toLocaleDateString();
+}
+
+//Update if the cart was picked up or not
+async function updateCartStatus(ev, cartId) {
+    try {
+        let cartStatus = ev.target.value;
+        //Convert to boolean because in the model is a boolean and I prefer to manage as that
+        if (cartStatus === 'true') {
+            cartStatus = true;
+        } else {
+            cartStatus = false;
+        }
+        const changed = await axios.put(`/cart/changeStatus`, { cartId, cartStatus });
+        swal("Good job!", changed.data.message, "success");
+        renderUsersCart()
+    } catch (error) {
+        console.error(error);
+    }
 }
