@@ -1,1 +1,1 @@
-[{"username":"pepe","email":"pepe@pepe.com","password":"123","purchasedCarts":["d58677f2-4193-474b-8db7-543e03ca141e","a778431b-48f9-481b-be51-df49bb495f6a","480366ae-9775-4e78-adec-2c81c18eedb8"],"role":"user","createdDate":1629800596186},{"username":"leonardo","email":"leo.mixdecompras@gmail.com","password":"123","purchasedCarts":[],"role":"admin","createdDate":1629800639701}]
+[{"username":"pepe","email":"pepe@pepe.com","password":"$2b$10$g.6v5zVcPkGnBdkeJreHp.yedZvO6FizisGvSqCzWlhzU/fuKqH1O","purchasedCarts":[],"role":"user","createdDate":1630108158771}]

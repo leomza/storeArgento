@@ -54,17 +54,8 @@ export class Users {
 
     createUser(user) {
         try {
-            //Search if the user exist
-            const userExist = this.users.findIndex(userElement => userElement.email === user.email);
-            if (userExist !== -1) {
-                // The user exist
-                return true
-            } else {
-                // The user doesn't exist
-                this.users.push(user);
-                this.updateUsersJson();
-                return false;
-            }
+            this.users.push(user);
+            this.updateUsersJson();
         } catch (error) {
             console.error(error);
         }
@@ -83,20 +74,7 @@ export class Users {
         }
     }
 
-    loginUser(email, password) {
-        try {
-            const userInfo = this.users.find(userElement => userElement.email === email && userElement.password === password);
-            if (userInfo) {
-                return userInfo;
-            } else {
-                return undefined
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    addPurchasedCart(userInfo, cartId){
+    addPurchasedCart(userInfo, cartId) {
         try {
             userInfo.purchasedCarts.push(cartId);
         } catch (error) {

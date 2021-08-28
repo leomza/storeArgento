@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,66 +35,70 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-//Handle the form to create a new user:
-var handleFormCreate = document.querySelector("#createForm");
-handleFormCreate.addEventListener('submit', doingSubmitCreate);
-var passwordInput = document.getElementById('passwordInput');
-var rePasswordInput = document.getElementById('rePasswordInput');
-function changeHTML() {
-    if (document.getElementById('checkRole').checked) {
-        passwordInput.style.display = "none";
-        rePasswordInput.style.display = "none";
+exports.__esModule = true;
+exports.decryptPassword = exports.encryptPassword = void 0;
+var bcrypt = require('bcrypt');
+var userModel_1 = require("../models/userModel");
+function encryptPassword(req, res, next) {
+    try {
+        var _a = req.body, password = _a.password, repassword = _a.repassword;
+        if (password !== repassword) {
+            res.status(400).send('Passwords are not the same, try again!');
+            return;
+        }
+        else {
+            var saltRounds = 10;
+            bcrypt.hash(password, saltRounds, function (err, hash) {
+                if (err) {
+                    res.status(500).send('Error encrypting');
+                    return;
+                }
+                else {
+                    req.hashPassword = hash;
+                    next();
+                }
+            });
+        }
     }
-    else {
-        passwordInput.style.display = "flex";
-        rePasswordInput.style.display = "flex";
+    catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
     }
 }
-function doingSubmitCreate(ev) {
+exports.encryptPassword = encryptPassword;
+function decryptPassword(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, username, email, password, repassword, role, userDetails, userCreated, uuid, error_1;
+        var _a, email, password, allUsers, user, match, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
-                    ev.preventDefault();
-                    _a = ev.target.elements, username = _a.username, email = _a.email, password = _a.password, repassword = _a.repassword, role = _a.role;
-                    username = username.value;
-                    email = email.value;
-                    password = password.value;
-                    repassword = repassword.value;
-                    if (role.checked) {
-                        role = 'admin';
-                        password = username + 'Ss12@';
-                        repassword = username + 'Ss12@';
+                    _a = req.body, email = _a.email, password = _a.password;
+                    allUsers = new userModel_1.Users();
+                    user = allUsers.findUser(email);
+                    if (!user) {
+                        res.status(400).send('The email is not register!');
+                        return [2 /*return*/];
+                    }
+                    return [4 /*yield*/, bcrypt.compare(password, user.password)];
+                case 1:
+                    match = _b.sent();
+                    if (match) {
+                        next();
                     }
                     else {
-                        role = 'user';
-                    }
-                    if (!username || !email || !password || !repassword)
-                        throw new Error("Please complete all the fields");
-                    ev.target.reset();
-                    userDetails = { username: username, email: email, password: password, repassword: repassword, role: role };
-                    return [4 /*yield*/, axios.post('/user/register', userDetails)];
-                case 1:
-                    userCreated = _b.sent();
-                    uuid = userCreated.data.unpurchaseCart.uuid;
-                    if (userCreated.data.user.role === 'user') {
-                        location.href = "03 - products.html?cartId=" + uuid;
-                    }
-                    else if (userCreated.data.user.role === 'admin') {
-                        swal("Thanks to register in Los Argento!", "During the day you will recieve your password by email!", "success");
-                        passwordInput.style.display = "flex";
+                        res.status(400).send('Wrong password, try again!');
+                        return [2 /*return*/];
                     }
                     return [3 /*break*/, 3];
                 case 2:
                     error_1 = _b.sent();
-                    swal("Ohhh no!", error_1.response.data, "warning");
                     console.error(error_1);
+                    res.status(500).send(error_1.message);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
         });
     });
 }
-;
+exports.decryptPassword = decryptPassword;

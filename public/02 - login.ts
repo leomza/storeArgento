@@ -18,14 +18,9 @@ async function doingSubmitLogin(ev) {
         const userDetails = { username, email, password, role }
         const userLogin = await axios.post('/user/login', userDetails);
         const { uuid } = userLogin.data.unpurchaseCart;
-
-        if (userLogin.data.userExists) {
-            location.href = `03 - products.html?cartId=${uuid}`;
-        } else {
-            throw new Error(userLogin.data.message)
-        }
+        location.href = `03 - products.html?cartId=${uuid}`;
     } catch (error) {
-        swal("Ohhh no!", `${error}`, "warning");
+        swal("Ohhh no!", error.response.data, "warning");
         console.error(error);
     }
 }

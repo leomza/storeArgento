@@ -152,7 +152,7 @@ async function purchase() {
             window.location.href = `./index.html`;
         });
     } catch (error) {
-        swal("Ohhh no!", `${error.response.data}`, "warning");
+        swal("Ohhh no!", error.response.data, "warning");
         console.error(error);
     }
 }

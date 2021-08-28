@@ -62,16 +62,11 @@ function doingSubmitLogin(ev) {
                 case 2:
                     userLogin = _c.sent();
                     uuid = userLogin.data.unpurchaseCart.uuid;
-                    if (userLogin.data.userExists) {
-                        location.href = "03 - products.html?cartId=" + uuid;
-                    }
-                    else {
-                        throw new Error(userLogin.data.message);
-                    }
+                    location.href = "03 - products.html?cartId=" + uuid;
                     return [3 /*break*/, 4];
                 case 3:
                     error_1 = _c.sent();
-                    swal("Ohhh no!", "" + error_1, "warning");
+                    swal("Ohhh no!", error_1.response.data, "warning");
                     console.error(error_1);
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];

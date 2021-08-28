@@ -116,8 +116,8 @@ function getInformationToRender() {
 }
 //Conver the date, so its going to be readable
 function convertDate(date) {
-    var hoy = new Date(date);
-    return hoy.toLocaleDateString();
+    var today = new Date(date);
+    return today.toLocaleDateString();
 }
 //Update if the cart was picked up or not
 function updateCartStatus(ev, cartId) {

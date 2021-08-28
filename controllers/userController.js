@@ -7,22 +7,18 @@ var cartModel_1 = require("../models/cartModel");
 function registerUser(req, res) {
     try {
         //Get the information from the body
-        var _a = req.body, username = _a.username, email = _a.email, password = _a.password, role = _a.role;
+        var _a = req.body, username = _a.username, email = _a.email, role = _a.role;
+        var hashPassword = req.hashPassword;
         //Initialice a new instance of the User
-        var user = new userModel_1.User(username, email, password, role);
+        var user = new userModel_1.User(username, email, hashPassword, role);
         //Initialice a new instance of Users (the initialization will read the JSON of Users)
         var allUsers = new userModel_1.Users();
-        var emailExist = allUsers.createUser(user);
-        if (!emailExist) {
-            var products = null;
-            var unpurchaseCart = new cartModel_1.Cart(email, products);
-            var allCarts = new cartModel_1.Carts();
-            allCarts.addProductsToCart(unpurchaseCart);
-            res.send({ message: "A new User was added", user: user, unpurchaseCart: unpurchaseCart });
-        }
-        else {
-            res.send({ message: "Email already registered, please try a different email address!" });
-        }
+        allUsers.createUser(user);
+        var products = null;
+        var unpurchaseCart = new cartModel_1.Cart(email, products);
+        var allCarts = new cartModel_1.Carts();
+        allCarts.addProductsToCart(unpurchaseCart);
+        res.send({ message: "A new User was added", user: user, unpurchaseCart: unpurchaseCart });
     }
     catch (error) {
         console.error(error);
@@ -52,9 +48,7 @@ function findUser(req, res) {
 exports.findUser = findUser;
 function login(req, res) {
     try {
-        var _a = req.body, email = _a.email, password = _a.password;
-        var allUsers = new userModel_1.Users();
-        var userExists = allUsers.loginUser(email, password);
+        var email = req.body.email;
         var unpurchaseCart = req.unpurchaseCart;
         if (!unpurchaseCart) {
             var products = null;
@@ -63,12 +57,7 @@ function login(req, res) {
             allCarts.addProductsToCart(unpurchaseCart);
         }
         ;
-        if (userExists) {
-            res.send({ message: "Logged in successfully", userExists: true, unpurchaseCart: unpurchaseCart });
-        }
-        else {
-            res.send({ message: "Username or password are wrong, please try again!", userExists: false });
-        }
+        res.send({ message: "Logged in successfully", unpurchaseCart: unpurchaseCart });
     }
     catch (error) {
         console.error(error);

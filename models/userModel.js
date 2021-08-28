@@ -45,18 +45,8 @@ var Users = /** @class */ (function () {
     };
     Users.prototype.createUser = function (user) {
         try {
-            //Search if the user exist
-            var userExist = this.users.findIndex(function (userElement) { return userElement.email === user.email; });
-            if (userExist !== -1) {
-                // The user exist
-                return true;
-            }
-            else {
-                // The user doesn't exist
-                this.users.push(user);
-                this.updateUsersJson();
-                return false;
-            }
+            this.users.push(user);
+            this.updateUsersJson();
         }
         catch (error) {
             console.error(error);
@@ -65,20 +55,6 @@ var Users = /** @class */ (function () {
     Users.prototype.findUser = function (email) {
         try {
             var userInfo = this.users.find(function (userElement) { return userElement.email === email; });
-            if (userInfo) {
-                return userInfo;
-            }
-            else {
-                return undefined;
-            }
-        }
-        catch (error) {
-            console.error(error);
-        }
-    };
-    Users.prototype.loginUser = function (email, password) {
-        try {
-            var userInfo = this.users.find(function (userElement) { return userElement.email === email && userElement.password === password; });
             if (userInfo) {
                 return userInfo;
             }

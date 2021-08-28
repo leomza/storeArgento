@@ -69,8 +69,8 @@ async function getInformationToRender() {
 
 //Conver the date, so its going to be readable
 function convertDate(date) {
-    const hoy = new Date(date);
-    return hoy.toLocaleDateString();
+    const today = new Date(date);
+    return today.toLocaleDateString();
 }
 
 //Update if the cart was picked up or not
