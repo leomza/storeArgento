@@ -47,7 +47,7 @@ async function renderCart(): Promise<void> {
             <td><img class="table__image" src="${element.picture}" alt=""></td>
             <td>${element.name}</td> 
             <td>${element.description}</td>
-            <td>${element.quantity}</td>  
+            <td><input type="number" onchange='changeQuantityItem("${element.productId}")' name="quantityCart" id="quantityCartitem${element.productId}" value="${element.quantity}" min="1"></td>  
             <td>$${element.price}</td> 
             <td>$${element.totalPrice}</td> 
             <td>
@@ -153,6 +153,22 @@ async function purchase() {
         });
     } catch (error) {
         swal("Ohhh no!", error.response.data, "warning");
+        console.error(error);
+    }
+}
+
+//Function to allow the user to change the quantity from the cart
+async function changeQuantityItem(productId) {
+    try {
+        const itemQuantity = document.querySelector(`#quantityCartitem${productId}`)
+        const quantity = itemQuantity.valueAsNumber;
+        await axios.post(`/cart/changeQuantity/`, { quantity, productId, cartId }).catch(error => {
+            //If I cant update because I dont have stock of the product I will render again to go back the quantity as before
+            swal("Ohhh no!", `${error.response.data}`, "warning");
+        });
+        renderCart();
+    } catch (error) {
+        swal("Ohhh no!", `${error.response.data}`, "warning");
         console.error(error);
     }
 }

@@ -9,13 +9,11 @@ function checkStockProduct(req, res, next) {
         var product = new productModel_1.Products();
         var productInfo = product.detailsProduct(productId);
         if (parseInt(quantity) > productInfo.stock) {
-            res.status(400).send('Not enough stock of the product');
+            res.status(400).send('Not enough stock of the product', { productStock: false });
             return;
         }
-        else {
-            req.price = productInfo.price;
-            next();
-        }
+        req.price = productInfo.price;
+        next();
     }
     catch (error) {
         console.error(error);
@@ -28,13 +26,12 @@ function checkStockCart(req, res, next) {
         var cartId = req.body.cartId;
         //Get the cart of the user
         var carts = new cartModel_1.Carts();
-        var cartUser_1 = carts.searchUserCart(cartId);
+        var cartUser = carts.searchUserCart(cartId);
         //Get all the products
         var products_1 = new productModel_1.Products();
-        cartUser_1.products.forEach(function (userProduct) {
+        cartUser.products.forEach(function (userProduct) {
             products_1.products.forEach(function (product) {
                 if (userProduct.productId === product.uuid && userProduct.quantity > product.stock) {
-                    console.log(cartUser_1);
                     res.status(400).send("Not enough stock of the product " + product.name);
                     return;
                 }

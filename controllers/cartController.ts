@@ -125,3 +125,43 @@ export function changeStatus(req, res) {
         res.status(500).send(error.message);
     }
 }
+
+export function changeQuantity(req, res) {
+    try {
+        //Get the information from the body
+        const { quantity, productId, cartId } = req.body;
+
+        //Initialice a new instance of the carts
+        const allCarts = new Carts()
+
+        //Look for the cart of the user
+        const userCart = allCarts.searchUserCart(cartId);
+
+        //Search the product in the cart
+        const productExist = allCarts.searchProductInCart(productId, userCart);
+
+        //Have to parse because they are Strings
+        productExist.quantity = quantity;
+        console.log(productExist.quantity);
+        console.log(typeof productExist.quantity);
+
+        console.log(quantity);
+        console.log(typeof quantity);
+
+        productExist.totalPrice = productExist.quantity * productExist.price;
+        allCarts.updateTotalAmount(userCart);
+
+        res.send({ message: "The quantity was changed in the cart", updatedQuantity: true });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
+}
+
+try {
+
+} catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+}
+}

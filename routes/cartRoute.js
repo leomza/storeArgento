@@ -10,6 +10,7 @@ var isAdmin_1 = require("../middleware/isAdmin");
 var cartController_1 = require("../controllers/cartController");
 //When the user click to start a new survey I call this method
 router.post('/addCart', userCookie_1.userCookieRead, checkStock_1.checkStockProduct, cartController_1.addCart);
+router.post('/changeQuantity', userCookie_1.userCookieRead, checkStock_1.checkStockProduct, cartController_1.changeQuantity);
 router.post('/purchase', userCookie_1.userCookieRead, checkStock_1.checkStockCart, cartController_1.finalPurchase);
 router.get('/infoCart/:cartId', userCookie_1.userCookieRead, cartController_1.infoCart);
 router.get('/allPurchase', userCookie_1.userCookieRead, isAdmin_1.isAdmin, cartController_1.allCartsPurchased);

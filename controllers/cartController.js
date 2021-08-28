@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.changeStatus = exports.allCartsPurchased = exports.finalPurchase = exports.deleteProduct = exports.infoCart = exports.addCart = void 0;
+exports.changeQuantity = exports.changeStatus = exports.allCartsPurchased = exports.finalPurchase = exports.deleteProduct = exports.infoCart = exports.addCart = void 0;
 //I import the classes (with Methods) of the Models that Im going to use here
 var cartModel_1 = require("../models/cartModel");
 var userModel_1 = require("../models/userModel");
@@ -124,3 +124,35 @@ function changeStatus(req, res) {
     }
 }
 exports.changeStatus = changeStatus;
+function changeQuantity(req, res) {
+    try {
+        //Get the information from the body
+        var _a = req.body, quantity = _a.quantity, productId = _a.productId, cartId = _a.cartId;
+        //Initialice a new instance of the carts
+        var allCarts = new cartModel_1.Carts();
+        //Look for the cart of the user
+        var userCart = allCarts.searchUserCart(cartId);
+        //Search the product in the cart
+        var productExist = allCarts.searchProductInCart(productId, userCart);
+        //Have to parse because they are Strings
+        productExist.quantity = quantity;
+        console.log(productExist.quantity);
+        console.log(typeof productExist.quantity);
+        console.log(quantity);
+        console.log(typeof quantity);
+        productExist.totalPrice = productExist.quantity * productExist.price;
+        allCarts.updateTotalAmount(userCart);
+        res.send({ message: "The quantity was changed in the cart", updatedQuantity: true });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
+}
+exports.changeQuantity = changeQuantity;
+try {
+}
+catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+}

@@ -92,7 +92,7 @@ function renderCart() {
                     renderInfo = _a.sent();
                     totalAmount = renderInfo.totalAmount;
                     html = renderInfo.products.map(function (element) {
-                        return ("<tr>\n            <td><img class=\"table__image\" src=\"" + element.picture + "\" alt=\"\"></td>\n            <td>" + element.name + "</td> \n            <td>" + element.description + "</td>\n            <td>" + element.quantity + "</td>  \n            <td>$" + element.price + "</td> \n            <td>$" + element.totalPrice + "</td> \n            <td>\n            <i class=\"fas fa-trash table__remove\" onclick='removeFromCart(\"" + element.productId + "\" )' title=\"Remove\"></i>\n            </td>\n            </tr>");
+                        return ("<tr>\n            <td><img class=\"table__image\" src=\"" + element.picture + "\" alt=\"\"></td>\n            <td>" + element.name + "</td> \n            <td>" + element.description + "</td>\n            <td><input type=\"number\" onchange='changeQuantityItem(\"" + element.productId + "\")' name=\"quantityCart\" id=\"quantityCartitem" + element.productId + "\" value=\"" + element.quantity + "\" min=\"1\"></td>  \n            <td>$" + element.price + "</td> \n            <td>$" + element.totalPrice + "</td> \n            <td>\n            <i class=\"fas fa-trash table__remove\" onclick='removeFromCart(\"" + element.productId + "\" )' title=\"Remove\"></i>\n            </td>\n            </tr>");
                     }).join('');
                     table.innerHTML = html;
                     finalAmount = document.querySelector('#finalAmount');
@@ -227,6 +227,34 @@ function purchase() {
                     error_3 = _a.sent();
                     swal("Ohhh no!", error_3.response.data, "warning");
                     console.error(error_3);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+//Function to allow the user to change the quantity from the cart
+function changeQuantityItem(productId) {
+    return __awaiter(this, void 0, void 0, function () {
+        var itemQuantity, quantity, error_4;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    itemQuantity = document.querySelector("#quantityCartitem" + productId);
+                    quantity = itemQuantity.valueAsNumber;
+                    return [4 /*yield*/, axios.post("/cart/changeQuantity/", { quantity: quantity, productId: productId, cartId: cartId })["catch"](function (error) {
+                            //If I cant update because I dont have stock of the product I will render again to go back the quantity as before
+                            swal("Ohhh no!", "" + error.response.data, "warning");
+                        })];
+                case 1:
+                    _a.sent();
+                    renderCart();
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_4 = _a.sent();
+                    swal("Ohhh no!", "" + error_4.response.data, "warning");
+                    console.error(error_4);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
