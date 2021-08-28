@@ -102,6 +102,7 @@ var Carts = /** @class */ (function () {
         userCart.products.forEach(function (product) {
             userCart.totalAmount = userCart.totalAmount + product.totalPrice;
         });
+        this.updateCartsJson();
     };
     Carts.prototype.setPurchaseDate = function (userCart) {
         userCart.purchasedDate = Date.now();

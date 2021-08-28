@@ -42,8 +42,9 @@ async function doingSubmitCreate(ev) {
             location.href = `03 - products.html?cartId=${uuid}`;
 
         } else if (userCreated.data.user.role === 'admin') {
-            swal("Thanks to register in Los Argento!", "During the day you will recieve your password by email!", "success");
-            passwordInput.style.display = "flex";
+            swal("Thanks to register in Los Argento!", "During the day you will recieve your password by email!", "success").then(() => {
+                window.location.href = `./index.html`;
+            });
         }
     } catch (error) {
         swal("Ohhh no!", error.response.data, "warning");

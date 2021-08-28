@@ -28,7 +28,6 @@ function addCart(req, res) {
             userCart.products.push(productToPurchase);
         }
         allCarts.updateTotalAmount(userCart);
-        allCarts.updateCartsJson();
         res.send({ message: "A new product was added to the cart", userCart: userCart });
     }
     catch (error) {

@@ -4,22 +4,14 @@ import { Users } from "../models/userModel";
 
 export function isAdmin(req, res, next) {
     try {
-        //req.isAuthorized = false;
         const allUsers = new Users();
-        console.log(req.email);
-        const userIndex = allUsers.users.findIndex(user => user.email === req.email);
-        console.log(userIndex);
+        const user = allUsers.findUser(req.email);
 
-        if (userIndex !== -1) { // user exists
-            const userRole = allUsers.users[userIndex].role;
-            console.log(userRole);
-            if (userRole === 'admin') { // check the role if is Admin
-                req.isAuthorized = true;
-                next();
-            }
-        } else {
+        if (user.role === 'admin') { // user is admin
             next();
-            res.status(401).send({ isAuthorized: req.isAuthorized, message: 'You are not authorized to open this page.' })
+        } else {
+            res.status(401).send('You are not authorized to open this page')
+            return;
         };
 
     } catch (error) {

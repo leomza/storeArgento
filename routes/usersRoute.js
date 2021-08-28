@@ -12,8 +12,7 @@ var Schemas = require('../schemas/allSchemas');
 var encryptPassword_1 = require("../middleware/encryptPassword");
 //I import the function of the Controlers that Im going to use here
 var userController_1 = require("../controllers/userController");
-router.post('/register', validateBody_1.validateBody(Schemas.registerSchemaFJS), doesUserExist_1.doesUserExist, encryptPassword_1.encryptPassword, userCookie_1.userCookieWrite, sendEmail_1.sendEmail, userController_1.registerUser);
-router.get('/username/:email', userController_1.findUser);
+router.post('/register', validateBody_1.validateBody(Schemas.registerSchemaFJS), doesUserExist_1.doesUserExistRegister, encryptPassword_1.encryptPassword, userCookie_1.userCookieWrite, sendEmail_1.sendEmail, userController_1.registerUser);
+router.post('/login', doesUserExist_1.doesUserExistLogin, userCookie_1.userCookieWrite, encryptPassword_1.decryptPassword, unpurchaseCarts_1.checkUnpurachaseCart, userController_1.login);
 router.get('/info', userCookie_1.userCookieRead, userController_1.findUser);
-router.post('/login', userCookie_1.userCookieWrite, encryptPassword_1.decryptPassword, unpurchaseCarts_1.checkUnpurachaseCart, userController_1.login);
 module.exports = router;

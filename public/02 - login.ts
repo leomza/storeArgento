@@ -10,12 +10,7 @@ async function doingSubmitLogin(ev) {
         password = password.value;
         if ((!email) || (!password)) throw new Error("Please complete all the fields");
         ev.target.reset();
-        //Get the role of the user
-        const userLoginUsername = await axios.get(`/user/username/${email}`);
-
-        if (!userLoginUsername.data.userInfo) throw new Error('Could not find the user');
-        const { username, role } = userLoginUsername.data.userInfo;
-        const userDetails = { username, email, password, role }
+        const userDetails = { email, password }
         const userLogin = await axios.post('/user/login', userDetails);
         const { uuid } = userLogin.data.unpurchaseCart;
         location.href = `03 - products.html?cartId=${uuid}`;

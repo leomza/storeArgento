@@ -2,7 +2,7 @@
 exports.__esModule = true;
 exports.checkUnpurachaseCart = void 0;
 var cartModel_1 = require("../models/cartModel");
-//With the user email that whants to log in, I will search inside the carts which contain a purchaseDate = "null", if any contains that date I will create a new cart
+//With the user email that wants to log in, I will search inside the carts which one contain a purchaseDate = "null", if no one contains that date I will create a new cart
 function checkUnpurachaseCart(req, res, next) {
     try {
         var email = req.body.email;

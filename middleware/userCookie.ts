@@ -4,8 +4,14 @@ const jwt = require('jwt-simple');
 
 export function userCookieWrite(req, res, next) {
     try {
-        //Get the information from the body
-        const { username, email, role } = req.body;
+        //Get the information from the body and from the middleware (doesUserExist)
+        const { email } = req.body;
+        const username = req.username;
+        const role = req.role;
+        console.log(email);
+        console.log(username);
+        console.log(role);
+
 
         if (!username || !email || !role) throw new Error("User details processing issues");
 
@@ -15,10 +21,7 @@ export function userCookieWrite(req, res, next) {
         //The cookie is going to expire in 30 minutes
         res.cookie("userInfo", token, { maxAge: 1800000, httpOnly: true });
 
-        req.cookieExists = true;
-        req.username = username;
         req.email = email;
-        req.role = role;
         //"Next" means that I will continue with the Route
         next();
 
@@ -39,10 +42,8 @@ export function userCookieRead(req, res, next) {
             req.username = username;
             req.email = email;
             req.role = role;
-
             next();
         } else {
-            req.cookieExists = false;
             res.status(401).send({ cookieExist: req.cookieExists, message: 'The session has expired. Please log in again.' });
         }
     } catch (error) {

@@ -84,6 +84,7 @@ function renderUsersCart() {
                     return [3 /*break*/, 3];
                 case 2:
                     error_1 = _a.sent();
+                    swal("Ohhh no!", error_1.response.data, "warning");
                     console.error(error_1);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];

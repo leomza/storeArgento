@@ -39,11 +39,11 @@ var handleFormCreate = document.querySelector("#existingForm");
 handleFormCreate.addEventListener('submit', doingSubmitLogin);
 function doingSubmitLogin(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, email, password, userLoginUsername, _b, username, role, userDetails, userLogin, uuid, error_1;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var _a, email, password, userDetails, userLogin, uuid, error_1;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    _c.trys.push([0, 3, , 4]);
+                    _b.trys.push([0, 2, , 3]);
                     ev.preventDefault();
                     _a = ev.target.elements, email = _a.email, password = _a.password;
                     email = email.value;
@@ -51,25 +51,19 @@ function doingSubmitLogin(ev) {
                     if ((!email) || (!password))
                         throw new Error("Please complete all the fields");
                     ev.target.reset();
-                    return [4 /*yield*/, axios.get("/user/username/" + email)];
-                case 1:
-                    userLoginUsername = _c.sent();
-                    if (!userLoginUsername.data.userInfo)
-                        throw new Error('Could not find the user');
-                    _b = userLoginUsername.data.userInfo, username = _b.username, role = _b.role;
-                    userDetails = { username: username, email: email, password: password, role: role };
+                    userDetails = { email: email, password: password };
                     return [4 /*yield*/, axios.post('/user/login', userDetails)];
-                case 2:
-                    userLogin = _c.sent();
+                case 1:
+                    userLogin = _b.sent();
                     uuid = userLogin.data.unpurchaseCart.uuid;
                     location.href = "03 - products.html?cartId=" + uuid;
-                    return [3 /*break*/, 4];
-                case 3:
-                    error_1 = _c.sent();
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_1 = _b.sent();
                     swal("Ohhh no!", error_1.response.data, "warning");
                     console.error(error_1);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });

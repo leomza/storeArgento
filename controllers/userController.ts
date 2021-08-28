@@ -31,17 +31,20 @@ export function registerUser(req, res) {
 
 export function findUser(req, res) {
     try {
-        const { email } = req.params;
         const allUsers = new Users();
         let userInfo;
 
-        //I use req.params from the login and req.email from the cookies 
+        //I use req.email from the cookies 
         if (req.email) {
             userInfo = allUsers.findUser(req.email);
-        } else {
-            userInfo = allUsers.findUser(email);
         }
-        res.send({ message: "Username was found", userInfo });
+
+        if (userInfo) {
+            res.status(200).send({ message: "Username was found", userInfo });
+        } else {
+            res.status(400).send("Username was not found");
+        }
+
     } catch (error) {
         console.error(error);
         res.status(500).send(error.message);
@@ -52,6 +55,8 @@ export function login(req, res) {
     try {
         const { email } = req.body;
         let unpurchaseCart = req.unpurchaseCart;
+
+        //If it is a new cart I create and push the data of the user (email and empty list of products)
         if (!unpurchaseCart) {
             const products = null;
             unpurchaseCart = new Cart(email, products);

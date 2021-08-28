@@ -38,11 +38,11 @@ function manageDOMAccordingRol() {
 }
 
 //Function to add a new product
-try {
-    const createProduct = document.querySelector('#product-form');
-    createProduct.addEventListener('submit', addProduct);
+const createProduct = document.querySelector('#product-form');
+createProduct.addEventListener('submit', addProductAdmin);
 
-    async function addProduct(ev) {
+async function addProductAdmin(ev) {
+    try {
         ev.preventDefault();
         let { product, description, price, stock } = ev.target.elements;
         product = product.value;
@@ -52,19 +52,21 @@ try {
         const image: string = document.querySelector('#previewImage').getAttribute("src");
         if (!product || !description || !price || !stock)
             throw new Error("Please complete all the fields");
-        ev.target.reset();
 
         const newProduct = { product, description, price, stock, image };
-        const productInfo = await axios.post(`/products/newProduct/`, { newProduct });
-        modalUpload.style.display = "none";
-        swal("Good job!", productInfo.data.message, "success");
-        document.querySelector('#previewImage').setAttribute('src', 'img/logoLosArgento.png');
-        renderProducts(null);
-    };
-
-} catch (error) {
-    console.error(error);
-};
+        const productInfo = await axios.post(`/products/newProduct/`, newProduct);
+        if (productInfo) {
+            modalUpload.style.display = "none";
+            swal("Good job!", productInfo.data.message, "success");
+            ev.target.reset();
+            document.querySelector('#previewImage').setAttribute('src', 'img/logoLosArgento.png');
+            renderProducts(null);
+        }
+    } catch (error) {
+        swal("Ohhh no!", error.response.data, "warning");
+        console.error(error);
+    }
+}
 
 //Function to show the previous image in the form:
 function readURL(input): void {
@@ -115,8 +117,8 @@ async function renderProducts(productsToShow): Promise<void> {
             html = productsToShow.map(element => {
                 //Just show elements that have stock
                 if (element.stock > 0)
-                return (
-                    `<div class="product__item__wrapper">
+                    return (
+                        `<div class="product__item__wrapper">
                     <img onclick="redirectDetailsProduct('${element.uuid}')" class="product__item__image image--clickeable" src = "${element.picture}" alt = "">
                     <div class="product__item__information__wrapper">
                     <div><b>${element.name.toUpperCase()} </b></div>
@@ -129,7 +131,7 @@ async function renderProducts(productsToShow): Promise<void> {
                     <input id="item${element.uuid}" class="product__item__quantity" type="number" name="quantity" value="1" min="1">
                     </div>
                     </div>`
-                )
+                    )
             }).join('');
         }
         root.innerHTML = html;
@@ -138,7 +140,7 @@ async function renderProducts(productsToShow): Promise<void> {
             root.innerHTML = 'Product not found';
             root.classList.add('error__message')
         };
-        
+
         if (rolUser === 'user') {
             showNumberProducts();
         }

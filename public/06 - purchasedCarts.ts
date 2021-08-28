@@ -48,6 +48,7 @@ async function renderUsersCart() {
         table.innerHTML = html;
 
     } catch (error) {
+        swal("Ohhh no!", error.response.data, "warning");
         console.error(error);
     }
 }

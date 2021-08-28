@@ -81,44 +81,46 @@ function manageDOMAccordingRol() {
     }
 }
 //Function to add a new product
-try {
-    var createProduct = document.querySelector('#product-form');
-    createProduct.addEventListener('submit', addProduct);
-    function addProduct(ev) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _a, product, description, price, stock, image, newProduct, productInfo;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        ev.preventDefault();
-                        _a = ev.target.elements, product = _a.product, description = _a.description, price = _a.price, stock = _a.stock;
-                        product = product.value;
-                        description = description.value;
-                        price = price.valueAsNumber;
-                        stock = stock.valueAsNumber;
-                        image = document.querySelector('#previewImage').getAttribute("src");
-                        if (!product || !description || !price || !stock)
-                            throw new Error("Please complete all the fields");
-                        ev.target.reset();
-                        newProduct = { product: product, description: description, price: price, stock: stock, image: image };
-                        return [4 /*yield*/, axios.post("/products/newProduct/", { newProduct: newProduct })];
-                    case 1:
-                        productInfo = _b.sent();
+var createProduct = document.querySelector('#product-form');
+createProduct.addEventListener('submit', addProductAdmin);
+function addProductAdmin(ev) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, product, description, price, stock, image, newProduct, productInfo, error_1;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _b.trys.push([0, 2, , 3]);
+                    ev.preventDefault();
+                    _a = ev.target.elements, product = _a.product, description = _a.description, price = _a.price, stock = _a.stock;
+                    product = product.value;
+                    description = description.value;
+                    price = price.valueAsNumber;
+                    stock = stock.valueAsNumber;
+                    image = document.querySelector('#previewImage').getAttribute("src");
+                    if (!product || !description || !price || !stock)
+                        throw new Error("Please complete all the fields");
+                    newProduct = { product: product, description: description, price: price, stock: stock, image: image };
+                    return [4 /*yield*/, axios.post("/products/newProduct/", newProduct)];
+                case 1:
+                    productInfo = _b.sent();
+                    if (productInfo) {
                         modalUpload.style.display = "none";
                         swal("Good job!", productInfo.data.message, "success");
+                        ev.target.reset();
                         document.querySelector('#previewImage').setAttribute('src', 'img/logoLosArgento.png');
                         renderProducts(null);
-                        return [2 /*return*/];
-                }
-            });
+                    }
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_1 = _b.sent();
+                    swal("Ohhh no!", error_1.response.data, "warning");
+                    console.error(error_1);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
         });
-    }
-    ;
+    });
 }
-catch (error) {
-    console.error(error);
-}
-;
 //Function to show the previous image in the form:
 function readURL(input) {
     if (input.files && input.files[0]) {
@@ -138,7 +140,7 @@ function readURL(input) {
 //I render all the products
 function renderProducts(productsToShow) {
     return __awaiter(this, void 0, Promise, function () {
-        var root, html, productsInfo, products, error_1;
+        var root, html, productsInfo, products, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -177,8 +179,8 @@ function renderProducts(productsToShow) {
                     }
                     return [3 /*break*/, 4];
                 case 3:
-                    error_1 = _a.sent();
-                    console.error(error_1);
+                    error_2 = _a.sent();
+                    console.error(error_2);
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }
@@ -188,7 +190,7 @@ function renderProducts(productsToShow) {
 //Add in the DOM the number of products that the user is buying
 function showNumberProducts() {
     return __awaiter(this, void 0, void 0, function () {
-        var numberProducts, userCart, error_2;
+        var numberProducts, userCart, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -200,8 +202,8 @@ function showNumberProducts() {
                     numberProducts.innerHTML = userCart.data.userCart.products.length;
                     return [3 /*break*/, 3];
                 case 2:
-                    error_2 = _a.sent();
-                    console.error(error_2);
+                    error_3 = _a.sent();
+                    console.error(error_3);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
@@ -211,7 +213,7 @@ function showNumberProducts() {
 //Function to add products into the cart
 function addToCart(productId) {
     return __awaiter(this, void 0, void 0, function () {
-        var itemQuantity, quantity, userCart, numberProducts, error_3;
+        var itemQuantity, quantity, userCart, numberProducts, error_4;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -235,9 +237,9 @@ function addToCart(productId) {
                     });
                     return [3 /*break*/, 3];
                 case 2:
-                    error_3 = _a.sent();
-                    swal("Ohhh no!", "" + error_3.response.data, "warning");
-                    console.error(error_3);
+                    error_4 = _a.sent();
+                    swal("Ohhh no!", "" + error_4.response.data, "warning");
+                    console.error(error_4);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
@@ -274,7 +276,7 @@ function redirectCheckout() {
 //Function to do a filter in the search input
 function handleSearch() {
     return __awaiter(this, void 0, void 0, function () {
-        var searchProduct, regEx, searching_1, productsCreated, productsFiltered, error_4;
+        var searchProduct, regEx, searching_1, productsCreated, productsFiltered, error_5;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -289,8 +291,8 @@ function handleSearch() {
                     renderProducts(productsFiltered);
                     return [3 /*break*/, 3];
                 case 2:
-                    error_4 = _a.sent();
-                    console.error(error_4);
+                    error_5 = _a.sent();
+                    console.error(error_5);
                     return [3 /*break*/, 3];
                 case 3:
                     ;

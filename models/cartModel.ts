@@ -115,6 +115,7 @@ export class Carts {
         userCart.products.forEach(product => {
             userCart.totalAmount = userCart.totalAmount + product.totalPrice;
         });
+        this.updateCartsJson();
     }
 
     setPurchaseDate(userCart) {
@@ -129,6 +130,4 @@ export class Carts {
             console.error(error);
         }
     }
-
-    
 }

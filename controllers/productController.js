@@ -7,7 +7,7 @@ var productModel_1 = require("../models/productModel");
 function newProduct(req, res) {
     try {
         //Get the information from the body
-        var _a = req.body.newProduct, product = _a.product, description = _a.description, price = _a.price, stock = _a.stock, image = _a.image;
+        var _a = req.body, product = _a.product, description = _a.description, price = _a.price, stock = _a.stock, image = _a.image;
         //Initialice a new instance of the User
         var productInfo = new productModel_1.Product(image, product, description, price, stock);
         //Initialice a new instance of Products (the initialization will read the JSON of Products)

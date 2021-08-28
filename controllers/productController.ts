@@ -7,7 +7,7 @@ import { Product, Products } from "../models/productModel";
 export function newProduct(req, res) {
     try {
         //Get the information from the body
-        const { product, description, price, stock, image } = req.body.newProduct;
+        const { product, description, price, stock, image } = req.body;
         //Initialice a new instance of the User
         const productInfo = new Product(image, product, description, price, stock);
         //Initialice a new instance of Products (the initialization will read the JSON of Products)
