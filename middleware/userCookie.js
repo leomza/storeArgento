@@ -1,22 +1,19 @@
 "use strict";
 exports.__esModule = true;
 exports.userCookieRead = exports.userCookieWrite = void 0;
-var secret_1 = require("./secret");
 var jwt = require('jwt-simple');
+require('dotenv').config();
 function userCookieWrite(req, res, next) {
     try {
         //Get the information from the body and from the middleware (doesUserExist)
         var email = req.body.email;
         var username = req.username;
         var role = req.role;
-        console.log(email);
-        console.log(username);
-        console.log(role);
         if (!username || !email || !role)
             throw new Error("User details processing issues");
         //Here I set the cookie
         var cookieToWrite = JSON.stringify({ username: username, email: email, role: role });
-        var token = jwt.encode(cookieToWrite, secret_1.secret);
+        var token = jwt.encode(cookieToWrite, process.env.SECRET_KEY);
         //The cookie is going to expire in 30 minutes
         res.cookie("userInfo", token, { maxAge: 1800000, httpOnly: true });
         req.email = email;
@@ -33,7 +30,7 @@ function userCookieRead(req, res, next) {
     try {
         var userInfo = req.cookies.userInfo;
         if (userInfo) {
-            var decoded = jwt.decode(userInfo, secret_1.secret);
+            var decoded = jwt.decode(userInfo, process.env.SECRET_KEY);
             var cookie = JSON.parse(decoded);
             var username = cookie.username, email = cookie.email, role = cookie.role;
             req.username = username;

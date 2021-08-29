@@ -11,8 +11,8 @@ var isAdmin_1 = require("../middleware/isAdmin");
 var productController_1 = require("../controllers/productController");
 //When the user click to start a new survey I call this method
 router.post('/newProduct', userCookie_1.userCookieRead, isAdmin_1.isAdmin, validateBody_1.validateBody(Schemas.productSchemaFJS), productController_1.newProduct);
-router.get('/allProducts', productController_1.getAllProducts);
+router.get('/allProducts', userCookie_1.userCookieRead, productController_1.getAllProducts);
 router["delete"]('/deleteProduct/:id', userCookie_1.userCookieRead, isAdmin_1.isAdmin, productController_1.removeProduct);
-router.get('/productDetail/:id', productController_1.productDetail);
+router.get('/productDetail/:id', userCookie_1.userCookieRead, productController_1.productDetail);
 router.put('/updateProduct/:id', userCookie_1.userCookieRead, isAdmin_1.isAdmin, productController_1.editProduct);
 module.exports = router;

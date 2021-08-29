@@ -1,6 +1,6 @@
 export { };
-import { secret } from './secret';
 const jwt = require('jwt-simple');
+require('dotenv').config();
 
 export function userCookieWrite(req, res, next) {
     try {
@@ -8,16 +8,12 @@ export function userCookieWrite(req, res, next) {
         const { email } = req.body;
         const username = req.username;
         const role = req.role;
-        console.log(email);
-        console.log(username);
-        console.log(role);
-
 
         if (!username || !email || !role) throw new Error("User details processing issues");
 
         //Here I set the cookie
         const cookieToWrite: string = JSON.stringify({ username, email, role });
-        const token = jwt.encode(cookieToWrite, secret);
+        const token = jwt.encode(cookieToWrite, process.env.SECRET_KEY);
         //The cookie is going to expire in 30 minutes
         res.cookie("userInfo", token, { maxAge: 1800000, httpOnly: true });
 
@@ -36,7 +32,7 @@ export function userCookieRead(req, res, next) {
         const { userInfo } = req.cookies;
 
         if (userInfo) {
-            const decoded = jwt.decode(userInfo, secret);
+            const decoded = jwt.decode(userInfo, process.env.SECRET_KEY);
             const cookie = JSON.parse(decoded);
             const { username, email, role } = cookie;
             req.username = username;
