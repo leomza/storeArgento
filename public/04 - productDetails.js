@@ -184,7 +184,7 @@ function editProduct(id, name, description, picture, price, stock) {
 //Handle Edit
 function handleEdit(idProduct) {
     return __awaiter(this, void 0, void 0, function () {
-        var product, image, description, price, stock, productToChange, error_3;
+        var product, image, description, price, stock, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -194,20 +194,19 @@ function handleEdit(idProduct) {
                     description = document.querySelector('input[name="description"]').value;
                     price = document.querySelector('input[name="price"]').valueAsNumber;
                     stock = document.querySelector('input[name="stock"]').valueAsNumber;
-                    productToChange = { product: product, image: image, description: description, price: price, stock: stock };
-                    if (!productToChange)
+                    if (!product || !image || !description || !price || !stock)
                         throw new Error("You need to complete all the fields");
                     if (!modalUpload)
-                        throw new Error('There is a problem finding modalEdit from HTML');
+                        throw new Error('There is a problem finding modal from HTML');
                     modalUpload.style.display = "none";
-                    return [4 /*yield*/, axios.put("/products/updateProduct/" + idProduct, { productToChange: productToChange })];
+                    return [4 /*yield*/, axios.put("/products/updateProduct/" + idProduct, { product: product, image: image, description: description, price: price, stock: stock })];
                 case 1:
                     _a.sent();
                     renderProduct();
                     return [3 /*break*/, 3];
                 case 2:
                     error_3 = _a.sent();
-                    swal("Ohhh no!", "" + error_3.response.data, "warning");
+                    swal("Ohhh no!", "" + error_3, "warning");
                     console.error(error_3);
                     return [3 /*break*/, 3];
                 case 3:

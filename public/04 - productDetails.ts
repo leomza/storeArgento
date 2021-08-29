@@ -167,16 +167,15 @@ async function handleEdit(idProduct) {
         let price = document.querySelector('input[name="price"]').valueAsNumber;
         let stock = document.querySelector('input[name="stock"]').valueAsNumber;
 
-        const productToChange = { product, image, description, price, stock };
-        if (!productToChange) throw new Error("You need to complete all the fields");
+        if (!product || !image || !description || !price || !stock) throw new Error("You need to complete all the fields");
 
-        if (!modalUpload) throw new Error('There is a problem finding modalEdit from HTML');
+        if (!modalUpload) throw new Error('There is a problem finding modal from HTML');
         modalUpload.style.display = "none";
 
-        await axios.put(`/products/updateProduct/${idProduct}`, { productToChange });
+        await axios.put(`/products/updateProduct/${idProduct}`, { product, image, description, price, stock });
         renderProduct();
     } catch (error) {
-        swal("Ohhh no!", `${error.response.data}`, "warning");
+        swal("Ohhh no!", `${error}`, "warning");
         console.error(error);
     };
 };
