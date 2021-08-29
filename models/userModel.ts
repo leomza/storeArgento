@@ -1,5 +1,5 @@
 export { };
-
+const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 const path = require("path");
 const usersJsonPath = path.resolve(__dirname, "./users.json");
@@ -20,6 +20,7 @@ enum Role {
 }
 
 export class User {
+    uuid: string;
     username: string;
     email: string;
     password: string;
@@ -28,6 +29,7 @@ export class User {
     createdDate: any;
 
     constructor(username: string, email: string, password: string, role: Role) {
+        this.uuid = uuidv4();
         this.username = username;
         this.email = email;
         this.password = password;
@@ -74,6 +76,18 @@ export class Users {
         }
     }
 
+    findUserById(id) {
+        try {
+            const userInfo = this.users.find(userElement => userElement.uuid === id);
+            if (userInfo) {
+                return userInfo;
+            } else {
+                return undefined
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
     addPurchasedCart(userInfo, cartId) {
         try {
             userInfo.purchasedCarts.push(cartId);

@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 exports.Users = exports.User = void 0;
+var uuidv4 = require("uuid").v4;
 var fs = require("fs");
 var path = require("path");
 var usersJsonPath = path.resolve(__dirname, "./users.json");
@@ -21,6 +22,7 @@ var Role;
 })(Role || (Role = {}));
 var User = /** @class */ (function () {
     function User(username, email, password, role) {
+        this.uuid = uuidv4();
         this.username = username;
         this.email = email;
         this.password = password;
@@ -55,6 +57,20 @@ var Users = /** @class */ (function () {
     Users.prototype.findUser = function (email) {
         try {
             var userInfo = this.users.find(function (userElement) { return userElement.email === email; });
+            if (userInfo) {
+                return userInfo;
+            }
+            else {
+                return undefined;
+            }
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+    Users.prototype.findUserById = function (id) {
+        try {
+            var userInfo = this.users.find(function (userElement) { return userElement.uuid === id; });
             if (userInfo) {
                 return userInfo;
             }
