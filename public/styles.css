@@ -31,7 +31,6 @@ body {
   background: black;
   color: white;
   padding: 5px;
-  border-radius: 50px;
   width: 55px;
   display: flex;
   justify-content: center;
@@ -299,6 +298,24 @@ body {
   margin: 15px;
 }
 
+#finalAmount {
+  background: black;
+  color: white;
+  border-radius: 50px;
+  padding: 10px;
+}
+
+#purchase {
+  font-size: 24px;
+  background: green;
+  color: white;
+}
+#purchase:hover {
+  cursor: pointer;
+  background: grey;
+  color: black;
+}
+
 .modal {
   display: none;
   position: fixed;
@@ -344,6 +361,9 @@ body {
 #proceedCart,
 #purchasedCarts {
   display: none;
+  width: max-content;
+  border: none;
+  font-size: 15px;
 }
 
 .image--clickeable:hover {
@@ -383,6 +403,10 @@ table th,
 table td {
   padding: 12px;
   text-align: center;
+}
+table th input,
+table td input {
+  width: 40px;
 }
 table tr:nth-child(odd) {
   background-color: white;
