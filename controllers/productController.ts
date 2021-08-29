@@ -7,9 +7,10 @@ import { Product, Products } from "../models/productModel";
 export function newProduct(req, res) {
     try {
         //Get the information from the body
-        const { product, description, price, stock, image } = req.body;
+        const { product, description, price, stock } = req.body;
+        const { filename } = req.file;
         //Initialice a new instance of the User
-        const productInfo = new Product(image, product, description, price, stock);
+        const productInfo = new Product(filename, product, description, price, stock);
         //Initialice a new instance of Products (the initialization will read the JSON of Products)
         const allProducts = new Products();
         allProducts.createProducts(productInfo);
@@ -65,7 +66,7 @@ export function editProduct(req, res) {
         const productToUpdate = allProducts.detailsProduct(id);
         productToUpdate.name = req.body.product;
         productToUpdate.description = req.body.description;
-        productToUpdate.picture = req.body.image;
+        productToUpdate.picture = req.file.filename;
         productToUpdate.price = req.body.price;
         productToUpdate.stock = req.body.stock;
         allProducts.updateProductsJson();

@@ -94,7 +94,7 @@ function renderProduct() {
                         productInfo.picture = 'img/logoLosArgento.png';
                     }
                     root.innerHTML =
-                        "<div class=\"product__item__wrapper\">\n                <img class=\"product__item__image\" src = \"" + productInfo.picture + "\" alt = \"\">\n                <div class=\"product__item__information__wrapper description\">\n                <div><b>" + productInfo.name.toUpperCase() + " </b></div>\n                <div>" + productInfo.description + "</div>\n                </div>\n                <div class=\"product__item__information\">\n                <div><b>$" + productInfo.price + " </b></div>\n                <div id=\"stockProduct\">Stock: <b>" + productInfo.stock + " </b></div>\n                </div>\n                <div class=\"product__item__options\" id=\"editArea\">\n                <i class=\"fas fa-trash-alt button--pointer\" onclick=\"deleteProduct('" + productInfo.uuid + "')\"></i>\n                <i class=\"fas fa-edit button--pointer\" onclick=\"editProduct('" + productInfo.uuid + "', '" + productInfo.name + "', '" + productInfo.description + "', '" + productInfo.picture + "', '" + productInfo.price + "', '" + productInfo.stock + "')\"></i>\n                </div>\n                </div>";
+                        "<div class=\"product__item__wrapper\">\n                <img class=\"product__item__image\" src = \"images/" + productInfo.picture + "\" alt = \"\">\n                <div class=\"product__item__information__wrapper description\">\n                <div><b>" + productInfo.name.toUpperCase() + " </b></div>\n                <div>" + productInfo.description + "</div>\n                </div>\n                <div class=\"product__item__information\">\n                <div><b>$" + productInfo.price + " </b></div>\n                <div id=\"stockProduct\">Stock: <b>" + productInfo.stock + " </b></div>\n                </div>\n                <div class=\"product__item__options\" id=\"editArea\">\n                <i class=\"fas fa-trash-alt button--pointer\" onclick=\"deleteProduct('" + productInfo.uuid + "')\"></i>\n                <i class=\"fas fa-edit button--pointer\" onclick=\"editProduct('" + productInfo.uuid + "', '" + productInfo.name + "', '" + productInfo.description + "', '" + productInfo.picture + "', '" + productInfo.price + "', '" + productInfo.stock + "')\"></i>\n                </div>\n                </div>";
                     manageDOMAccordingRol();
                     return [3 /*break*/, 3];
                 case 2:
@@ -173,7 +173,7 @@ function editProduct(id, name, description, picture, price, stock) {
         var formEdit = document.querySelector("#formEdit");
         if (!formEdit)
             throw new Error('There is a problem finding form from HTML');
-        var html = "\n        <div class=\"modalUpload\">\n\n        <div class=\"form__wrapper--edit\">\n                <h3>Edit product</h3>\n\n                <div class=\"form__wrapper\">\n                    <input type=\"text\" name=\"product\" value=\"" + name + "\" required>\n                </div>\n\n                <div class=\"form__wrapper--image\">\n                    <input type=\"file\" id=\"image\" name=\"image\" onchange=\"readURL(this)\">\n                    <img id=\"previewImage\" src=\"" + picture + "\">\n                </div>\n\n                <div class=\"form__wrapper\">\n                    <input type=\"text\" name=\"description\" value=\"" + description + "\" placeholder=\"Product description\" required>\n                </div>\n\n                <div class=\"form__wrapper\">\n                    <input type=\"number\" name=\"price\" value=\"" + price + "\" placeholder=\"Product price\" min=\"1\" required>\n                </div>\n\n                <div class=\"form__wrapper\">\n                    <input type=\"number\" name=\"stock\" value=\"" + stock + "\" placeholder=\"Product stock\" min=\"1\" required>\n                </div>\n\n            <button class=\"form__submit--newuser form__wrapper--edit--button\" onclick=\"handleEdit('" + id + "')\">Update product</button>\n        </div>\n        <div>";
+        var html = "\n        <div class=\"modalUpload\">\n\n        <div class=\"form__wrapper--edit\">\n                <h3>Edit product</h3>\n\n                <div class=\"form__wrapper\">\n                    <input type=\"text\" name=\"product\" value=\"" + name + "\" required>\n                </div>\n\n                <div class=\"form__wrapper--image\">\n                    <input type=\"file\" id=\"image\" name=\"image\" onchange=\"readURL(this)\">\n                    <img id=\"previewImage\" src=\"images/" + picture + "\">\n                </div>\n\n                <div class=\"form__wrapper\">\n                    <input type=\"text\" name=\"description\" value=\"" + description + "\" placeholder=\"Product description\" required>\n                </div>\n\n                <div class=\"form__wrapper\">\n                    <input type=\"number\" name=\"price\" value=\"" + price + "\" placeholder=\"Product price\" min=\"1\" required>\n                </div>\n\n                <div class=\"form__wrapper\">\n                    <input type=\"number\" name=\"stock\" value=\"" + stock + "\" placeholder=\"Product stock\" min=\"1\" required>\n                </div>\n\n            <button class=\"form__submit--newuser form__wrapper--edit--button\" onclick=\"handleEdit('" + id + "')\">Update product</button>\n        </div>\n        <div>";
         formEdit.innerHTML = html;
     }
     catch (error) {
@@ -184,22 +184,32 @@ function editProduct(id, name, description, picture, price, stock) {
 //Handle Edit
 function handleEdit(idProduct) {
     return __awaiter(this, void 0, void 0, function () {
-        var product, image, description, price, stock, error_3;
+        var product, description, price, stock, headersForFile, fd, imageFile, file, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     product = document.querySelector('input[name="product"]').value;
-                    image = document.querySelector('#previewImage').getAttribute("src");
                     description = document.querySelector('input[name="description"]').value;
                     price = document.querySelector('input[name="price"]').valueAsNumber;
                     stock = document.querySelector('input[name="stock"]').valueAsNumber;
-                    if (!product || !image || !description || !price || !stock)
+                    headersForFile = {
+                        'Content-Type': 'multipart/form-data'
+                    };
+                    fd = new FormData();
+                    imageFile = document.getElementById("image");
+                    file = imageFile.files[0];
+                    fd.append('product', product);
+                    fd.append('description', description);
+                    fd.append('price', price);
+                    fd.append('stock', stock);
+                    fd.append('image', file, "" + file.name);
+                    if (!product || !description || !price || !stock)
                         throw new Error("You need to complete all the fields");
                     if (!modalUpload)
                         throw new Error('There is a problem finding modal from HTML');
                     modalUpload.style.display = "none";
-                    return [4 /*yield*/, axios.put("/products/updateProduct/" + idProduct, { product: product, image: image, description: description, price: price, stock: stock })];
+                    return [4 /*yield*/, axios.put("/products/updateProduct/" + idProduct, fd, { headers: headersForFile })];
                 case 1:
                     _a.sent();
                     renderProduct();

@@ -44,7 +44,7 @@ async function renderCart(): Promise<void> {
         let html: string = renderInfo.products.map(element => {
             return (
                 `<tr>
-            <td><img class="table__image" src="${element.picture}" alt=""></td>
+            <td><img class="table__image" src="images/${element.picture}" alt=""></td>
             <td>${element.name}</td> 
             <td>${element.description}</td>
             <td><input type="number" onchange='changeQuantityItem("${element.productId}")' name="quantityCart" id="quantityCartitem${element.productId}" value="${element.quantity}" min="1"></td>  

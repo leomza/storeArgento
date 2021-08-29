@@ -85,7 +85,7 @@ var createProduct = document.querySelector('#product-form');
 createProduct.addEventListener('submit', addProductAdmin);
 function addProductAdmin(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, product, description, price, stock, image, newProduct, productInfo, error_1;
+        var _a, product, description, price, stock, headersForFile, fd, imageFile, file, productInfo, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -96,11 +96,20 @@ function addProductAdmin(ev) {
                     description = description.value;
                     price = price.valueAsNumber;
                     stock = stock.valueAsNumber;
-                    image = document.querySelector('#previewImage').getAttribute("src");
+                    headersForFile = {
+                        'Content-Type': 'multipart/form-data'
+                    };
+                    fd = new FormData();
+                    imageFile = document.getElementById("image");
+                    file = imageFile.files[0];
+                    fd.append('product', product);
+                    fd.append('description', description);
+                    fd.append('price', price);
+                    fd.append('stock', stock);
+                    fd.append('image', file, "" + file.name);
                     if (!product || !description || !price || !stock)
                         throw new Error("Please complete all the fields");
-                    newProduct = { product: product, description: description, price: price, stock: stock, image: image };
-                    return [4 /*yield*/, axios.post("/products/newProduct/", newProduct)];
+                    return [4 /*yield*/, axios.post("/products/newProduct/", fd, { headers: headersForFile })];
                 case 1:
                     productInfo = _b.sent();
                     if (productInfo) {
@@ -158,14 +167,14 @@ function renderProducts(productsToShow) {
                 case 2:
                     if (rolUser === 'admin') {
                         html = productsToShow.map(function (element) {
-                            return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"redirectDetailsProduct('" + element.uuid + "')\" class=\"product__item__image image--clickeable\" src = \"" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    <div>Stock: <b>" + element.stock + " </b></div>\n                    </div>\n                    </div>");
+                            return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"redirectDetailsProduct('" + element.uuid + "')\" class=\"product__item__image image--clickeable\" src = \"images/" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    <div>Stock: <b>" + element.stock + " </b></div>\n                    </div>\n                    </div>");
                         }).join('');
                     }
                     else {
                         html = productsToShow.map(function (element) {
                             //Just show elements that have stock
                             if (element.stock > 0)
-                                return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"redirectDetailsProduct('" + element.uuid + "')\" class=\"product__item__image image--clickeable\" src = \"" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <button class=\"product__item__cart\" onclick=\"addToCart('" + element.uuid + "')\">Add to cart</button>\n                    <input id=\"item" + element.uuid + "\" class=\"product__item__quantity\" type=\"number\" name=\"quantity\" value=\"1\" min=\"1\">\n                    </div>\n                    </div>");
+                                return ("<div class=\"product__item__wrapper\">\n                    <img onclick=\"redirectDetailsProduct('" + element.uuid + "')\" class=\"product__item__image image--clickeable\" src = \"images/" + element.picture + "\" alt = \"\">\n                    <div class=\"product__item__information__wrapper\">\n                    <div><b>" + element.name.toUpperCase() + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <div><b>$" + element.price + " </b></div>\n                    </div>\n                    <div class=\"product__item__information\">\n                    <button class=\"product__item__cart\" onclick=\"addToCart('" + element.uuid + "')\">Add to cart</button>\n                    <input id=\"item" + element.uuid + "\" class=\"product__item__quantity\" type=\"number\" name=\"quantity\" value=\"1\" min=\"1\">\n                    </div>\n                    </div>");
                         }).join('');
                     }
                     root.innerHTML = html;

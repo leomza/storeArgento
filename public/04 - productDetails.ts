@@ -46,7 +46,7 @@ async function renderProduct(): Promise<void> {
 
         root.innerHTML =
             `<div class="product__item__wrapper">
-                <img class="product__item__image" src = "${productInfo.picture}" alt = "">
+                <img class="product__item__image" src = "images/${productInfo.picture}" alt = "">
                 <div class="product__item__information__wrapper description">
                 <div><b>${productInfo.name.toUpperCase()} </b></div>
                 <div>${productInfo.description}</div>
@@ -134,7 +134,7 @@ function editProduct(id, name, description, picture, price, stock) {
 
                 <div class="form__wrapper--image">
                     <input type="file" id="image" name="image" onchange="readURL(this)">
-                    <img id="previewImage" src="${picture}">
+                    <img id="previewImage" src="images/${picture}">
                 </div>
 
                 <div class="form__wrapper">
@@ -162,17 +162,28 @@ function editProduct(id, name, description, picture, price, stock) {
 async function handleEdit(idProduct) {
     try {
         let product = document.querySelector('input[name="product"]').value;
-        const image: string = document.querySelector('#previewImage').getAttribute("src");
         let description = document.querySelector('input[name="description"]').value;
         let price = document.querySelector('input[name="price"]').valueAsNumber;
         let stock = document.querySelector('input[name="stock"]').valueAsNumber;
 
-        if (!product || !image || !description || !price || !stock) throw new Error("You need to complete all the fields");
+        const headersForFile = {
+            'Content-Type': 'multipart/form-data'
+        };
+        const fd: FormData = new FormData();
+        const imageFile = document.getElementById("image");
+        const file: any = imageFile.files[0];
+        fd.append('product', product);
+        fd.append('description', description);
+        fd.append('price', price);
+        fd.append('stock', stock);
+        fd.append('image', file, `${file.name}`);
+        
+        if (!product || !description || !price || !stock) throw new Error("You need to complete all the fields");
 
         if (!modalUpload) throw new Error('There is a problem finding modal from HTML');
         modalUpload.style.display = "none";
 
-        await axios.put(`/products/updateProduct/${idProduct}`, { product, image, description, price, stock });
+        await axios.put(`/products/updateProduct/${idProduct}`, fd, { headers: headersForFile });
         renderProduct();
     } catch (error) {
         swal("Ohhh no!", `${error}`, "warning");

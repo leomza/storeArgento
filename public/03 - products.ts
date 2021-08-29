@@ -49,12 +49,23 @@ async function addProductAdmin(ev) {
         description = description.value;
         price = price.valueAsNumber;
         stock = stock.valueAsNumber;
-        const image: string = document.querySelector('#previewImage').getAttribute("src");
+
+        const headersForFile = {
+            'Content-Type': 'multipart/form-data'
+        };
+        const fd: FormData = new FormData();
+        const imageFile = document.getElementById("image");
+        const file: any = imageFile.files[0];
+        fd.append('product', product);
+        fd.append('description', description);
+        fd.append('price', price);
+        fd.append('stock', stock);
+        fd.append('image', file, `${file.name}`);
+        
         if (!product || !description || !price || !stock)
             throw new Error("Please complete all the fields");
 
-        const newProduct = { product, description, price, stock, image };
-        const productInfo = await axios.post(`/products/newProduct/`, newProduct);
+        const productInfo = await axios.post(`/products/newProduct/`, fd, { headers: headersForFile });
         if (productInfo) {
             modalUpload.style.display = "none";
             swal("Good job!", productInfo.data.message, "success");
@@ -102,7 +113,7 @@ async function renderProducts(productsToShow): Promise<void> {
             html = productsToShow.map(element => {
                 return (
                     `<div class="product__item__wrapper">
-                    <img onclick="redirectDetailsProduct('${element.uuid}')" class="product__item__image image--clickeable" src = "${element.picture}" alt = "">
+                    <img onclick="redirectDetailsProduct('${element.uuid}')" class="product__item__image image--clickeable" src = "images/${element.picture}" alt = "">
                     <div class="product__item__information__wrapper">
                     <div><b>${element.name.toUpperCase()} </b></div>
                     </div>
@@ -119,7 +130,7 @@ async function renderProducts(productsToShow): Promise<void> {
                 if (element.stock > 0)
                     return (
                         `<div class="product__item__wrapper">
-                    <img onclick="redirectDetailsProduct('${element.uuid}')" class="product__item__image image--clickeable" src = "${element.picture}" alt = "">
+                    <img onclick="redirectDetailsProduct('${element.uuid}')" class="product__item__image image--clickeable" src = "images/${element.picture}" alt = "">
                     <div class="product__item__information__wrapper">
                     <div><b>${element.name.toUpperCase()} </b></div>
                     </div>
