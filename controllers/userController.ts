@@ -7,17 +7,13 @@ import { Cart, Carts } from "../models/cartModel";
 
 export function registerUser(req, res) {
     try {
-        //Get the information from the body
-        const { username, email, role } = req.body;
-        const hashPassword = req.hashPassword;
-        //Initialice a new instance of the User
-        const user = new User(username, email, hashPassword, role);
         //Initialice a new instance of Users (the initialization will read the JSON of Users)
+        const user = req.user;
         const allUsers = new Users();
         allUsers.createUser(user);
 
         const products = null;
-        const unpurchaseCart = new Cart(email, products)
+        const unpurchaseCart = new Cart(req.email, products)
         const allCarts = new Carts();
         allCarts.addProductsToCart(unpurchaseCart);
 

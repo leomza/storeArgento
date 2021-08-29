@@ -1,16 +1,20 @@
 export { };
 const jwt = require('jwt-simple');
 require('dotenv').config();
-import { Users } from '../models/userModel'
+import { User, Users } from '../models/userModel'
 
 export function userCookieWrite(req, res, next) {
     try {
         //Get the information from the body and from the middleware (doesUserExist)
         const { email } = req.body;
         const allUsers = new Users();
-        const user = allUsers.findUser(email);
+        let user = allUsers.findUser(email);
 
-        if (!user.username || !email || !user.role) throw new Error("User details processing issues");
+        if (!user) {
+            const { username, role } = req.body;
+            const hashPassword = req.hashPassword;
+            user = new User(username, email, hashPassword, role)
+        }
 
         //Here I set the cookie
         const cookieToWrite: string = JSON.stringify({ id: user.uuid });
@@ -21,6 +25,7 @@ export function userCookieWrite(req, res, next) {
         req.email = email;
         req.username = user.username;
         req.role = user.role;
+        req.user = user;
         //"Next" means that I will continue with the Route
         next();
 
@@ -37,10 +42,10 @@ export function userCookieRead(req, res, next) {
         if (userInfo) {
             const decoded = jwt.decode(userInfo, process.env.SECRET_KEY);
             const cookie = JSON.parse(decoded);
-            const { uuid } = cookie;
+            const { id } = cookie;
             const allUsers = new Users();
-            const user = allUsers.findUserById(uuid);
-
+            const user = allUsers.findUserById(id);
+            
             req.username = user.username;
             req.email = user.email;
             req.role = user.role;

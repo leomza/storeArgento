@@ -6,16 +6,12 @@ var userModel_1 = require("../models/userModel");
 var cartModel_1 = require("../models/cartModel");
 function registerUser(req, res) {
     try {
-        //Get the information from the body
-        var _a = req.body, username = _a.username, email = _a.email, role = _a.role;
-        var hashPassword = req.hashPassword;
-        //Initialice a new instance of the User
-        var user = new userModel_1.User(username, email, hashPassword, role);
         //Initialice a new instance of Users (the initialization will read the JSON of Users)
+        var user = req.user;
         var allUsers = new userModel_1.Users();
         allUsers.createUser(user);
         var products = null;
-        var unpurchaseCart = new cartModel_1.Cart(email, products);
+        var unpurchaseCart = new cartModel_1.Cart(req.email, products);
         var allCarts = new cartModel_1.Carts();
         allCarts.addProductsToCart(unpurchaseCart);
         res.send({ message: "A new User was added", user: user, unpurchaseCart: unpurchaseCart });
