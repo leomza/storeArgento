@@ -16,6 +16,6 @@ router.post('/newProduct', userCookieRead, isAdmin, validateBody(Schemas.product
 router.get('/allProducts', userCookieRead, getAllProducts);
 router.delete('/deleteProduct/:id', userCookieRead, isAdmin, removeProduct);
 router.get('/productDetail/:id', userCookieRead, productDetail);
-router.put('/updateProduct/:id', userCookieRead, isAdmin, editProduct);
+router.put('/updateProduct/:id', userCookieRead, isAdmin, validateBody(Schemas.productSchemaFJS), editProduct);
 
 module.exports = router;

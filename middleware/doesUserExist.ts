@@ -13,7 +13,6 @@ export function doesUserExistRegister(req, res, next) {
             res.status(400).send('User already exist');
             return;
         }
-
         req.username = username;
         req.role = role;
         next();

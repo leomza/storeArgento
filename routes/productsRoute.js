@@ -14,5 +14,5 @@ router.post('/newProduct', userCookie_1.userCookieRead, isAdmin_1.isAdmin, valid
 router.get('/allProducts', userCookie_1.userCookieRead, productController_1.getAllProducts);
 router["delete"]('/deleteProduct/:id', userCookie_1.userCookieRead, isAdmin_1.isAdmin, productController_1.removeProduct);
 router.get('/productDetail/:id', userCookie_1.userCookieRead, productController_1.productDetail);
-router.put('/updateProduct/:id', userCookie_1.userCookieRead, isAdmin_1.isAdmin, productController_1.editProduct);
+router.put('/updateProduct/:id', userCookie_1.userCookieRead, isAdmin_1.isAdmin, validateBody_1.validateBody(Schemas.productSchemaFJS), productController_1.editProduct);
 module.exports = router;

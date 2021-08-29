@@ -10,12 +10,13 @@ function userCookieWrite(req, res, next) {
         var email = req.body.email;
         var allUsers = new userModel_1.Users();
         var user = allUsers.findUser(email);
+        //As when Im doing the register the user doesnt exist, I will create it so I will his UUID
         if (!user) {
             var _a = req.body, username = _a.username, role = _a.role;
             var hashPassword = req.hashPassword;
             user = new userModel_1.User(username, email, hashPassword, role);
         }
-        //Here I set the cookie
+        //Here I set the cookie (the cookie is only going to contain the ID of the user)
         var cookieToWrite = JSON.stringify({ id: user.uuid });
         var token = jwt.encode(cookieToWrite, process.env.SECRET_KEY);
         //The cookie is going to expire in 30 minutes
