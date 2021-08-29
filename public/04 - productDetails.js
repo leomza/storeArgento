@@ -184,17 +184,17 @@ function editProduct(id, name, description, picture, price, stock) {
 //Handle Edit
 function handleEdit(idProduct) {
     return __awaiter(this, void 0, void 0, function () {
-        var nameProduct, pictureProduct, descriptionProduct, priceProduct, stockProduct, productToChange, error_3;
+        var product, image, description, price, stock, productToChange, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    nameProduct = document.querySelector('input[name="product"]').value;
-                    pictureProduct = document.querySelector('#previewImage').getAttribute("src");
-                    descriptionProduct = document.querySelector('input[name="description"]').value;
-                    priceProduct = document.querySelector('input[name="price"]').valueAsNumber;
-                    stockProduct = document.querySelector('input[name="stock"]').valueAsNumber;
-                    productToChange = { nameProduct: nameProduct, pictureProduct: pictureProduct, descriptionProduct: descriptionProduct, priceProduct: priceProduct, stockProduct: stockProduct };
+                    product = document.querySelector('input[name="product"]').value;
+                    image = document.querySelector('#previewImage').getAttribute("src");
+                    description = document.querySelector('input[name="description"]').value;
+                    price = document.querySelector('input[name="price"]').valueAsNumber;
+                    stock = document.querySelector('input[name="stock"]').valueAsNumber;
+                    productToChange = { product: product, image: image, description: description, price: price, stock: stock };
                     if (!productToChange)
                         throw new Error("You need to complete all the fields");
                     if (!modalUpload)
@@ -207,6 +207,7 @@ function handleEdit(idProduct) {
                     return [3 /*break*/, 3];
                 case 2:
                     error_3 = _a.sent();
+                    swal("Ohhh no!", "" + error_3.response.data, "warning");
                     console.error(error_3);
                     return [3 /*break*/, 3];
                 case 3:

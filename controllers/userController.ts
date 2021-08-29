@@ -1,7 +1,7 @@
 export { };
 
 //I import the classes (with Methods) of the Models that Im going to use here
-import { User, Users } from "../models/userModel";
+import { Users } from "../models/userModel";
 import { Cart, Carts } from "../models/cartModel";
 
 

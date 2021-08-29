@@ -63,11 +63,11 @@ export function editProduct(req, res) {
         const { id } = req.params;
         const allProducts = new Products();
         const productToUpdate = allProducts.detailsProduct(id);
-        productToUpdate.name = req.body.productToChange.nameProduct;
-        productToUpdate.description = req.body.productToChange.descriptionProduct;
-        productToUpdate.picture = req.body.productToChange.pictureProduct;
-        productToUpdate.price = req.body.productToChange.priceProduct;
-        productToUpdate.stock = req.body.productToChange.stockProduct;
+        productToUpdate.name = req.body.productToChange.product;
+        productToUpdate.description = req.body.productToChange.description;
+        productToUpdate.picture = req.body.productToChange.image;
+        productToUpdate.price = req.body.productToChange.price;
+        productToUpdate.stock = req.body.productToChange.stock;
         allProducts.updateProductsJson();
 
         res.send({ message: "The product was edited", allProducts });

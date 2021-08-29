@@ -82,7 +82,7 @@ function doingSubmitCreate(ev) {
                         location.href = "03 - products.html?cartId=" + uuid;
                     }
                     else if (userCreated.data.user.role === 'admin') {
-                        swal("Thanks to register in Los Argento!", "During the day you will recieve your password by email!", "success").then(function () {
+                        swal("Thanks to register in Los Argento!", "You will recieve your password by email (remember to check Spam)!", "success").then(function () {
                             window.location.href = "./index.html";
                         });
                     }

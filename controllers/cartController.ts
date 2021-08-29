@@ -19,7 +19,6 @@ export function addCart(req, res) {
 
         //Search if the product already exist in the cart, if not create a new one
         const productExist = allCarts.searchProductInCart(productId, userCart);
-        let productToPurchase;
 
         if (productExist) {
             //Have to parse because they are Strings
@@ -27,7 +26,7 @@ export function addCart(req, res) {
             productExist.totalPrice = productExist.quantity * productExist.price;
         } else {
             //Initialice a new instance of the product that is going to purchase
-            productToPurchase = new PurchaseProduct(productId, quantity, req.price);
+            let productToPurchase = new PurchaseProduct(productId, quantity, req.price);
             userCart.products.push(productToPurchase);
         }
         allCarts.updateTotalAmount(userCart);
@@ -58,7 +57,6 @@ export function deleteProduct(req, res) {
         const productDelete = allCarts.removeProductsFromUserCart(productId, cartId);
         const userCart = allCarts.searchUserCart(cartId);
         allCarts.updateTotalAmount(userCart);
-        allCarts.updateCartsJson();
         res.send({ message: "Poof! Your product has been deleted!", productDelete });
     } catch (error) {
         console.error(error);
@@ -142,11 +140,6 @@ export function changeQuantity(req, res) {
 
         //Have to parse because they are Strings
         productExist.quantity = quantity;
-        console.log(productExist.quantity);
-        console.log(typeof productExist.quantity);
-
-        console.log(quantity);
-        console.log(typeof quantity);
 
         productExist.totalPrice = productExist.quantity * productExist.price;
         allCarts.updateTotalAmount(userCart);
@@ -156,12 +149,4 @@ export function changeQuantity(req, res) {
         console.error(error);
         res.status(500).send(error.message);
     }
-}
-
-try {
-
-} catch (error) {
-    console.error(error);
-    res.status(500).send(error.message);
-}
 }

@@ -67,11 +67,11 @@ function editProduct(req, res) {
         var id = req.params.id;
         var allProducts = new productModel_1.Products();
         var productToUpdate = allProducts.detailsProduct(id);
-        productToUpdate.name = req.body.productToChange.nameProduct;
-        productToUpdate.description = req.body.productToChange.descriptionProduct;
-        productToUpdate.picture = req.body.productToChange.pictureProduct;
-        productToUpdate.price = req.body.productToChange.priceProduct;
-        productToUpdate.stock = req.body.productToChange.stockProduct;
+        productToUpdate.name = req.body.productToChange.product;
+        productToUpdate.description = req.body.productToChange.description;
+        productToUpdate.picture = req.body.productToChange.image;
+        productToUpdate.price = req.body.productToChange.price;
+        productToUpdate.stock = req.body.productToChange.stock;
         allProducts.updateProductsJson();
         res.send({ message: "The product was edited", allProducts: allProducts });
     }

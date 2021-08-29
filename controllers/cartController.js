@@ -16,7 +16,6 @@ function addCart(req, res) {
         var userCart = allCarts.searchUserCart(cartId);
         //Search if the product already exist in the cart, if not create a new one
         var productExist = allCarts.searchProductInCart(productId, userCart);
-        var productToPurchase = void 0;
         if (productExist) {
             //Have to parse because they are Strings
             productExist.quantity = parseInt(productExist.quantity) + parseInt(quantity);
@@ -24,7 +23,7 @@ function addCart(req, res) {
         }
         else {
             //Initialice a new instance of the product that is going to purchase
-            productToPurchase = new cartModel_1.PurchaseProduct(productId, quantity, req.price);
+            var productToPurchase = new cartModel_1.PurchaseProduct(productId, quantity, req.price);
             userCart.products.push(productToPurchase);
         }
         allCarts.updateTotalAmount(userCart);
@@ -56,7 +55,6 @@ function deleteProduct(req, res) {
         var productDelete = allCarts.removeProductsFromUserCart(productId, cartId);
         var userCart = allCarts.searchUserCart(cartId);
         allCarts.updateTotalAmount(userCart);
-        allCarts.updateCartsJson();
         res.send({ message: "Poof! Your product has been deleted!", productDelete: productDelete });
     }
     catch (error) {
@@ -136,10 +134,6 @@ function changeQuantity(req, res) {
         var productExist = allCarts.searchProductInCart(productId, userCart);
         //Have to parse because they are Strings
         productExist.quantity = quantity;
-        console.log(productExist.quantity);
-        console.log(typeof productExist.quantity);
-        console.log(quantity);
-        console.log(typeof quantity);
         productExist.totalPrice = productExist.quantity * productExist.price;
         allCarts.updateTotalAmount(userCart);
         res.send({ message: "The quantity was changed in the cart", updatedQuantity: true });
@@ -150,9 +144,3 @@ function changeQuantity(req, res) {
     }
 }
 exports.changeQuantity = changeQuantity;
-try {
-}
-catch (error) {
-    console.error(error);
-    res.status(500).send(error.message);
-}

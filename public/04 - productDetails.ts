@@ -161,13 +161,13 @@ function editProduct(id, name, description, picture, price, stock) {
 //Handle Edit
 async function handleEdit(idProduct) {
     try {
-        let nameProduct = document.querySelector('input[name="product"]').value;
-        const pictureProduct: string = document.querySelector('#previewImage').getAttribute("src");
-        let descriptionProduct = document.querySelector('input[name="description"]').value;
-        let priceProduct = document.querySelector('input[name="price"]').valueAsNumber;
-        let stockProduct = document.querySelector('input[name="stock"]').valueAsNumber;
+        let product = document.querySelector('input[name="product"]').value;
+        const image: string = document.querySelector('#previewImage').getAttribute("src");
+        let description = document.querySelector('input[name="description"]').value;
+        let price = document.querySelector('input[name="price"]').valueAsNumber;
+        let stock = document.querySelector('input[name="stock"]').valueAsNumber;
 
-        const productToChange = { nameProduct, pictureProduct, descriptionProduct, priceProduct, stockProduct };
+        const productToChange = { product, image, description, price, stock };
         if (!productToChange) throw new Error("You need to complete all the fields");
 
         if (!modalUpload) throw new Error('There is a problem finding modalEdit from HTML');
@@ -176,6 +176,7 @@ async function handleEdit(idProduct) {
         await axios.put(`/products/updateProduct/${idProduct}`, { productToChange });
         renderProduct();
     } catch (error) {
+        swal("Ohhh no!", `${error.response.data}`, "warning");
         console.error(error);
     };
 };
